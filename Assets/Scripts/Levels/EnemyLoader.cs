@@ -15,7 +15,17 @@ public class EnemyLoader : MonoBehaviour
         }
 
         string json = jsonFile.text;
-        Debug.Log(json);
+        string wrappedJson = "{ \"enemies\": " + json + "}";
+
+        EnemyDataWrapper wrapper = JsonUtility.FromJson<EnemyDataWrapper>(wrappedJson);
+        enemyDataList = wrapper.enemies;
+
+        Debug.Log("Loaded " + enemyDataList.Count + " enemies");
+
+        foreach (EnemyData enemy in enemyDataList)
+        {
+            Debug.Log("Loaded Enemy: " + enemy.name + ", Sprite: " + enemy.sprite + ", HP: " + enemy.hp + ", Speed: " + enemy.speed + ", Damage: " + enemy.damage);
+        }
 
 
     }
