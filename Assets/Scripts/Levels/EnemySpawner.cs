@@ -6,17 +6,31 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using System.Runtime.Versioning;
 
 public class EnemySpawner : MonoBehaviour
 {
     public Image level_selector;
     public GameObject button;
     public GameObject enemy;
-    public SpawnPoint[] SpawnPoints;    
+    public SpawnPoint[] SpawnPoints;
+    private List<EnemyData> enemies;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+        TextAsset jsonFile = Resources.Load<TextAsset>("enemies");
+        if(jsonFile == null)
+        {
+            Debug.Log("Failed to load enemies from json");
+            return;
+        }
+
+        string json = jsonFile.text;
+        EnemyLoader loader = new EnemyLoader();
+        enemies = loader.LoadEnemies(json);
+
         GameObject selector = Instantiate(button, level_selector.transform);
         selector.transform.localPosition = new Vector3(0, 130);
         selector.GetComponent<MenuSelectorController>().spawner = this;
@@ -31,6 +45,8 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartLevel(string levelname)
     {
+
+
         level_selector.gameObject.SetActive(false);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();

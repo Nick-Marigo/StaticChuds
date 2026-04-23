@@ -1,38 +1,28 @@
 using UnityEngine;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-public class EnemyLoader : MonoBehaviour
+
+public class EnemyLoader
 {
-    private List<EnemyData> enemyDataList;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public List<EnemyData> enemyDataList;
+
+    public List<EnemyData> LoadEnemies(string json)
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("enemies");
+        enemyDataList = JsonConvert.DeserializeObject<List<EnemyData>>(json);
 
-        if(jsonFile == null)
+        if(enemyDataList == null)
         {
-            Debug.Log("Failed to load enemies.json");
-            return;
+            Debug.Log("Failed to deserialize enemies");
+            return new List<EnemyData>();
         }
-
-        string json = jsonFile.text;
-        string wrappedJson = "{ \"enemies\": " + json + "}";
-
-        EnemyDataWrapper wrapper = JsonUtility.FromJson<EnemyDataWrapper>(wrappedJson);
-        enemyDataList = wrapper.enemies;
 
         Debug.Log("Loaded " + enemyDataList.Count + " enemies");
 
         foreach (EnemyData enemy in enemyDataList)
         {
-            Debug.Log("Loaded Enemy: " + enemy.name + ", Sprite: " + enemy.sprite + ", HP: " + enemy.hp + ", Speed: " + enemy.speed + ", Damage: " + enemy.damage);
+            Debug.Log("Enemy: " + enemy.name + ", Sprite: " + enemy.sprite + ", HP: " + enemy.hp + ", Speed: " + enemy.speed + ", Damage: " + enemy.damage);
         }
 
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return enemyDataList;
     }
 }
