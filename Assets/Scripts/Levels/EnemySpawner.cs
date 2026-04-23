@@ -14,14 +14,13 @@ public class EnemySpawner : MonoBehaviour
     public GameObject button;
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
-    private List<EnemyData> enemies;
+    private List<EnemyData> enemyData;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
         TextAsset jsonFile = Resources.Load<TextAsset>("enemies");
-        if(jsonFile == null)
+        if (jsonFile == null)
         {
             Debug.Log("Failed to load enemies from json");
             return;
@@ -29,7 +28,11 @@ public class EnemySpawner : MonoBehaviour
 
         string json = jsonFile.text;
         EnemyLoader loader = new EnemyLoader();
-        enemies = loader.LoadEnemies(json);
+        int status = loader.LoadEnemies(json, out enemyData);
+        if (status == -1) {
+            Debug.Log("Failed to load from JSON");
+            return;
+        }
 
         GameObject selector = Instantiate(button, level_selector.transform);
         selector.transform.localPosition = new Vector3(0, 130);
