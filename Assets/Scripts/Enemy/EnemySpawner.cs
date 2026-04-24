@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject button;
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
-    private List<EnemyData> enemyData;
+    private List<Enemy> enemyData;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

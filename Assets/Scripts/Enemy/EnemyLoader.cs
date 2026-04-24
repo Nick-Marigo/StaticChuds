@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public class EnemyLoader
 {
-    public int LoadEnemies(string json, out List<EnemyData> enemyData)
+    public int LoadEnemies(string json, out List<Enemy> enemyData)
     {
-        enemyData = JsonConvert.DeserializeObject<List<EnemyData>>(json);
+        enemyData = JsonConvert.DeserializeObject<List<Enemy>>(json);
 
         if (enemyData == null) {
             return -1;

@@ -1,9 +1,7 @@
-using UnityEngine;
 using Newtonsoft.Json;
 
 [System.Serializable]
-public class EnemyData
-{
+public class Enemy {
     [JsonProperty("name")]
     public string name;
     [JsonProperty("sprite")]
