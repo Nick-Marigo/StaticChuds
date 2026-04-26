@@ -1,12 +1,12 @@
 using Newtonsoft.Json;
 
 [System.Serializable]
-public class LevelData {
+public class Level {
     [JsonProperty("name")]
     public string name;
     [JsonProperty("waves")]
     public int waves;
     [JsonProperty("spawns")]
-    public SpawnData[] spawns;
+    public Spawn[] spawns;
 }
 

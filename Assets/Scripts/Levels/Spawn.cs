@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 
 [System.Serializable]
-public class SpawnData {
+public class Spawn {
     [JsonProperty("enemy")]
     public string enemy;
     [JsonProperty("count")]

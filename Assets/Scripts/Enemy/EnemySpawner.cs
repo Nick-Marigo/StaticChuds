@@ -14,23 +14,41 @@ public class EnemySpawner : MonoBehaviour
     public GameObject button;
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
-    private List<Enemy> enemyData;
+
+    private List<Enemy> enemies;
+    private List<Level> levels;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("enemies");
-        if (jsonFile == null)
+        TextAsset enemyJson = Resources.Load<TextAsset>("enemies");
+        if (enemyJson == null)
         {
             Debug.Log("Failed to load enemies from json");
             return;
         }
 
-        string json = jsonFile.text;
-        EnemyLoader loader = new EnemyLoader();
-        int status = loader.LoadEnemies(json, out enemyData);
+        TextAsset levelJson = Resources.Load<TextAsset>("levels");
+        if (levelJson == null)
+        {
+            Debug.Log("Failed to load levels from json");
+            return;
+        }
+
+        string enemyJsonText = enemyJson.text;
+        string levelJsonText = levelJson.text;
+
+        EnemyLoader enemyLoader = new EnemyLoader();
+        int status = enemyLoader.LoadEnemies(enemyJsonText, out enemies);
         if (status == -1) {
-            Debug.Log("Failed to load from JSON");
+            Debug.Log("Failed to load enemies from JSON");
+            return;
+        }
+
+        LevelLoader levelLoader = new LevelLoader();
+        status = levelLoader.LoadLevels(levelJsonText, out levels);
+        if (status == -1) {
+            Debug.Log("Failed to load levels from JSON");
             return;
         }
 
@@ -66,6 +84,7 @@ public class EnemySpawner : MonoBehaviour
     {
         GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
         GameManager.Instance.countdown = 3;
+        // Start countdown
         for (int i = 3; i > 0; i--)
         {
             yield return new WaitForSeconds(1);
@@ -74,13 +93,13 @@ public class EnemySpawner : MonoBehaviour
         GameManager.Instance.state = GameManager.GameState.INWAVE;
         for (int i = 0; i < 10; ++i)
         {
-            yield return SpawnZombie();
+            yield return SpawnEnemy();
         }
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
-    IEnumerator SpawnZombie()
+    IEnumerator SpawnEnemy()
     {
         SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
         Vector2 offset = Random.insideUnitCircle * 1.8f;
