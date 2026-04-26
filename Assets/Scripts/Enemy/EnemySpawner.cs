@@ -52,10 +52,19 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        GameObject selector = Instantiate(button, level_selector.transform);
-        selector.transform.localPosition = new Vector3(0, 130);
-        selector.GetComponent<MenuSelectorController>().spawner = this;
-        selector.GetComponent<MenuSelectorController>().SetLevel("Start");
+        // Generate all the buttons
+        int buttonXOffset = 90;
+        int buttonYOffset = 50;
+        string[] modes = {"Easy", "Medium", "Hard"};
+        for (int i = 0; i < modes.Length; i++) {
+            float xPos = (i%2) == 0 ?
+                -buttonXOffset : buttonXOffset;
+            float yPos = 90-buttonYOffset*(i/2);
+            button = Instantiate(button, level_selector.transform);
+            button.transform.localPosition = new Vector3(xPos, yPos);
+            button.GetComponent<MenuSelectorController>().spawner = this;
+            button.GetComponent<MenuSelectorController>().SetLevel(modes[i]);
+        }
     }
 
     // Update is called once per frame
@@ -91,7 +100,7 @@ public class EnemySpawner : MonoBehaviour
             GameManager.Instance.countdown--;
         }
         GameManager.Instance.state = GameManager.GameState.INWAVE;
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < levels[1].waves; ++i)
         {
             yield return SpawnEnemy();
         }
