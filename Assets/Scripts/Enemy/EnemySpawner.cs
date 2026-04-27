@@ -8,6 +8,7 @@ using System.Collections;
 using System.Linq;
 using System.Runtime.Versioning;
 
+
 public class EnemySpawner : MonoBehaviour
 {
     public Image level_selector;
@@ -55,15 +56,14 @@ public class EnemySpawner : MonoBehaviour
         // Generate all the buttons
         int buttonXOffset = 90;
         int buttonYOffset = 50;
-        string[] modes = {"Easy", "Medium", "Hard"};
-        for (int i = 0; i < modes.Length; i++) {
+        for (int i = 0; i < levels.Count; i++) {
             float xPos = (i%2) == 0 ?
                 -buttonXOffset : buttonXOffset;
             float yPos = 90-buttonYOffset*(i/2);
             button = Instantiate(button, level_selector.transform);
             button.transform.localPosition = new Vector3(xPos, yPos);
             button.GetComponent<MenuSelectorController>().spawner = this;
-            button.GetComponent<MenuSelectorController>().SetLevel(modes[i]);
+            button.GetComponent<MenuSelectorController>().SetLevel(levels[i].name);
         }
     }
 
