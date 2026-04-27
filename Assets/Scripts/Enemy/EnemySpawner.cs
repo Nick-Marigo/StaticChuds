@@ -132,7 +132,7 @@ public class EnemySpawner : MonoBehaviour
 
             // Calculate hp for the enemyType. I made this simple for now, but I dont like passings hp as another parameter because if we ever need to pass speed or damage then we have to keep adding more parameters. I think we should do something like Enemy enemyTemp and add json and any other varaibles that would be calculated and then just pass that through. 
             int hp;
-            if (spawn.hp != null)
+            if (!string.IsNullOrEmpty(spawn.hp))
             {
                 variables["base"] = enemyType.hp;
                 hp = RPNEvaluator.RPNEvaluator.Evaluate(spawn.hp, variables);
@@ -142,18 +142,41 @@ public class EnemySpawner : MonoBehaviour
             }
 
             int spawnCount = RPNEvaluator.RPNEvaluator.Evaluate(spawn.count, variables);
-            for (int i = 0; i < spawnCount; i++)
+
+            int spawned = 0;
+            int sequenceIndex = 0;
+            //Could probably add the check for sequence and delay to the level loader. In the assignment it says if its not specified then sequence should default to 1 and delay should default to 2.
+            if (spawn.sequence == null || spawn.sequence.Length == 0)
             {
-                SpawnEnemy(enemyType, hp);
+                spawn.sequence = new int[] { 1 };
+            }
+            if (spawn.delay <= 0)
+            {
+                spawn.delay = 2;
+            }
+
+            while (spawned < spawnCount)
+            {
+                for (int i = 0; i < spawn.sequence[sequenceIndex] && spawned < spawnCount; i++)
+                {
+                    SpawnEnemy(enemyType, hp);
+                    spawned++;
+                }
+
+                //Debug.Log("Wave: " + currentWave + " | Enemy: " + spawn.enemy + " | Group size: " + spawn.sequence[sequenceIndex] + " | Already Spawned: " + spawned + " / " + spawnCount);
+
+                sequenceIndex = (sequenceIndex + 1) % spawn.sequence.Length;
+
                 yield return new WaitForSeconds(spawn.delay);
             }
+    
         }
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
-    IEnumerator SpawnEnemy(Enemy enemyType, int hp)
+    void SpawnEnemy(Enemy enemyType, int hp)
     {
         SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
         Vector2 offset = Random.insideUnitCircle * 1.8f;
