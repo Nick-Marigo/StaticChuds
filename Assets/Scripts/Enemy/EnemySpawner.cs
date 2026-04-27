@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
     private List<Enemy> enemies;
     private List<Level> levels;
     private Level selectedLevel;
+    private int currentWave;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -83,6 +84,8 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
+        currentWave = 1;
+
         level_selector.gameObject.SetActive(false);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
@@ -91,7 +94,16 @@ public class EnemySpawner : MonoBehaviour
 
     public void NextWave()
     {
-        StartCoroutine(SpawnWave());
+        currentWave++;
+
+        if(currentWave <= selectedLevel.waves)
+        {
+            StartCoroutine(SpawnWave());
+            return;
+        } else
+        {
+            //GameManager.Instance.state = GameManager.GameState.LEVELEND;
+        }
     }
 
 
@@ -107,19 +119,41 @@ public class EnemySpawner : MonoBehaviour
         }
         GameManager.Instance.state = GameManager.GameState.INWAVE;
 
+        Dictionary<string, int> variables = new Dictionary<string, int>();
+        variables["wave"] = currentWave;
         foreach (Spawn spawn in selectedLevel.spawns)
         {
             Enemy enemyType = enemies.Where(enemy => enemy.name == spawn.enemy).FirstOrDefault();
-            for (int i = 0; i < 3; i++)
+            if (enemyType == null)
             {
-                yield return SpawnEnemy(enemyType);
+                Debug.Log("Failed to find enemy type: " + spawn.enemy);
+                continue;
+            }
+
+            // Calculate hp for the enemyType. I made this simple for now, but I dont like passings hp as another parameter because if we ever need to pass speed or damage then we have to keep adding more parameters. I think we should do something like Enemy enemyTemp and add json and any other varaibles that would be calculated and then just pass that through. 
+            int hp;
+            if (spawn.hp != null)
+            {
+                variables["base"] = enemyType.hp;
+                hp = RPNEvaluator.RPNEvaluator.Evaluate(spawn.hp, variables);
+            } else
+            {
+                hp = enemyType.hp;
+            }
+
+            int spawnCount = RPNEvaluator.RPNEvaluator.Evaluate(spawn.count, variables);
+            for (int i = 0; i < spawnCount; i++)
+            {
+                SpawnEnemy(enemyType, hp);
+                yield return new WaitForSeconds(spawn.delay);
             }
         }
+
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
-    IEnumerator SpawnEnemy(Enemy enemyType)
+    IEnumerator SpawnEnemy(Enemy enemyType, int hp)
     {
         SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
         Vector2 offset = Random.insideUnitCircle * 1.8f;
@@ -129,9 +163,8 @@ public class EnemySpawner : MonoBehaviour
 
         new_enemy.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.enemySpriteManager.Get(enemyType.sprite);
         EnemyController en = new_enemy.GetComponent<EnemyController>();
-        en.hp = new Hittable(enemyType.hp, Hittable.Team.MONSTERS, new_enemy);
+        en.hp = new Hittable(hp, Hittable.Team.MONSTERS, new_enemy);
         en.speed = enemyType.speed;
         GameManager.Instance.AddEnemy(new_enemy);
-        yield return new WaitForSeconds(0.5f);
     }
 }
