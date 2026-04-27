@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
 
     private List<Enemy> enemies;
     private List<Level> levels;
+    private Level selectedLevel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -75,7 +76,12 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartLevel(string levelname)
     {
-
+        selectedLevel = levels.Where(level => level.name == levelname).FirstOrDefault();
+        if (selectedLevel == null)
+        {
+            Debug.Log("Failed to find selected level: " + levelname);
+            return;
+        }
 
         level_selector.gameObject.SetActive(false);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting
@@ -100,15 +106,20 @@ public class EnemySpawner : MonoBehaviour
             GameManager.Instance.countdown--;
         }
         GameManager.Instance.state = GameManager.GameState.INWAVE;
-        for (int i = 0; i < levels[1].waves; ++i)
+
+        foreach (Spawn spawn in selectedLevel.spawns)
         {
-            yield return SpawnEnemy();
+            Enemy enemyType = enemies.Where(enemy => enemy.name == spawn.enemy).FirstOrDefault();
+            for (int i = 0; i < 3; i++)
+            {
+                yield return SpawnEnemy(enemyType);
+            }
         }
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
-    IEnumerator SpawnEnemy()
+    IEnumerator SpawnEnemy(Enemy enemyType)
     {
         SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
         Vector2 offset = Random.insideUnitCircle * 1.8f;
@@ -116,10 +127,10 @@ public class EnemySpawner : MonoBehaviour
         Vector3 initial_position = spawn_point.transform.position + new Vector3(offset.x, offset.y, 0);
         GameObject new_enemy = Instantiate(enemy, initial_position, Quaternion.identity);
 
-        new_enemy.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.enemySpriteManager.Get(0);
+        new_enemy.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.enemySpriteManager.Get(enemyType.sprite);
         EnemyController en = new_enemy.GetComponent<EnemyController>();
-        en.hp = new Hittable(50, Hittable.Team.MONSTERS, new_enemy);
-        en.speed = 10;
+        en.hp = new Hittable(enemyType.hp, Hittable.Team.MONSTERS, new_enemy);
+        en.speed = enemyType.speed;
         GameManager.Instance.AddEnemy(new_enemy);
         yield return new WaitForSeconds(0.5f);
     }
