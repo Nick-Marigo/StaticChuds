@@ -2,16 +2,12 @@ using Newtonsoft.Json;
 
 [System.Serializable]
 public class Spawn {
-    [JsonProperty("enemy")]
-    public string enemy;
-    [JsonProperty("count")]
+    public string enemy; 
     public string count;
-    [JsonProperty("hp")]
-    public string hp;
-    [JsonProperty("delay")]
-    public int delay;
-    [JsonProperty("sequence")]
-    public int[] sequence;
-    [JsonProperty("location")]
-    public string location;
+    public string hp = "base";
+    public int delay = 2;
+    public int[] sequence = {1};
+    public string location = "random";
+    public string speed = "base";
+    public string damage = "base";
 }

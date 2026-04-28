@@ -2,16 +2,10 @@ using Newtonsoft.Json;
 
 [System.Serializable]
 public class Enemy {
-    [JsonProperty("name")]
-    public string name;
-    [JsonProperty("sprite")]
-    public int sprite;
-    [JsonProperty("hp")]
-    public int hp;
-    [JsonProperty("speed")]
-    public int speed;
-    [JsonProperty("damage")]
-    public int damage;
-
+    public string name = "default";
+    public int sprite = 0;
+    public int hp = 1;
+    public int speed = 5;
+    public int damage = 5;
 }
 
