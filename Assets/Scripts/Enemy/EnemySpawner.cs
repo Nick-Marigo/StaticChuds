@@ -11,19 +11,17 @@ using System.Runtime.Versioning;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Image level_selector;
-    public GameObject button;
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
 
     private List<Enemy> enemies;
-    private List<Level> levels;
     private Level selectedLevel;
     private int currentWave;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // TODO move this enemyLoader
         TextAsset enemyJson = Resources.Load<TextAsset>("enemies");
         if (enemyJson == null)
         {
@@ -31,15 +29,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        TextAsset levelJson = Resources.Load<TextAsset>("levels");
-        if (levelJson == null)
-        {
-            Debug.Log("Failed to load levels from json");
-            return;
-        }
-
         string enemyJsonText = enemyJson.text;
-        string levelJsonText = levelJson.text;
 
         EnemyLoader enemyLoader = new EnemyLoader();
         int status = enemyLoader.LoadEnemies(enemyJsonText, out enemies);
@@ -48,25 +38,6 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        LevelLoader levelLoader = new LevelLoader();
-        status = levelLoader.LoadLevels(levelJsonText, out levels);
-        if (status == -1) {
-            Debug.Log("Failed to load levels from JSON");
-            return;
-        }
-
-        // Generate all the buttons
-        int buttonXOffset = 90;
-        int buttonYOffset = 50;
-        for (int i = 0; i < levels.Count; i++) {
-            float xPos = (i%2) == 0 ?
-                -buttonXOffset : buttonXOffset;
-            float yPos = 90-buttonYOffset*(i/2);
-            button = Instantiate(button, level_selector.transform);
-            button.transform.localPosition = new Vector3(xPos, yPos);
-            button.GetComponent<MenuSelectorController>().spawner = this;
-            button.GetComponent<MenuSelectorController>().SetLevel(levels[i].name);
-        }
     }
 
     // Update is called once per frame
@@ -75,20 +46,9 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    public void StartLevel(string levelname)
-    {
-        selectedLevel = levels.Where(level => level.name == levelname).FirstOrDefault();
-        if (selectedLevel == null)
-        {
-            Debug.Log("Failed to find selected level: " + levelname);
-            return;
-        }
-
+    public void StartLevel(Level selectedLevel) {
+        this.selectedLevel = selectedLevel;
         currentWave = 1;
-
-        level_selector.gameObject.SetActive(false);
-        // this is not nice: we should not have to be required to tell the player directly that the level is starting
-        GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
         StartCoroutine(SpawnWave());
     }
 

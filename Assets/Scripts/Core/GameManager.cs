@@ -14,15 +14,7 @@ public class GameManager
         GAMEOVER
     }
 
-    public enum Mode
-    {
-        EASY,
-        MEDIUM,
-        HARD
-    }
-
     public GameState state;
-    public Mode mode;
 
     public int countdown;
     private static GameManager theInstance;
