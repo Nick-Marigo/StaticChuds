@@ -14,30 +14,14 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
 
-    private List<Enemy> enemies;
+    private List<Enemy> enemies; 
     private Level selectedLevel;
     private int currentWave;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // TODO move this enemyLoader
-        TextAsset enemyJson = Resources.Load<TextAsset>("enemies");
-        if (enemyJson == null)
-        {
-            Debug.Log("Failed to load enemies from json");
-            return;
-        }
-
-        string enemyJsonText = enemyJson.text;
-
-        EnemyLoader enemyLoader = new EnemyLoader();
-        int status = enemyLoader.LoadEnemies(enemyJsonText, out enemies);
-        if (status == -1) {
-            Debug.Log("Failed to load enemies from JSON");
-            return;
-        }
-
+        enemies = EnemyLoader.GetEnemies();
     }
 
     // Update is called once per frame

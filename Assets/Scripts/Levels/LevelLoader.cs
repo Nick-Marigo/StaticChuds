@@ -18,10 +18,10 @@ public class LevelLoader
         TextAsset levelJson = Resources.Load<TextAsset>("levels");
         if (levelJson == null)
         {
-            Debug.Log("Failed to get json from Resources");
+            Debug.Log("Failed to get levels json from Resources");
             return null;
         }
-        int status = LevelLoader.JsonToText(levelJson.text, out levels);
+        int status = LevelLoader.JsonToList(levelJson.text, out levels);
         if (status == -1) {
             Debug.Log("Failed to load levels from JSON"); 
             return null; 
@@ -29,7 +29,7 @@ public class LevelLoader
         return levels;
     }
 
-    private static int JsonToText(string json, out List<Level> levelData)
+    private static int JsonToList(string json, out List<Level> levelData)
     {
         levelData = JsonConvert.DeserializeObject<List<Level>>(json);
 
