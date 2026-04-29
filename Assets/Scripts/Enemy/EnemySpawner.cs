@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
         this.selectedLevel = selectedLevel;
         currentWave = 1;
         StartCoroutine(SpawnWave());
-        waveStats.StartLevel();
+        //waveStats.StartLevel();
         waveStats.StartWave(currentWave);
     }
 

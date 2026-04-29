@@ -9,23 +9,19 @@ public class WaveStats : MonoBehaviour
     private int totalEnemies;
     private int totalWaveEnemies;
     private int totalDamageDealt;
-    private float levelStartTime;
+    private int totalWaveDamageDealt;
     private float totalTime;
     private float waveStartTime;
     private float waveTime;
 
     public TextMeshProUGUI waveDisplay; // Reference to UI element, assign in inspector
 
-    public void StartLevel()
-    {
-        //levelStartTime = Time.time;
-    }
     public void StartWave(int wave)
     {
         waveDisplay.gameObject.SetActive(false);
         waveNumber = wave;
         totalWaveEnemies = 0;
-        totalDamageDealt = 0;
+        totalWaveDamageDealt = 0;
         waveStartTime = Time.time;
         enemiesKilledByType = new Dictionary<string, int>();
     }
@@ -51,6 +47,7 @@ public class WaveStats : MonoBehaviour
 
     public void UpdateTotalDamageDealt(int damage)
     {
+        totalWaveDamageDealt += damage;
         totalDamageDealt += damage;
     }
 
@@ -66,6 +63,7 @@ public class WaveStats : MonoBehaviour
             displayText += Capitalize(enemy.Key) + "s Killed: " + enemy.Value + "\n";
         }
         displayText += "Total Enemies Killed: " + totalEnemies + "\n";
+        displayText += "Wave Damage Dealt: " + totalWaveDamageDealt + "\n";
         displayText += "Total Damage Dealt: " + totalDamageDealt + "\n";
         displayText += "Wave Time: " + waveTime.ToString("F0") + " seconds\n";
         displayText += "Total Time: " + totalTime.ToString("F0") + " seconds\n";
