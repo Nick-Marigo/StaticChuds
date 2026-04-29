@@ -26,7 +26,7 @@ TODO
 - [ ] Add location spawning logic
 - [ ] Add simultaneous enemytype spawning
 - [ ] Fix the "not nice" section
-- [ ] Wave stats
+- [X] Wave stats
 - [ ] Lose and win conditions
 - [ ] Make a new enemy type
 - [ ] Check TODOS
