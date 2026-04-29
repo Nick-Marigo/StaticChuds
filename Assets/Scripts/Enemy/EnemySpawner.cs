@@ -1,15 +1,33 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour {
 
     [SerializeField]
     GameObject enemy;
-    [SerializeField]
-    SpawnPoint[] SpawnPoints;
+    private SpawnPoint[][] SpawnPoints;
+    private Dictionary<string, Func<GameObject>> spawnSelect;
 
-    public void SpawnEnemy(Enemy enemyType, Spawn spawn, int currentWave)
-        
-    {
+    private const int GREEN = 0;
+    private const int RED = 0;
+    private const int BONE = 0;
+
+    void Start() {
+        spawnSelect = new Dictionary<string, Func<GameObject>> {
+            { "random green", () => { return SpawnPoints[GREEN][Random.Range(0, SpawnPoints[GREEN].Length)]; } },
+            { "random red", () => { return SpawnPoints[RED][Random.Range(0, SpawnPoints[RED].Length)]; } },
+            { "random bone", () => { return SpawnPoints[BONE][Random.Range(0, SpawnPoints[BONE].Length)]; } },
+            { "random", () => { SpawnPoint[] type = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+                                  return type[Random.Range(0, SpawnPoints[type.Length])]; 
+                              } },
+        };
+        SpawnPoints[GREEN] = FindGameObjectsWithTag("GreenSpawn");
+        SpawnPoints[RED] = FindGameObjectsWithTag("RedSpawn");
+        SpawnPoints[BONE] = FindGameObjectsWithTag("BoneSpawn");
+    }
+
+    public void SpawnEnemy(Enemy enemyType, Spawn spawn, int currentWave) {
         SpawnPoint spawn_point = SpawnPoints[0];
         Vector2 offset = Random.insideUnitCircle * 1.8f;
                 
