@@ -63,8 +63,6 @@ public class EnemySpawner : MonoBehaviour
         }
         GameManager.Instance.state = GameManager.GameState.INWAVE;
 
-        Dictionary<string, int> variables = new Dictionary<string, int>();
-        variables["wave"] = currentWave;
         foreach (Spawn spawn in selectedLevel.spawns)
         {
             Enemy enemyType = enemies.Where(enemy => enemy.name == spawn.enemy).FirstOrDefault();
@@ -74,36 +72,16 @@ public class EnemySpawner : MonoBehaviour
                 continue;
             }
 
-            // Calculate hp for the enemyType. I made this simple for now, but I dont like passings hp as another parameter because if we ever need to pass speed or damage then we have to keep adding more parameters. I think we should do something like Enemy enemyTemp and add json and any other varaibles that would be calculated and then just pass that through. 
-            int hp;
-            if (!string.IsNullOrEmpty(spawn.hp))
-            {
-                variables["base"] = enemyType.hp;
-                hp = RPNEvaluator.RPNEvaluator.Evaluate(spawn.hp, variables);
-            } else
-            {
-                hp = enemyType.hp;
-            }
-
-            int spawnCount = RPNEvaluator.RPNEvaluator.Evaluate(spawn.count, variables);
+            int spawnCount = spawn.CalculateSpawnCount(enemyType.hp, currentWave);
 
             int spawned = 0;
             int sequenceIndex = 0;
-            //Could probably add the check for sequence and delay to the level loader. In the assignment it says if its not specified then sequence should default to 1 and delay should default to 2.
-            if (spawn.sequence == null || spawn.sequence.Length == 0)
-            {
-                spawn.sequence = new int[] { 1 };
-            }
-            if (spawn.delay <= 0)
-            {
-                spawn.delay = 2;
-            }
 
             while (spawned < spawnCount)
             {
                 for (int i = 0; i < spawn.sequence[sequenceIndex] && spawned < spawnCount; i++)
                 {
-                    SpawnEnemy(enemyType, hp);
+                    SpawnEnemy(enemyType, spawn);
                     spawned++;
                 }
 
@@ -120,9 +98,9 @@ public class EnemySpawner : MonoBehaviour
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
-    void SpawnEnemy(Enemy enemyType, int hp)
+    void SpawnEnemy(Enemy enemyType, Spawn spawn)
     {
-        SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+        SpawnPoint spawn_point = SpawnPoints[0];
         Vector2 offset = Random.insideUnitCircle * 1.8f;
                 
         Vector3 initial_position = spawn_point.transform.position + new Vector3(offset.x, offset.y, 0);
@@ -130,8 +108,9 @@ public class EnemySpawner : MonoBehaviour
 
         new_enemy.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.enemySpriteManager.Get(enemyType.sprite);
         EnemyController en = new_enemy.GetComponent<EnemyController>();
-        en.hp = new Hittable(hp, Hittable.Team.MONSTERS, new_enemy);
+        en.hp = new Hittable(spawn.CalculateHP(enemyType.hp, currentWave), Hittable.Team.MONSTERS, new_enemy);
         en.speed = enemyType.speed;
         GameManager.Instance.AddEnemy(new_enemy);
+        Debug.Log("Enemy hp:" + en.hp.hp); 
     }
 }

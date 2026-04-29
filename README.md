@@ -21,3 +21,12 @@ https://opengameart.org/content/tiny-creatures
 
 Arcane bolt projectile:
 https://opengameart.org/content/arcane-magic-effect
+
+TODO
+- [ ] Add location spawning logic
+- [ ] Add simultaneous enemytype spawning
+- [ ] Fix the "not nice" section
+- [ ] Wave stats
+- [ ] Lose and win conditions
+- [ ] Make a new enemy type
+- [ ] Check TODOS
