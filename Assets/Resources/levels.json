@@ -60,10 +60,12 @@
     "spawns": [
         {
                 "enemy": "zombie",
-                "count": "5 wave 3 * +",
+                "count": "2",
                 "hp": "15 wave *",
                 "delay": "5",
-                "sequence": [1,2,3],
+                "damage": "base wave 5 * +",
+                "speed": "base wave +",
+                "sequence": [2,2,3],
                 "location": "random"
             }
     ]

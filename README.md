@@ -26,7 +26,9 @@ TODO
 - [ ] Add location spawning logic
 - [ ] Add simultaneous enemytype spawning
 - [ ] Fix the "not nice" section
+- [ ] Move enemySpawner off the camera
 - [ ] Wave stats
 - [ ] Lose and win conditions
 - [ ] Make a new enemy type
+- [ ] Class diagram
 - [ ] Check TODOS

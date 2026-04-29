@@ -21,4 +21,13 @@ public class Spawn {
                 new Dictionary <string, int> { {"base", enemyHP}, {"wave", wave}} );
     }
 
+    public int CalculateSpeed(int enemySpeed, int wave) {
+        return RPNEvaluator.RPNEvaluator.Evaluate(speed, 
+                new Dictionary <string, int> { {"base", enemySpeed}, {"wave", wave}} );
+    }
+
+    public int CalculateDamage(int enemyDmg, int wave) {
+        return RPNEvaluator.RPNEvaluator.Evaluate(damage, 
+                new Dictionary <string, int> { {"base", enemyDmg}, {"wave", wave}} );
+    }
 }
