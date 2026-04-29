@@ -50,8 +50,9 @@ public class WaveStats : MonoBehaviour
         waveDisplay.text = displayText;
     }
 
-    void update()
+    void Update()
     {
+        //Debug.Log(waveDisplay.text);
         if(GameManager.Instance.state == GameManager.GameState.WAVEEND)
         {
             DisplayStats();
