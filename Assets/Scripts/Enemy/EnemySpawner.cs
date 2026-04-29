@@ -1,8 +1,14 @@
 using UnityEngine;
 
-public class EnemySpawner {
+public class EnemySpawner : MonoBehaviour {
 
-    public static void SpawnEnemy(Enemy enemyType, Spawn spawn, SpawnPoint[] SpawnPoints, GameObject enemy, int currentWave)
+    [SerializeField]
+    GameObject enemy;
+    [SerializeField]
+    SpawnPoint[] SpawnPoints;
+
+    public void SpawnEnemy(Enemy enemyType, Spawn spawn, int currentWave)
+        
     {
         SpawnPoint spawn_point = SpawnPoints[0];
         Vector2 offset = Random.insideUnitCircle * 1.8f;

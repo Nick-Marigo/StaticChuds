@@ -6,11 +6,9 @@ using System.Linq;
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField]
-    GameObject enemy;
-    [SerializeField]
-    SpawnPoint[] SpawnPoints;
-    [SerializeField]
     WaveStats waveStats;
+    [SerializeField]
+    EnemySpawner enemySpawner;
 
     private List<Enemy> enemies; 
     private Level selectedLevel;
@@ -47,6 +45,7 @@ public class WaveSpawner : MonoBehaviour
             return;
         } else
         {
+            // TODO ask for explanation
             //GameManager.Instance.state = GameManager.GameState.LEVELEND;
         }
     }
@@ -82,7 +81,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 for (int i = 0; i < spawn.sequence[sequenceIndex] && spawned < spawnCount; i++)
                 {
-                    EnemySpawner.SpawnEnemy(enemyType, spawn, SpawnPoints, enemy, currentWave);
+                    enemySpawner.SpawnEnemy(enemyType, spawn, currentWave);
                     spawned++;
                 }
 
