@@ -1,34 +1,39 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour {
 
     [SerializeField]
     GameObject enemy;
-    private SpawnPoint[][] SpawnPoints;
-    private Dictionary<string, Func<GameObject>> spawnSelect;
+    private GameObject[][] SpawnPoints;
+    private Dictionary<string, System.Func<GameObject>> spawnSelect;
 
     private const int GREEN = 0;
-    private const int RED = 0;
-    private const int BONE = 0;
+    private const int RED = 1;
+    private const int BONE = 2;
 
     void Start() {
-        spawnSelect = new Dictionary<string, Func<GameObject>> {
+        // Spawnpoints is a 2d array which collects all the spawnpoints of same types into their own subarrays.
+        // When you add a new spawnpoint into the scene, make sure you tag it appropiately
+        SpawnPoints = new GameObject[3][];
+        SpawnPoints[GREEN] = GameObject.FindGameObjectsWithTag("GreenSpawn");
+        SpawnPoints[RED] = GameObject.FindGameObjectsWithTag("RedSpawn");
+        SpawnPoints[BONE] = GameObject.FindGameObjectsWithTag("BoneSpawn");
+
+
+        // The spawn location property is used to index into the spawnSelect dictionary, which returns a spawnPoint game object
+        spawnSelect = new Dictionary<string, System.Func<GameObject>> {
             { "random green", () => { return SpawnPoints[GREEN][Random.Range(0, SpawnPoints[GREEN].Length)]; } },
             { "random red", () => { return SpawnPoints[RED][Random.Range(0, SpawnPoints[RED].Length)]; } },
             { "random bone", () => { return SpawnPoints[BONE][Random.Range(0, SpawnPoints[BONE].Length)]; } },
-            { "random", () => { SpawnPoint[] type = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
-                                  return type[Random.Range(0, SpawnPoints[type.Length])]; 
+            { "random", () => { GameObject[] type = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+                                  return type[Random.Range(0, type.Length)]; 
                               } },
         };
-        SpawnPoints[GREEN] = FindGameObjectsWithTag("GreenSpawn");
-        SpawnPoints[RED] = FindGameObjectsWithTag("RedSpawn");
-        SpawnPoints[BONE] = FindGameObjectsWithTag("BoneSpawn");
     }
 
     public void SpawnEnemy(Enemy enemyType, Spawn spawn, int currentWave) {
-        SpawnPoint spawn_point = SpawnPoints[0];
+        GameObject spawn_point = spawnSelect[spawn.location]();
         Vector2 offset = Random.insideUnitCircle * 1.8f;
                 
         Vector3 initial_position = spawn_point.transform.position + new Vector3(offset.x, offset.y, 0);
