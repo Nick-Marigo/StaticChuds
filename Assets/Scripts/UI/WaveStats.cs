@@ -1,62 +1,80 @@
 using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
 
 public class WaveStats : MonoBehaviour
 {
     private int waveNumber;
-    //private List<int> enemiesKilled;
+    private Dictionary<string, int> enemiesKilledByType;
     private int totalEnemies;
+    private int totalWaveEnemies;
     private int totalDamageDealt;
+    private float levelStartTime;
     private float totalTime;
+    private float waveStartTime;
     private float waveTime;
 
     public TextMeshProUGUI waveDisplay; // Reference to UI element, assign in inspector
 
-    public void startLevel()
+    public void StartLevel()
     {
-        totalTime = Time.time;
+        //levelStartTime = Time.time;
     }
-    public void startWave(int currentWave)
+    public void StartWave(int wave)
     {
-        waveNumber = currentWave;
-        totalEnemies = 0;
+        waveDisplay.gameObject.SetActive(false);
+        waveNumber = wave;
+        totalWaveEnemies = 0;
         totalDamageDealt = 0;
-        waveTime = Time.time;
+        waveStartTime = Time.time;
+        enemiesKilledByType = new Dictionary<string, int>();
     }
 
-    public void endWave()
+    public void EndWave()
     {
-        waveTime = Time.time - waveTime;
-        totalTime = Time.time - totalTime;
+        waveTime = Time.time - waveStartTime;
+        totalTime += waveTime;
     }
 
-    public void updateTotalEnemies()
+    public void UpdateTotalEnemies(string enemyName)
     {
+        totalWaveEnemies++;
         totalEnemies++;
+
+        if (!enemiesKilledByType.ContainsKey(enemyName))
+        {
+            enemiesKilledByType[enemyName] = 0;
+        }
+
+        enemiesKilledByType[enemyName]++;
     }
 
-    public void updateTotalDamageDealt(int damage)
+    public void UpdateTotalDamageDealt(int damage)
     {
         totalDamageDealt += damage;
     }
 
     public void DisplayStats()
     {
+        var ts = System.TimeSpan.FromSeconds(waveTime);
+        
+        waveDisplay.gameObject.SetActive(true);
         string displayText = "Wave " + waveNumber + " Stats:\n";
-        displayText += "Total Enemies: " + totalEnemies + "\n";
+        displayText += "Wave Enemies Killed: " + totalWaveEnemies + "\n";
+        foreach (var enemy in enemiesKilledByType)
+        {
+            displayText += Capitalize(enemy.Key) + "s Killed: " + enemy.Value + "\n";
+        }
+        displayText += "Total Enemies Killed: " + totalEnemies + "\n";
         displayText += "Total Damage Dealt: " + totalDamageDealt + "\n";
-        displayText += "Wave Time: " + waveTime + " seconds\n";
-        displayText += "Total Time: " + totalTime + " seconds\n";
+        displayText += "Wave Time: " + waveTime.ToString("F0") + " seconds\n";
+        displayText += "Total Time: " + totalTime.ToString("F0") + " seconds\n";
         waveDisplay.text = displayText;
     }
 
-    void Update()
+    private string Capitalize(string str)
     {
-        //Debug.Log(waveDisplay.text);
-        if(GameManager.Instance.state == GameManager.GameState.WAVEEND)
-        {
-            DisplayStats();
-        }
+        return char.ToUpper(str[0]) + str.Substring(1);
     }
 
 }
