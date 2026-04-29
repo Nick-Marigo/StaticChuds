@@ -1167,6 +1167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 302007992}
   - component: {fileID: 302007991}
+  - component: {fileID: 302007993}
   m_Layer: 0
   m_Name: WaveSpawner
   m_TagString: Untagged
@@ -1186,10 +1187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2b5e7d05522a238a3de05e1dbd376e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveSpawner
-  enemy: {fileID: 1832418719708313566, guid: bebfa21247182184d92ab200b93e6cf0, type: 3}
-  SpawnPoints:
-  - {fileID: 956873992}
   waveStats: {fileID: 338341328}
+  enemySpawner: {fileID: 302007993}
 --- !u!4 &302007992
 Transform:
   m_ObjectHideFlags: 0
@@ -1205,6 +1204,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &302007993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302007990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efde5d11a0c0a9e43921697e98a09200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  enemy: {fileID: 1832418719708313566, guid: bebfa21247182184d92ab200b93e6cf0, type: 3}
+  SpawnPoints:
+  - {fileID: 956873992}
+  - {fileID: 1677496371}
+  - {fileID: 1428830197}
+  - {fileID: 1577913788}
 --- !u!1 &334187433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,7 +1355,7 @@ GameObject:
   - component: {fileID: 372856468}
   m_Layer: 0
   m_Name: BoneSpawnGreatHall
-  m_TagString: Untagged
+  m_TagString: BoneSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2333,7 +2350,7 @@ GameObject:
   - component: {fileID: 587991943}
   m_Layer: 0
   m_Name: RedSpawnSouthWing
-  m_TagString: Untagged
+  m_TagString: RedSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3320,7 +3337,7 @@ GameObject:
   - component: {fileID: 956873992}
   m_Layer: 0
   m_Name: GreenSpawnStudy
-  m_TagString: Untagged
+  m_TagString: GreenSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4385,7 +4402,7 @@ GameObject:
   - component: {fileID: 1428830197}
   m_Layer: 0
   m_Name: GreenSpawnDiningHall
-  m_TagString: Untagged
+  m_TagString: GreenSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4913,7 +4930,7 @@ GameObject:
   - component: {fileID: 1577913788}
   m_Layer: 0
   m_Name: RedSpawnKitchen
-  m_TagString: Untagged
+  m_TagString: RedSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5108,7 +5125,7 @@ GameObject:
   - component: {fileID: 1677496371}
   m_Layer: 0
   m_Name: GreenSpawnFoyer
-  m_TagString: Untagged
+  m_TagString: GreenSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56264,7 +56281,7 @@ GameObject:
   - component: {fileID: 2073311049}
   m_Layer: 0
   m_Name: RedSpawnLibrary
-  m_TagString: Untagged
+  m_TagString: RedSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

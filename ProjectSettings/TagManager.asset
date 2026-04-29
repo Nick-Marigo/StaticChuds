@@ -6,6 +6,9 @@ TagManager:
   tags:
   - unit
   - projectile
+  - GreenSpawn
+  - RedSpawn
+  - BoneSpawn
   layers:
   - Default
   - TransparentFX
