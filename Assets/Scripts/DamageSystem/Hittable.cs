@@ -14,6 +14,11 @@ public class Hittable
 
     public void Damage(Damage damage)
     {
+        if (team == Team.MONSTERS && GameManager.Instance.waveStats != null)
+        {
+            GameManager.Instance.waveStats.UpdateTotalDamageDealt(Math.Min(damage.amount, hp));
+        }
+
         EventBus.Instance.DoDamage(owner.transform.position, damage, this);
         hp -= damage.amount;
         if (hp <= 0)

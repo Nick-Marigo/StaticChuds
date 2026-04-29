@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     public Hittable hp;
     public HealthBar healthui;
     public bool dead;
+    public string enemyName;
 
 
     public float last_attack;
@@ -49,6 +50,7 @@ public class EnemyController : MonoBehaviour
         if (!dead)
         {
             dead = true;
+            GameManager.Instance.waveStats.UpdateTotalEnemies(enemyName);
             GameManager.Instance.RemoveEnemy(gameObject);
             Destroy(gameObject);
         }

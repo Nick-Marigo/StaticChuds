@@ -13,6 +13,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
+    public WaveStats waveStats;
 
     private List<Enemy> enemies; 
     private Level selectedLevel;
@@ -22,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         enemies = EnemyLoader.GetEnemies();
+        GameManager.Instance.waveStats = waveStats;
     }
 
     // Update is called once per frame
@@ -34,11 +36,14 @@ public class EnemySpawner : MonoBehaviour
         this.selectedLevel = selectedLevel;
         currentWave = 1;
         StartCoroutine(SpawnWave());
+        //waveStats.StartLevel();
+        waveStats.StartWave(currentWave);
     }
 
     public void NextWave()
     {
         currentWave++;
+        waveStats.StartWave(currentWave);
 
         if(currentWave <= selectedLevel.waves)
         {
@@ -95,6 +100,8 @@ public class EnemySpawner : MonoBehaviour
         }
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
+        waveStats.EndWave();
+        waveStats.DisplayStats();
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
