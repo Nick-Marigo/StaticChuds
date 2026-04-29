@@ -970,8 +970,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 519420033}
-        m_TargetAssemblyTypeName: EnemySpawner, Assembly-CSharp
+      - m_Target: {fileID: 302007991}
+        m_TargetAssemblyTypeName: WaveSpawner, Assembly-CSharp
         m_MethodName: NextWave
         m_Mode: 1
         m_Arguments:
@@ -1157,6 +1157,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293492105}
   m_CullTransparentMesh: 1
+--- !u!1 &302007990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 302007992}
+  - component: {fileID: 302007991}
+  m_Layer: 0
+  m_Name: WaveSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &302007991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302007990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2b5e7d05522a238a3de05e1dbd376e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaveSpawner
+  enemy: {fileID: 1832418719708313566, guid: bebfa21247182184d92ab200b93e6cf0, type: 3}
+  SpawnPoints:
+  - {fileID: 956873992}
+  waveStats: {fileID: 338341328}
+--- !u!4 &302007992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302007990}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &334187433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,7 +1863,6 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
-  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1941,28 +1988,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1718273953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efde5d11a0c0a9e43921697e98a09200, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 1832418719708313566, guid: bebfa21247182184d92ab200b93e6cf0, type: 3}
-  SpawnPoints:
-  - {fileID: 956873992}
-  - {fileID: 1677496371}
-  - {fileID: 1428830197}
-  - {fileID: 372856468}
-  - {fileID: 2073311049}
-  - {fileID: 1577913788}
-  - {fileID: 587991943}
-  waveStats: {fileID: 338341328}
 --- !u!1 &532755679
 GameObject:
   m_ObjectHideFlags: 0
@@ -56585,3 +56610,4 @@ SceneRoots:
   - {fileID: 220180078}
   - {fileID: 947241246}
   - {fileID: 856041117}
+  - {fileID: 302007992}

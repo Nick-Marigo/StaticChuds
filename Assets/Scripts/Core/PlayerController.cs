@@ -1,9 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.IO;
-using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -49,7 +45,8 @@ public class PlayerController : MonoBehaviour
 
     void OnAttack(InputValue value)
     {
-        if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
+        GameManager.GameState gameState = GameManager.Instance.state;
+        if (gameState == GameManager.GameState.PREGAME || gameState == GameManager.GameState.GAMEOVER || gameState == GameManager.GameState.WAVEEND) return;
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;

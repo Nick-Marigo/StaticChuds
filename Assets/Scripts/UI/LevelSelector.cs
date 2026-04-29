@@ -8,14 +8,14 @@ public class LevelSelector : MonoBehaviour {
     private List<Level> levels;
     private GameObject levelSelector;
     //TODO determine if spawner needs to be dynamic
-    private EnemySpawner spawner;
+    private WaveSpawner spawner;
 
     [SerializeField]
     GameObject button;
     
     void Start() {
         levels = LevelLoader.GetLevels();
-        spawner = FindFirstObjectByType<EnemySpawner>();
+        spawner = FindFirstObjectByType<WaveSpawner>();
         levelSelector = this.gameObject;
         GenerateButtons();
     }

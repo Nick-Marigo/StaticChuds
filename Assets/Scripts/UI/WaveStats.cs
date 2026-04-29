@@ -14,7 +14,8 @@ public class WaveStats : MonoBehaviour
     private float waveStartTime;
     private float waveTime;
 
-    public TextMeshProUGUI waveDisplay; // Reference to UI element, assign in inspector
+    [SerializeField]
+    TextMeshProUGUI waveDisplay; // Reference to UI element, assign in inspector
 
     public void StartWave(int wave)
     {
