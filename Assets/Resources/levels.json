@@ -60,14 +60,24 @@
     "spawns": [
         {
                 "enemy": "zombie",
-                "count": "100",
+                "count": "6 wave *",
                 "hp": "15 wave *",
-                "delay": "5",
+                "delay": "1",
                 "damage": "base wave 5 * +",
-                "speed": "base wave +",
-                "sequence": [100,2,3],
-                "location": "random"
-            }
+                "speed": "0",
+                "sequence": [1, 2],
+                "location": "random bone"
+        },
+        {
+            "enemy": "warlock",
+            "count": "6 wave *",
+            "hp": "15 wave *",
+            "delay": "1",
+            "damage": "base wave 5 * +",
+            "speed": "0",
+            "sequence": [2, 1],
+            "location": "random bone"
+        }
     ]
    },
    {

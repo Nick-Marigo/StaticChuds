@@ -16,9 +16,9 @@ public class Spawn {
                 new Dictionary <string, int> { {"base", enemyHP}, {"wave", wave}} );
     }
 
-    public int CalculateSpawnCount(int enemyHP, int wave) {
+    public int CalculateSpawnCount(int wave) {
         return RPNEvaluator.RPNEvaluator.Evaluate(count, 
-                new Dictionary <string, int> { {"base", enemyHP}, {"wave", wave}} );
+                new Dictionary <string, int> {{"wave", wave}} );
     }
 
     public int CalculateSpeed(int enemySpeed, int wave) {

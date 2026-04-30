@@ -9,22 +9,19 @@ public class WaveSpawner : MonoBehaviour
     WaveStats waveStats;
     [SerializeField]
     EnemySpawner enemySpawner;
+    [SerializeField]
+    int countdown = 3;
 
     private List<Enemy> enemies; 
     private Level selectedLevel;
     private int currentWave;
+    private int totalRemainingSpawns = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         enemies = EnemyLoader.GetEnemies();
         GameManager.Instance.waveStats = waveStats;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void StartLevel(Level selectedLevel) {
@@ -39,7 +36,7 @@ public class WaveSpawner : MonoBehaviour
         currentWave++;
         waveStats.StartWave(currentWave);
 
-        if(currentWave <= selectedLevel.waves)
+        if (currentWave <= selectedLevel.waves)
         {
             StartCoroutine(SpawnWave());
             return;
@@ -50,49 +47,34 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-
     IEnumerator SpawnWave()
     {
-        GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
-        GameManager.Instance.countdown = 3;
         // Start countdown
-        for (int i = 3; i > 0; i--)
+        GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
+        GameManager.Instance.countdown = countdown;
+        for (int i = countdown; i > 0; i--)
         {
             yield return new WaitForSeconds(1);
             GameManager.Instance.countdown--;
         }
         GameManager.Instance.state = GameManager.GameState.INWAVE;
 
-        foreach (Spawn spawn in selectedLevel.spawns)
-        {
-            Enemy enemyType = enemies.Where(enemy => enemy.name == spawn.enemy).FirstOrDefault();
-            if (enemyType == null)
-            {
-                Debug.Log("Failed to find enemy type: " + spawn.enemy);
-                continue;
-            }
+        Spawn[] spawns = selectedLevel.spawns;
+        int numEnemyTypes = spawns.Length;
 
-            int spawnCount = spawn.CalculateSpawnCount(enemyType.hp, currentWave);
-
-            int spawned = 0;
-            int sequenceIndex = 0;
-
-            while (spawned < spawnCount)
-            {
-                for (int i = 0; i < spawn.sequence[sequenceIndex] && spawned < spawnCount; i++)
-                {
-                    enemySpawner.SpawnEnemy(enemyType, spawn, currentWave);
-                    spawned++;
-                }
-
-                //Debug.Log("Wave: " + currentWave + " | Enemy: " + spawn.enemy + " | Group size: " + spawn.sequence[sequenceIndex] + " | Already Spawned: " + spawned + " / " + spawnCount);
-
-                sequenceIndex = (sequenceIndex + 1) % spawn.sequence.Length;
-
-                yield return new WaitForSeconds(spawn.delay);
-            }
-    
+        /* For each type of enemy, start a coroutine that spawns that enemy at it's
+           unique tempo */
+        for (int i = 0; i < numEnemyTypes; i++) {
+            Spawn spawn = spawns[i];
+            int numOfType = spawn.CalculateSpawnCount(currentWave); 
+            totalRemainingSpawns += numOfType;
+            StartCoroutine(SpawnSequences(spawn, numOfType));
         }
+
+        // Do not check the win wave condition until all the enemies have been spawned
+        yield return new WaitWhile(() => totalRemainingSpawns > 0);
+
+        //Debug.Log("Wave: " + currentWave + " | Enemy: " + spawn.enemy + " | Group size: " + spawn.sequence[sequenceIndex] + " | Already Spawned: " + spawned + " / " + spawnCount);
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         waveStats.EndWave();
@@ -100,4 +82,29 @@ public class WaveSpawner : MonoBehaviour
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
+    /* Called for each enemy, this does the heavy lifting of spawning each enemy on
+     * tempo at the correct amounts per sequence step. It also keeps track of how
+     * many are left to spawn using remainingSpawns */
+    IEnumerator SpawnSequences(Spawn spawn, int remainingSpawns) {
+        Enemy enemyType = enemies.Where(enemy => enemy.name == spawn.enemy).FirstOrDefault();
+        if (enemyType == null)
+            Debug.Log("Failed to find enemy type: " + spawn.enemy);
+        int currentSequence = 0;
+
+        // Keep stepping through sequences until all enemies of this type are spawned
+        while (remainingSpawns > 0) {
+            // Spawn every enemy of this sequence
+            int sequenceIndex = currentSequence++ % spawn.sequence.Length;
+            int desiredSpawn = spawn.sequence[sequenceIndex];
+            int realSpawn = desiredSpawn < remainingSpawns ? 
+                desiredSpawn : remainingSpawns;
+            for (int i = 0; i < realSpawn; i++) {
+                enemySpawner.SpawnEnemy(enemyType, spawn, currentWave);
+                remainingSpawns--;
+                totalRemainingSpawns--;
+            }
+            // Wait for next sequence
+            yield return new WaitForSeconds(spawn.delay);
+        }
+    }
 }
