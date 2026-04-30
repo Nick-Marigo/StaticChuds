@@ -21,9 +21,10 @@ public class PlayerController : MonoBehaviour
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
+        InitPlayer();
     }
 
-    public void StartLevel()
+    public void InitPlayer()
     {
         // TODO move this logic somewhere else
         spellcaster = new SpellCaster(125, 8, Hittable.Team.PLAYER);
@@ -37,12 +38,6 @@ public class PlayerController : MonoBehaviour
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
         spellui.SetSpell(spellcaster.spell);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void OnAttack(InputValue value)

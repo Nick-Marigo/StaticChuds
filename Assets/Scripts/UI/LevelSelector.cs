@@ -12,6 +12,8 @@ public class LevelSelector : MonoBehaviour {
 
     [SerializeField]
     GameObject button;
+    [SerializeField]
+    GameObject wave;
     
     void Start() {
         levels = LevelLoader.GetLevels();
@@ -31,8 +33,8 @@ public class LevelSelector : MonoBehaviour {
 
         // Hide the level selector
         levelSelector.SetActive(false);
-        // TODO this is not nice: we should not have to be required to tell the player directly that the level is starting
-        GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
+        // Show wave text
+        wave.SetActive(true);
         spawner.StartLevel(selectedLevel);
     }
 
