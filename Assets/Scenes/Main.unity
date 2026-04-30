@@ -1189,6 +1189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveSpawner
   waveStats: {fileID: 338341328}
   enemySpawner: {fileID: 302007993}
+  countdown: 3
 --- !u!4 &302007992
 Transform:
   m_ObjectHideFlags: 0
@@ -4094,6 +4095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSelectorManager
   button: {fileID: 6791571272867747119, guid: 47865e4d0d1669541a3aa2992225a687, type: 3}
+  wave: {fileID: 2007398911}
 --- !u!1 &1202924358
 GameObject:
   m_ObjectHideFlags: 0
@@ -56421,7 +56423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2007398912
 RectTransform:
   m_ObjectHideFlags: 0
