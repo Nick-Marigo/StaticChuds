@@ -71,6 +71,11 @@ public class WaveStats : MonoBehaviour
         waveDisplay.text = displayText;
     }
 
+    public void HideStats()
+    {
+        waveDisplay.gameObject.SetActive(false);
+    }
+
     private string Capitalize(string str)
     {
         return char.ToUpper(str[0]) + str.Substring(1);

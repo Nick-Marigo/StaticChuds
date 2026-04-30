@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     public Unit unit;
 
+    public bool isDead = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -62,6 +64,8 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Debug.Log("You Lost");
+        isDead = true;
+        GameManager.Instance.state = GameManager.GameState.GAMEOVER;
     }
 
 }

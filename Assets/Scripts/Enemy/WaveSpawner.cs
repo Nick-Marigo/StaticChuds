@@ -43,10 +43,6 @@ public class WaveSpawner : MonoBehaviour
         {
             StartCoroutine(SpawnWave());
             return;
-        } else
-        {
-            // TODO ask for explanation
-            //GameManager.Instance.state = GameManager.GameState.LEVELEND;
         }
     }
 
@@ -95,9 +91,15 @@ public class WaveSpawner : MonoBehaviour
         }
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
+        if(currentWave == selectedLevel.waves)
+        {
+            GameManager.Instance.state = GameManager.GameState.GAMEOVER;
+        }
         waveStats.EndWave();
         waveStats.DisplayStats();
-        GameManager.Instance.state = GameManager.GameState.WAVEEND;
+        if(GameManager.Instance.state == GameManager.GameState.INWAVE) {
+            GameManager.Instance.state = GameManager.GameState.WAVEEND;
+        }
     }
 
 }
