@@ -19,6 +19,12 @@
        "hp": 30,
        "speed": 7,
        "damage": 10
+   },
+   {
+        "name": "frank",
+        "sprite": 15,
+        "hp": 100,
+        "speed": 2,
+        "damage": 20
    }
- 
 ]

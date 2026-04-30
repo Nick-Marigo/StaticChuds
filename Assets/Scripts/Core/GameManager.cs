@@ -58,4 +58,13 @@ public class GameManager
     {
         enemies = new List<GameObject>();
     }
+
+    public void ClearEnemies()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            GameObject.Destroy(enemy);
+        }
+        enemies.Clear();
+    }
 }
