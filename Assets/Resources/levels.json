@@ -23,6 +23,12 @@
                 "count": "wave 5 / 1 wave 5 % - *",
                 "hp": "100 25 wave * +",
                 "location": "random bone"
+            },
+            {
+                "enemy": "frank",
+                "count": "wave 10 /",
+                "hp": "base wave *",
+                "location": "random"
             }
         ]
    },
@@ -51,6 +57,12 @@
                 "hp": "75 50 wave * +",
                 "damage": "base 10 +",
                 "location": "random bone"
+            },
+            {
+                "enemy": "frank",
+                "count": "1 wave + 8 /",
+                "hp": "base wave *",
+                "location": "random"
             }
         ]
    },
@@ -58,17 +70,35 @@
     "name": "Hard",
     "waves": 20,
     "spawns": [
-        {
+            {
                 "enemy": "zombie",
-                "count": "100",
-                "hp": "15 wave *",
+                "count": "5 wave 3 * +",
+                "hp": "30 wave *",
                 "delay": "5",
-                "damage": "base wave 5 * +",
-                "speed": "base wave +",
-                "sequence": [100,2,3],
+                "sequence": [3,2,3],
+                "location": "random"
+            },
+            {
+                "enemy": "skeleton",
+                "count": "3 wave 2 / +",
+                "hp": "35 wave *",
+                "sequence": [2, 2],
+                "location": "random red"
+            },
+            {
+                "enemy": "warlock",
+                "count": "wave 5 / 1 wave 5 % - *",
+                "hp": "75 50 wave * +",
+                "damage": "base 10 +",
+                "location": "random bone"
+            },
+            {
+                "enemy": "frank",
+                "count": "wave 5 / wave 5 % 1 - *",
+                "hp": "base wave *",
                 "location": "random"
             }
-    ]
+        ]   
    },
    {
        "name": "Endless",
@@ -94,6 +124,13 @@
                 "hp": "75 15 wave * +",
                 "damage": "base 5 -",
                 "location": "random bone"
+            },
+            {
+                "enemy": "frank",
+                "count": "wave 10 / wave 10 % 1 - *",
+                "sequence": [5],
+                "hp": "base wave *",
+                "location": "random"
             }
         ]
    }
