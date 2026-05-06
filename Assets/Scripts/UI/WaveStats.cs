@@ -19,7 +19,7 @@ public class WaveStats : MonoBehaviour
 
     public void StartWave(int wave)
     {
-        waveDisplay.gameObject.SetActive(false);
+        //waveDisplay.gameObject.SetActive(false);
         waveNumber = wave;
         totalWaveEnemies = 0;
         totalWaveDamageDealt = 0;
@@ -56,7 +56,7 @@ public class WaveStats : MonoBehaviour
     {
         var ts = System.TimeSpan.FromSeconds(waveTime);
         
-        waveDisplay.gameObject.SetActive(true);
+        //waveDisplay.gameObject.SetActive(true);
         string displayText = "Wave " + waveNumber + " Stats:\n";
         displayText += "Wave Enemies Killed: " + totalWaveEnemies + "\n";
         foreach (var enemy in enemiesKilledByType)
@@ -73,7 +73,7 @@ public class WaveStats : MonoBehaviour
 
     public void HideStats()
     {
-        waveDisplay.gameObject.SetActive(false);
+        //waveDisplay.gameObject.SetActive(false);
     }
 
     private string Capitalize(string str)
