@@ -30,10 +30,10 @@ public class UIManager : MonoBehaviour
 
     void OnDestory()
     {
-        /*if (GameManager.Instance != null)
+        if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnChangeState -= UpdateUIState;
-        }*/
+            GameManager.Instance.OnChangedState -= UpdateUIState;
+        }
     }
 
     public void UpdateUIState(GameManager.GameState newState)
@@ -50,19 +50,30 @@ public class UIManager : MonoBehaviour
                 background.SetActive(true);
                 difficultySelector.SetActive(true);
                 break;
+
             case GameManager.GameState.COUNTDOWN:
                 background.SetActive(false);
                 difficultySelector.SetActive(false);
                 waveStatsDisplay.SetActive(false);
                 break;
+
             case GameManager.GameState.INWAVE:
                 break;
+
             case GameManager.GameState.WAVEEND:
+                background.SetActive(true);
+                rewardScreen.SetActive(true);
+                universalButton.SetActive(true);
+                buttonText.text = "Wave Stats";
+                break;
+
+            case GameManager.GameState.WAVESTATS:
                 background.SetActive(true);
                 waveStatsDisplay.SetActive(true);
                 universalButton.SetActive(true);
                 buttonText.text = "Next Wave";
                 break;
+
             case GameManager.GameState.GAMEOVER:
                 background.SetActive(true);
                 waveStatsDisplay.SetActive(true);
@@ -75,7 +86,11 @@ public class UIManager : MonoBehaviour
 
     public void OnUniversalButtonClick()
     {
-        if(GameManager.GameState.WAVEEND == GameManager.Instance.state)
+        if (GameManager.GameState.WAVEEND == GameManager.Instance.state)
+        {
+            GameManager.Instance.state = GameManager.GameState.WAVESTATS;
+        }
+        else if (GameManager.GameState.WAVESTATS == GameManager.Instance.state)
         {
             waveSpawner.NextWave();
         }

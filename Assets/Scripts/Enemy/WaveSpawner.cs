@@ -25,10 +25,15 @@ public class WaveSpawner : MonoBehaviour
     }
 
     public void StartLevel(Level selectedLevel) {
+        Debug.Log("1");
         this.selectedLevel = selectedLevel;
+        Debug.Log("2");
         currentWave = 1;
+        Debug.Log("3");
         StartCoroutine(SpawnWave());
+        Debug.Log("4");
         waveStats.StartWave(currentWave);
+        Debug.Log("5");
     }
 
     public void NextWave()
