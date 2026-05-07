@@ -19,7 +19,8 @@ public class GameOverManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    //TOREMOVE
+    /*void Update()
     {
         if(GameManager.Instance.state == GameManager.GameState.GAMEOVER)
         {
@@ -39,7 +40,7 @@ public class GameOverManager : MonoBehaviour
             gameOverUI.SetActive(false);
             //waveStats.HideStats();
         }
-    }
+    }*/
 
 
 

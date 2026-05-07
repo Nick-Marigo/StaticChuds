@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,41 +12,76 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject waveStatsDisplay;
 
-    public void UpdateUIState(GameManager.GameState newState)
-    {
-        Debug.Log("State changed");
-        Debug.Log(newState);
-        if(newState == GameManager.GameState.PREGAME)
-        {
-            background.SetActive(true);
-            difficultySelector.SetActive(true);
-        }
-        else if (newState == GameManager.GameState.COUNTDOWN)
-        {
-            background.SetActive(false);
-            difficultySelector.SetActive(false);
-            waveStatsDisplay.SetActive(false);
-        }
-        else if (newState == GameManager.GameState.INWAVE)
-        {
-            
-        }
-        else if (newState == GameManager.GameState.WAVEEND)
-        {
-            background.SetActive(true);
-            waveStatsDisplay.SetActive(true);
-        }
-        
-    }
+    [Header("Universal Button")]
+    [SerializeField] GameObject universalButton;
+    [SerializeField] TextMeshProUGUI buttonText;
+
+    [Header("External References")]
+    [SerializeField] WaveSpawner waveSpawner;
+    [SerializeField] GameOverManager gameOverManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         GameManager.Instance.OnChangedState += UpdateUIState;
-        //waveStatsDisplay.SetActive(false);
+
+        UpdateUIState(GameManager.Instance.state);
     }
 
     void OnDestory()
     {
-        
+        /*if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnChangeState -= UpdateUIState;
+        }*/
+    }
+
+    public void UpdateUIState(GameManager.GameState newState)
+    {
+        difficultySelector.SetActive(false);
+        rewardScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
+        waveStatsDisplay.SetActive(false);
+        universalButton.SetActive(false);
+
+        switch (newState)
+        {
+            case GameManager.GameState.PREGAME:
+                background.SetActive(true);
+                difficultySelector.SetActive(true);
+                break;
+            case GameManager.GameState.COUNTDOWN:
+                background.SetActive(false);
+                difficultySelector.SetActive(false);
+                waveStatsDisplay.SetActive(false);
+                break;
+            case GameManager.GameState.INWAVE:
+                break;
+            case GameManager.GameState.WAVEEND:
+                background.SetActive(true);
+                waveStatsDisplay.SetActive(true);
+                universalButton.SetActive(true);
+                buttonText.text = "Next Wave";
+                break;
+            case GameManager.GameState.GAMEOVER:
+                background.SetActive(true);
+                waveStatsDisplay.SetActive(true);
+                gameOverScreen.SetActive(true);
+                universalButton.SetActive(true);
+                buttonText.text = "Restart Game";
+                break;
+        }
+    }
+
+    public void OnUniversalButtonClick()
+    {
+        if(GameManager.GameState.WAVEEND == GameManager.Instance.state)
+        {
+            waveSpawner.NextWave();
+        }
+        else if (GameManager.GameState.GAMEOVER == GameManager.Instance.state)
+        {
+            gameOverManager.RestartScene();
+        }
     }
 }
