@@ -11,10 +11,26 @@ public class GameManager
         INWAVE,
         WAVEEND,
         COUNTDOWN,
-        GAMEOVER
+        GAMEOVER,
+        WAVESTATS
     }
 
-    public GameState state;
+    public event Action<GameState> OnChangedState;
+
+    private GameState _state;
+    public GameState state
+    {
+        get => _state;
+
+        set
+        {
+            if (_state == value) return;
+
+            _state = value;
+            OnChangedState?.Invoke(_state);
+            
+        }
+    }
 
     public int countdown;
     private static GameManager theInstance;
