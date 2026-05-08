@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
         UpdateUIState(GameManager.Instance.state);
     }
 
-    void OnDestory()
+    void OnDestroy()
     {
         if (GameManager.Instance != null)
         {
