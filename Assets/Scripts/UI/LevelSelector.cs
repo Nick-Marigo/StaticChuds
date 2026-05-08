@@ -31,8 +31,6 @@ public class LevelSelector : MonoBehaviour {
             return;
         }
 
-        // Hide the level selector
-        levelSelector.SetActive(false);
         // Show wave text
         wave.SetActive(true);
         spawner.StartLevel(selectedLevel);

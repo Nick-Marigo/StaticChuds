@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
                 background.SetActive(true);
                 rewardScreen.SetActive(true);
                 universalButton.SetActive(true);
-                buttonText.text = "Wave Stats";
+                buttonText.text = "Next";
                 break;
 
             case GameManager.GameState.WAVESTATS:
