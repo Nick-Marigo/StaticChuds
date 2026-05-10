@@ -12,4 +12,6 @@ public abstract class BaseSpell : Spell {
     protected string cooldown;
     protected Projectile projectile;
 
+    protected abstract void SetAttributes();
+
 }

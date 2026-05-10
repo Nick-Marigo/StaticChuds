@@ -6,11 +6,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 public class ArcaneBolt : BaseSpell {
-    // This instance is used to load defaults into from json
-    private static int n = 0;
-    private static ArcaneBolt configInstance;
 
-    void setAttributes() {
+    override protected void SetAttributes() {
         name = "Arcane Bolt";
         // Lazy load this spells attributes
             List<JProperty> spells = SpellLoader.GetSpells();
@@ -19,18 +16,19 @@ public class ArcaneBolt : BaseSpell {
                 Debug.Log("Failed to find spell of type " + name);
             }
             Debug.Log(spell);
-            n = 1;
-            configInstance = spell.Value.ToObject<ArcaneBolt>();
+            // Populate this instance's fields
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Populate(spell.Value.CreateReader(), this);
     }
 
     override public int GetDamage() {
-        return RPNEvaluator.RPNEvaluator.Evaluate(configInstance.damage.amount, 
+        return RPNEvaluator.RPNEvaluator.Evaluate(damage.amount, 
                 new Dictionary<string, int> { {"power", owner.spellPower } });
     }
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(0, configInstance.projectile.trajectory, where, target - where, 15f, OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, OnHit);
         yield return new WaitForEndOfFrame();
     }
 
@@ -38,17 +36,13 @@ public class ArcaneBolt : BaseSpell {
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), configInstance.damage.type));
+            other.Damage(new Damage(GetDamage(), damage.type));
         }
     }
 
 
     public ArcaneBolt(SpellCaster owner) {
         this.owner = owner;
-        if (n < 1) setAttributes();
-        //UnityEditor.EditorApplication.isPlaying = false;
-        Debug.Log(configInstance);
-       // Debug.Log(configInstance.damage.amount);
-
+        SetAttributes();
     }
 }
