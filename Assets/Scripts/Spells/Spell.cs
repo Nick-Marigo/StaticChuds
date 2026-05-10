@@ -21,7 +21,7 @@ public abstract class Spell
     }
 
     public virtual int GetDamage() {
-        return -1;
+        return 10;
     }
 
     public int GetManaCost()
