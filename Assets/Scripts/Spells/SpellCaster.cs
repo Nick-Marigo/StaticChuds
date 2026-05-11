@@ -41,11 +41,17 @@ public class SpellCaster
 
     public void SetStats(int newMana, int newManaRegen)
     {
+        // For Debug
+        //int oldMana = this.mana;
+        //int oldMax = this.max_mana;
+
         float perc = this.mana * 1.0f / this.max_mana;
         this.max_mana = newMana;
         this.mana = Mathf.RoundToInt(perc * newMana);
 
         this.mana_reg = newManaRegen;
+
+        //Debug.Log("OldMana: " + oldMana + " NewMana: " + this.mana + " OldMax: " + oldMax + " NewMax: " + this.max_mana);
     }
 
 }
