@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -60,6 +61,25 @@ public class PlayerController : MonoBehaviour
         Debug.Log("You Lost");
         isDead = true;
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
+    }
+
+    void ScaleStats(int wave)
+    {
+        Dictionary<string, int> variables = new Dictionary<string, int>
+        {
+            { "wave", wave }
+        };
+
+        int newHp = RPNEvaluator.RPNEvaluator.Evaluate("95 wave 5 * +", variables);
+        int newMana = RPNEvaluator.RPNEvaluator.Evaluate("90 wave 10 * +", variables);
+        int newManaRegen = RPNEvaluator.RPNEvaluator.Evaluate("10 wave +", variables);
+        int newSpellPower = RPNEvaluator.RPNEvaluator.Evaluate("wave 10 *", variables);
+        int newSpeed = RPNEvaluator.RPNEvaluator.Evaluate("5", variables);                  // Assignment says to do this but what is the point?
+
+        hp.SetMaxHP(newHp);
+        spellcaster.SetStats(newMana, newManaRegen);
+
+        this.speed = newSpeed;      // I dont think this is necessary because newSpeed is a constant
     }
 
 }

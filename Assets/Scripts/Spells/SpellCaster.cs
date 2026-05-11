@@ -39,4 +39,13 @@ public class SpellCaster
         yield break;
     }
 
+    public void SetStats(int newMana, int newManaRegen)
+    {
+        float perc = this.mana * 1.0f / this.max_mana;
+        this.max_mana = newMana;
+        this.mana = Mathf.RoundToInt(perc * newMana);
+
+        this.mana_reg = newManaRegen;
+    }
+
 }
