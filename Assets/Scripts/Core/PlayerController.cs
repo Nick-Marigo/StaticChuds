@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
+
 public class PlayerController : MonoBehaviour
 {
     public Hittable hp;
@@ -89,6 +90,19 @@ public class PlayerController : MonoBehaviour
         hp.SetMaxHP(newHp);
         spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
 
+    }
+
+    void OnSpell1() => SelectSpell(0);
+    void OnSpell2() => SelectSpell(1);
+    void OnSpell3() => SelectSpell(2);
+    void OnSpell4() => SelectSpell(3);
+    void SelectSpell(int spellSelected)
+    {
+        //float keyValue = value.Get<float>();
+        //int spellSelected = MathF.RoundToInt(keyValue) - 1;
+        
+        Debug.Log("Selected: " + spellSelected);
+        
     }
 
 }
