@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         this.speed = RPNEvaluator.RPNEvaluator.Evaluate("5", variables);                  // Assignment says to do this but what is the point?
 
         hp.SetMaxHP(newHp);
-        spellcaster.SetStats(newMana, newManaRegen);
+        spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
 
     }
 

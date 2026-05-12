@@ -7,6 +7,7 @@ public class SpellCaster
     public int mana;
     public int max_mana;
     public int mana_reg;
+    public int power;
     public Hittable.Team team;
     public Spell spell;
 
@@ -39,7 +40,7 @@ public class SpellCaster
         yield break;
     }
 
-    public void SetStats(int newMana, int newManaRegen)
+    public void SetStats(int newMana, int newManaRegen, int newSpellPower)
     {
         // For Debug
         //int oldMana = this.mana;
@@ -50,6 +51,7 @@ public class SpellCaster
         this.mana = Mathf.RoundToInt(perc * newMana);
 
         this.mana_reg = newManaRegen;
+        this.power = newSpellPower;
 
         //Debug.Log("OldMana: " + oldMana + " NewMana: " + this.mana + " OldMax: " + oldMax + " NewMax: " + this.max_mana);
     }
