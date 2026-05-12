@@ -5,8 +5,12 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public class ArcaneBolt : BaseSpell {
+[JsonObject(MemberSerialization.Fields)]
+public class DamageAmplifier : SpellModifier {
     public static JObject config;
+
+    protected string damage_multiplier;
+    protected string mana_multiplier;
 
     void SetAttributes() {
             if (config == null) {
@@ -18,8 +22,11 @@ public class ArcaneBolt : BaseSpell {
     }
 
     override public int GetDamage() {
-        return RPNEvaluator.RPNEvaluator.Evaluate(damage.amount, 
-                new Dictionary<string, int> { {"power", owner.spellPower } });
+        // TODO make a calculator class
+        // TODO make damage a float
+        int mul = (int) RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, 
+                new Dictionary<string, float> { {"power", (float)owner.spellPower } });
+        return innerSpell.GetDamage() * mul;
     }
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
@@ -28,7 +35,13 @@ public class ArcaneBolt : BaseSpell {
         yield return new WaitForEndOfFrame();
     }
 
-    public ArcaneBolt(SpellCaster owner) : base(owner) {
+    protected virtual void OnHit(Hittable other, Vector3 impact) {
+        if (other.team != team) {
+            other.Damage(new Damage(GetDamage(), damage.type));
+        }
+    }
+
+    public DamageAmplifier(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();
     }
 }

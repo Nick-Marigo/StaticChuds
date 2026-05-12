@@ -12,7 +12,7 @@ public class SpellLoader
      * each spell type is unique to the spell */
     private static List<JProperty> spells;
     private static List<Func<SpellCaster, BaseSpell>> baseSpells;
-    private static List<Func<Spell, ModifierSpell>> modifierSpells;
+    private static List<Func<SpellCaster, Spell, SpellModifier>> spellModifiers;
 
     /* These lists of lambdas are used to randomly
      * instantiate new spells and decorators from */
@@ -22,10 +22,10 @@ public class SpellLoader
             return baseSpells;
         }
     }
-    public static List<Func<Spell, ModifierSpell>> ModifierSpells { get
+    public static List<Func<SpellCaster, Spell, SpellModifier>> SpellModifiers { get
         {
             if (spells == null) LoadSpells();
-            return modifierSpells;
+            return spellModifiers;
         }
     }
 
@@ -38,21 +38,19 @@ public class SpellLoader
             switch(spell.Name) {
                 case "arcane_bolt":
                     ArcaneBolt.config = config;
-                    baseSpells.Add( (owner) => 
-                            new ArcaneBolt(owner) );
+                    baseSpells.Add( (owner) => new ArcaneBolt(owner) );
                     break;
-                    /*
                 case "damage_amp":
-                    modifierSpells.Add( (innerSpell) => new DamageAmp(innerSpell, config) );
+                    DamageAmplifier.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );
                     break;
-                    */
             }
         }
     }
 
     private static void LoadSpells() {
         baseSpells = new();
-        modifierSpells = new();
+        spellModifiers = new();
         TextAsset spellJson = Resources.Load<TextAsset>("spells");
         if (spellJson == null)
         {

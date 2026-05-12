@@ -14,10 +14,13 @@ public abstract class Spell
 
     public float last_cast;
     public SpellCaster owner;
-    public Hittable.Team team;
-    /* Every spell holds a config JObject, which it
-    * uses to load in its attributes */
-    public static JObject config;
+    public virtual Hittable.Team team { get; protected set; }
+    public virtual DamageInfo damage { get; protected set; }
+    public virtual Projectile projectile { get; protected set; }
+
+    public Spell(SpellCaster owner) {
+        this.owner = owner;
+    }
 
     public string GetName()
     {
@@ -47,8 +50,8 @@ public abstract class Spell
     {
         return (last_cast + GetCooldown() < Time.time);
     }
-    
-   public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+
+    public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
         yield return new WaitForEndOfFrame();
     }
