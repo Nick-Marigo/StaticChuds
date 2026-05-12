@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [JsonObject(MemberSerialization.OptIn)]
 public abstract class Spell 
@@ -14,6 +15,9 @@ public abstract class Spell
     public float last_cast;
     public SpellCaster owner;
     public Hittable.Team team;
+    /* Every spell holds a config JObject, which it
+    * uses to load in its attributes */
+    public static JObject config;
 
     public string GetName()
     {

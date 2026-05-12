@@ -10,10 +10,10 @@ public class SpellBuilder
 
     public Spell Build(SpellCaster owner)
     {
-        return new ArcaneBolt(owner);
+        Spell spell = SpellLoader.BaseSpells[0](owner);
+        return spell;
     }
 
-   
     public SpellBuilder()
     {        
     }

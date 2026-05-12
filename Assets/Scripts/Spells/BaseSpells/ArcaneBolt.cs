@@ -7,18 +7,13 @@ using Newtonsoft.Json.Linq;
 
 public class ArcaneBolt : BaseSpell {
 
-    override protected void SetAttributes() {
-        name = "Arcane Bolt";
-        // Lazy load this spells attributes
-            List<JProperty> spells = SpellLoader.GetSpells();
-            JProperty spell = spells.Where(spell => (string)((JObject)spell.Value)["name"] == name).FirstOrDefault();
-            if (spell == null) {
-                Debug.Log("Failed to find spell of type " + name);
+    void SetAttributes() {
+            if (config == null) {
+                Debug.Log("This spell's config has not been set");
+                return;
             }
-            Debug.Log(spell);
-            // Populate this instance's fields
             JsonSerializer serializer = new JsonSerializer();
-            serializer.Populate(spell.Value.CreateReader(), this);
+            serializer.Populate(config.CreateReader(), this);
     }
 
     override public int GetDamage() {
@@ -32,17 +27,7 @@ public class ArcaneBolt : BaseSpell {
         yield return new WaitForEndOfFrame();
     }
 
-    public void OnHit(Hittable other, Vector3 impact)
-    {
-        if (other.team != team)
-        {
-            other.Damage(new Damage(GetDamage(), damage.type));
-        }
-    }
-
-
-    public ArcaneBolt(SpellCaster owner) {
-        this.owner = owner;
+    public ArcaneBolt(SpellCaster owner) : base(owner, config) {
         SetAttributes();
     }
 }
