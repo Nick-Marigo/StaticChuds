@@ -53,6 +53,11 @@ public abstract class Spell
         return 0;
     }
 
+    public virtual string GetTrajectory()
+    {
+        return projectile.trajectory;
+    }
+
     public bool IsReady()
     {
         return (last_cast + GetCooldown() < Time.time);

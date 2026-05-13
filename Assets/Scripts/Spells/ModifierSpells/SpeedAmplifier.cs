@@ -22,7 +22,6 @@ public class SpeedAmplifier : SpellModifier {
     public override float GetSpeed()
     {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(speed_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
-        Debug.Log("BEING CALLED");
         return innerSpell.GetSpeed() * multiplier;
     }
 

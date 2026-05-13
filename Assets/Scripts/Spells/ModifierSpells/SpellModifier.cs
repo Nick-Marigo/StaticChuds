@@ -22,6 +22,11 @@ public abstract class SpellModifier : Spell {
         return innerSpell.GetCooldown();
     }
 
+    public override string GetTrajectory()
+    {
+        return innerSpell.GetTrajectory();
+    }
+
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         Debug.Log("Modifier cast called on: " + this.GetType().Name);
