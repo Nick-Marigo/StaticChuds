@@ -7,10 +7,9 @@ public class SpellCaster
     public int mana;
     public int max_mana;
     public int mana_reg;
-    public int power;
     public Hittable.Team team;
     public Spell spell;
-    // TODO
+    // TODO <- I think this is done? I assume you mean scale it.
     public int spellPower = 5;
 
     public IEnumerator ManaRegeneration()

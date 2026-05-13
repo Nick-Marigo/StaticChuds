@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Buffers;
 
 public class ArcaneBlast : BaseSpell
 {
     public static JObject config;
-
-    
+    [JsonProperty] protected string N;
+    [JsonProperty] protected string secondary_damage;
+    [JsonProperty] protected Projectile secondary_projectile;
 
     void SetAttributes() {
         if (config == null) {
@@ -17,23 +19,52 @@ public class ArcaneBlast : BaseSpell
             return;
         }
         JsonSerializer serializer = new JsonSerializer();
-        serializer.Populate(config.CreateReader(), this);            Debug.Log(damage);
+        serializer.Populate(config.CreateReader(), this);
     }
 
     override public int GetDamage() {
-        return RPNEvaluator.RPNEvaluator.Evaluate(damage.amount, 
+        float total = RPNEvaluator.RPNEvaluator.Evaluatef(damage.amount, 
                 new Dictionary<string, int> { {"power", owner.spellPower} });
+        return Mathf.RoundToInt(total);
     }
 
     public int CalculateN()
     {
-        //return RPNEvaluator.RPNEvaluator.Evaluate(N, new Dictionary<string, int> { {"power", owner.spellPower} });
-        return 1;
+        return RPNEvaluator.RPNEvaluator.Evaluate(N, new Dictionary<string, int> { {"power", owner.spellPower} });
+        
+    }
+
+    protected override void OnHit(Hittable other, Vector3 impact)
+    {
+        if (other.team != team)
+        {
+            int finalDamage = owner.spell.GetDamage();
+            Debug.Log("ArcaneBlast Intial: " + finalDamage);
+            other.Damage(new Damage(finalDamage, damage.type));
+
+            int count = CalculateN();
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 randomDir = Random.onUnitSphere;
+
+                GameManager.Instance.projectileManager.CreateProjectile(secondary_projectile.sprite, secondary_projectile.trajectory, impact, randomDir, float.Parse(secondary_projectile.speed), OnSecondaryHit);
+            }
+        }
+    }
+
+    private void OnSecondaryHit(Hittable other, Vector3 impact)
+    {
+        if(other.team != team)
+        {
+            int secDamage = RPNEvaluator.RPNEvaluator.Evaluate(secondary_damage, new Dictionary<string, int> { {"power", owner.spellPower} });
+            Debug.Log("ArcaneBlast second: " + secDamage);
+            other.Damage(new Damage(secDamage, damage.type));
+        }
     }
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, this.OnHit);
         yield return new WaitForEndOfFrame();
     }
 
