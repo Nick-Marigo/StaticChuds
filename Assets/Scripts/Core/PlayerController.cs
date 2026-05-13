@@ -11,12 +11,13 @@ public class PlayerController : MonoBehaviour
 
     public SpellCaster spellcaster;
     public SpellUI spellui;
-
+    public SpellUIContainer spellUIContainer;
     public int speed;
 
     public Unit unit;
 
     public bool isDead = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,7 +39,12 @@ public class PlayerController : MonoBehaviour
         // tell UI elements what to show
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
-        spellui.SetSpell(spellcaster.spell);
+        //spellui.SetSpell(spellcaster.spell);
+        spellUIContainer.RefreshSpells(spellcaster.spells);
+        spellui.SetSpell(spellcaster.GetSelectedSpell());
+
+        spellcaster.AddSpell(new SpellBuilder().Build(spellcaster));
+        spellUIContainer.RefreshSpells(spellcaster.spells);
     }
 
     void OnAttack(InputValue value)
@@ -69,7 +75,7 @@ public class PlayerController : MonoBehaviour
         EventBus.Instance.OnWaveStart += ScaleStats;
     }
 
-    void OnDisbale()
+    void OnDisable()
     {
         EventBus.Instance.OnWaveStart -= ScaleStats;
     }
@@ -98,10 +104,10 @@ public class PlayerController : MonoBehaviour
     void OnSpell4() => SelectSpell(3);
     void SelectSpell(int spellSelected)
     {
-        //float keyValue = value.Get<float>();
-        //int spellSelected = MathF.RoundToInt(keyValue) - 1;
+        spellcaster.SelectSpell(spellSelected);
+        spellui.SetSpell(spellcaster.GetSelectedSpell());
         
-        Debug.Log("Selected: " + spellSelected);
+        Debug.Log("Selected slot: " + spellSelected + " Spell modifier: " + spellSelected.GetType().Name);
         
     }
 
