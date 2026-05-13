@@ -52,6 +52,10 @@ public class SpellLoader
                     DamageAmplifier.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );
                     break;
+                case "speed_amp":
+                    SpeedAmplifier.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new SpeedAmplifier(owner, innerSpell) );
+                    break;
             }
         }
     }

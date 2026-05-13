@@ -45,9 +45,10 @@ public class ArcaneBlast : BaseSpell
             int count = CalculateN();
             for (int i = 0; i < count; i++)
             {
+                //TODO: change this from random to sphere 
                 Vector3 randomDir = Random.onUnitSphere;
 
-                GameManager.Instance.projectileManager.CreateProjectile(secondary_projectile.sprite, secondary_projectile.trajectory, impact, randomDir, float.Parse(secondary_projectile.speed), OnSecondaryHit);
+                GameManager.Instance.projectileManager.CreateProjectile(secondary_projectile.sprite, secondary_projectile.trajectory, impact, randomDir, float.Parse(secondary_projectile.speed), OnSecondaryHit, float.Parse(secondary_projectile.lifetime));
             }
         }
     }
@@ -64,7 +65,11 @@ public class ArcaneBlast : BaseSpell
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, this.OnHit);
+
+        Projectile p = this.projectile;
+        float speed = RPNEvaluator.RPNEvaluator.Evaluatef(p.speed, new Dictionary<string, float> { {"power", (float)owner.spellPower}});
+
+        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, speed, this.OnHit);
         yield return new WaitForEndOfFrame();
     }
 

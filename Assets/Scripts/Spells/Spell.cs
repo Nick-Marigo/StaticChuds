@@ -17,9 +17,11 @@ public abstract class Spell
     public virtual Hittable.Team team { get; protected set; }
     public virtual DamageInfo damage { get; protected set; }
     public virtual Projectile projectile { get; protected set; }
+    public Spell statSource;
 
     public Spell(SpellCaster owner) {
         this.owner = owner;
+        this.statSource = this;
     }
 
     public string GetName()
@@ -29,6 +31,11 @@ public abstract class Spell
 
     public virtual int GetDamage() {
         return 10;
+    }
+
+    public virtual float GetSpeed()
+    {
+        return RPNEvaluator.RPNEvaluator.Evaluatef(projectile.speed, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
     }
 
     public int GetManaCost()
