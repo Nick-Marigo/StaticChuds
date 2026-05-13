@@ -13,9 +13,9 @@ public class SpellBuilder
         //Debug.Log(SpellLoader.BaseSpells[1](owner));
         //Debug.Log(SpellLoader.BaseSpells[2](owner));
         // TODO, always picks Arcane Bolt
-        Spell spell = SpellLoader.BaseSpells[0](owner);
+        Spell spell = SpellLoader.BaseSpells[2](owner);
         // Wrap the base spell with a modifier
-        //spell = SpellLoader.SpellModifiers[1](owner, spell);
+        spell = SpellLoader.SpellModifiers[2](owner, spell);
         // Wrapping a second time
         //spell = SpellLoader.SpellModifiers[0](owner, spell);
         Debug.Log(spell);

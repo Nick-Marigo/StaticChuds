@@ -38,12 +38,12 @@ public abstract class Spell
         return RPNEvaluator.RPNEvaluator.Evaluatef(projectile.speed, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
     }
 
-    public int GetManaCost()
+    public virtual int GetManaCost()
     {
         return 10;
     }
 
-    public float GetCooldown()
+    public virtual float GetCooldown()
     {
         return 0.75f;
     }

@@ -56,6 +56,10 @@ public class SpellLoader
                     SpeedAmplifier.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new SpeedAmplifier(owner, innerSpell) );
                     break;
+                case "doubler":
+                    Doubler.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Doubler(owner, innerSpell) );
+                    break;
             }
         }
     }
