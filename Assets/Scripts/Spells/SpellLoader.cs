@@ -60,6 +60,10 @@ public class SpellLoader
                     Doubler.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Doubler(owner, innerSpell) );
                     break;
+                    case "splitter":
+                    Splitter.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Splitter(owner, innerSpell) );
+                    break;
             }
         }
     }

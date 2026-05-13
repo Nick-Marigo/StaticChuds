@@ -37,12 +37,14 @@ public class Doubler : SpellModifier {
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
+        // Let the inner spell handle its own casting behavior
         yield return innerSpell.Cast(where, target, team);
 
+        // Wait for delay time between casts
         float delayTime = RPNEvaluator.RPNEvaluator.Evaluatef(delay, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
-
         yield return new WaitForSeconds(delayTime);
 
+        // Let the inner spell handle its own casting behavior
         yield return innerSpell.Cast(where, target, team);
     }
 
