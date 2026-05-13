@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,12 +11,13 @@ public class PlayerController : MonoBehaviour
 
     public SpellCaster spellcaster;
     public SpellUI spellui;
-
+    public SpellUIContainer spellUIContainer;
     public int speed;
 
     public Unit unit;
 
     public bool isDead = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,7 +39,12 @@ public class PlayerController : MonoBehaviour
         // tell UI elements what to show
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
-        spellui.SetSpell(spellcaster.spell);
+        //spellui.SetSpell(spellcaster.spell);
+        spellUIContainer.RefreshSpells(spellcaster.spells);
+        spellui.SetSpell(spellcaster.GetSelectedSpell());
+
+        spellcaster.AddSpell(new SpellBuilder().Build(spellcaster));
+        spellUIContainer.RefreshSpells(spellcaster.spells);
     }
 
     void OnAttack(InputValue value)
@@ -60,6 +68,47 @@ public class PlayerController : MonoBehaviour
         Debug.Log("You Lost");
         isDead = true;
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
+    }
+
+    void OnEnable()
+    {
+        EventBus.Instance.OnWaveStart += ScaleStats;
+    }
+
+    void OnDisable()
+    {
+        EventBus.Instance.OnWaveStart -= ScaleStats;
+    }
+
+    void ScaleStats(int wave)
+    {
+        Dictionary<string, int> variables = new Dictionary<string, int>
+        {
+            { "wave", wave }
+        };
+
+        int newHp = RPNEvaluator.RPNEvaluator.Evaluate("95 wave 5 * +", variables);
+        int newMana = RPNEvaluator.RPNEvaluator.Evaluate("90 wave 10 * +", variables);
+        int newManaRegen = RPNEvaluator.RPNEvaluator.Evaluate("10 wave +", variables);
+        int newSpellPower = RPNEvaluator.RPNEvaluator.Evaluate("wave 10 *", variables);
+        this.speed = RPNEvaluator.RPNEvaluator.Evaluate("5", variables);                  // Assignment says to do this but what is the point?
+
+        hp.SetMaxHP(newHp);
+        spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
+
+    }
+
+    void OnSpell1() => SelectSpell(0);
+    void OnSpell2() => SelectSpell(1);
+    void OnSpell3() => SelectSpell(2);
+    void OnSpell4() => SelectSpell(3);
+    void SelectSpell(int spellSelected)
+    {
+        spellcaster.SelectSpell(spellSelected);
+        spellui.SetSpell(spellcaster.GetSelectedSpell());
+        
+        Debug.Log("Selected slot: " + spellSelected + " Spell modifier: " + spellSelected.GetType().Name);
+        
     }
 
 }

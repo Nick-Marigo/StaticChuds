@@ -13,9 +13,10 @@ public class SpellBuilder
         // TODO, always picks Arcane Bolt
         Spell spell = SpellLoader.BaseSpells[0](owner);
         // Wrap the base spell with a modifier
-        spell = SpellLoader.SpellModifiers[0](owner, spell);
+        spell = SpellLoader.SpellModifiers[UnityEngine.Random.Range(0, SpellLoader.SpellModifiers.Count)](owner, spell);
         // Wrapping a second time
-        spell = SpellLoader.SpellModifiers[0](owner, spell);
+        //spell = SpellLoader.SpellModifiers[0](owner, spell);
+        Debug.Log("Built spell with modifier: " + spell.GetType().Name);
         return spell;
     }
 

@@ -26,4 +26,9 @@ public class EventBus
         OnDamage = null;
     }
 
+    public event Action<int> OnWaveStart;
+    public void StartWave(int waveNum)
+    {
+        OnWaveStart?.Invoke(waveNum);
+    }
 }

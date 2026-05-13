@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Actions",
     "maps": [
         {
@@ -90,6 +91,42 @@
                     "name": "ChangeSpell",
                     "type": "Button",
                     "id": "50ff6c51-c263-4294-8d7e-038ac6378e12",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spell1",
+                    "type": "Button",
+                    "id": "1b27e7cc-9efb-4f1a-a70c-2e1436e46ff8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spell2",
+                    "type": "Button",
+                    "id": "8a92c9c6-6791-481f-acc4-80121a3c9403",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spell3",
+                    "type": "Button",
+                    "id": "d5864ded-1f64-47c6-87d7-2046ef08fb87",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spell4",
+                    "type": "Button",
+                    "id": "690934d7-8517-43a4-8641-6becac19b815",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -490,6 +527,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "ChangeSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c84675f8-9131-4d0c-b253-7b2960516f0e",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a552898f-7652-48a1-ab1b-1f561d224689",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f79633d6-a144-4386-8e08-caf426ba1a26",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84350569-3173-46c6-b0cf-dd081d6935f1",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

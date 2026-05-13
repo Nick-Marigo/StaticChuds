@@ -7,7 +7,34 @@ public abstract class SpellModifier : Spell {
     override public Hittable.Team team { get { return innerSpell.team; } }
     override public Projectile projectile { get { return innerSpell.projectile; } }
 
+    public override float GetSpeed()
+    {
+        return innerSpell.GetSpeed();
+    }
+
+    public override int GetManaCost()
+    {
+        return innerSpell.GetManaCost();
+    }
+
+    public override float GetCooldown()
+    {
+        return innerSpell.GetCooldown();
+    }
+
+    public override string GetTrajectory()
+    {
+        return innerSpell.GetTrajectory();
+    }
+
+    public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
+    {
+        Debug.Log("Modifier cast called on: " + this.GetType().Name);
+        yield return innerSpell.Cast(where, target, team);
+    }
+
     public SpellModifier(SpellCaster owner, Spell innerSpell) : base(owner) {
         this.innerSpell = innerSpell;
+        innerSpell.statSource = this;
     }
 }

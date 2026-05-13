@@ -8,7 +8,6 @@ using Newtonsoft.Json.Linq;
 [JsonObject(MemberSerialization.Fields)]
 public class DamageAmplifier : SpellModifier {
     public static JObject config;
-
     protected string damage_multiplier;
     protected string mana_multiplier;
 
@@ -23,23 +22,23 @@ public class DamageAmplifier : SpellModifier {
 
     override public int GetDamage() {
         // TODO make a calculator class
-        // TODO make damage a float
-        int mul = (int) RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, 
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, 
                 new Dictionary<string, float> { {"power", (float)owner.spellPower } });
-        return innerSpell.GetDamage() * mul;
+        return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
     }
 
-    override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
-        this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, OnHit);
-        yield return new WaitForEndOfFrame();
+    /*override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+        //this.team = team;
+        //GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, OnHit);
+        //yield return new WaitForEndOfFrame();
+        yield return innerSpell.Cast(where, target, team);
     }
 
     protected virtual void OnHit(Hittable other, Vector3 impact) {
         if (other.team != team) {
             other.Damage(new Damage(GetDamage(), damage.type));
         }
-    }
+    }*/
 
     public DamageAmplifier(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();

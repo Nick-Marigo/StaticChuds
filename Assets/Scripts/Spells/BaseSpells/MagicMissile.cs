@@ -5,7 +5,8 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public class ArcaneBolt : BaseSpell {
+public class MagicMissile : BaseSpell
+{
     public static JObject config;
 
     void SetAttributes() {
@@ -19,16 +20,16 @@ public class ArcaneBolt : BaseSpell {
 
     override public int GetDamage() {
         return RPNEvaluator.RPNEvaluator.Evaluate(damage.amount, 
-                new Dictionary<string, int> { {"power", owner.spellPower } });
+            new Dictionary<string, int> { {"power", owner.spellPower } });
     }
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(0, statSource.GetTrajectory(), where, target - where, statSource.GetSpeed(), OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, OnHit);
         yield return new WaitForEndOfFrame();
     }
 
-    public ArcaneBolt(SpellCaster owner) : base(owner) {
+    public MagicMissile(SpellCaster owner) : base(owner) {
         SetAttributes();
     }
 }

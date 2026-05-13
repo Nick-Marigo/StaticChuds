@@ -40,9 +40,37 @@ public class SpellLoader
                     ArcaneBolt.config = config;
                     baseSpells.Add( (owner) => new ArcaneBolt(owner) );
                     break;
+                case "magic_missile":
+                    MagicMissile.config = config;
+                    baseSpells.Add( (owner) => new MagicMissile(owner) );
+                    break;
+                case "arcane_blast":
+                    ArcaneBlast.config = config;
+                    baseSpells.Add( (owner) => new ArcaneBlast(owner) );
+                    break;
                 case "damage_amp":
                     DamageAmplifier.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );
+                    break;
+                case "speed_amp":
+                    SpeedAmplifier.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new SpeedAmplifier(owner, innerSpell) );
+                    break;
+                case "doubler":
+                    Doubler.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Doubler(owner, innerSpell) );
+                    break;
+                case "splitter":
+                    Splitter.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Splitter(owner, innerSpell) );
+                    break;
+                case "chaos":
+                    Chaos.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Chaos(owner, innerSpell) );
+                    break;
+                case "homing":
+                    Homing.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Homing(owner, innerSpell) );
                     break;
             }
         }

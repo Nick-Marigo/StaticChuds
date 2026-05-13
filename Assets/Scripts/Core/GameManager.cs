@@ -33,6 +33,7 @@ public class GameManager
     }
 
     public int countdown;
+    public int currentWave;
     private static GameManager theInstance;
     public static GameManager Instance {  get
         {

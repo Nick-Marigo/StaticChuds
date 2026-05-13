@@ -40,8 +40,14 @@ public class Hittable
 
     public void SetMaxHP(int max_hp)
     {
+        // For Debug
+        //int oldHp = this.hp;
+        //int oldMax = this.max_hp;
+
         float perc = this.hp * 1.0f / this.max_hp;
         this.max_hp = max_hp;
         this.hp = Mathf.RoundToInt(perc * max_hp);
+
+        //Debug.Log("OldHP: " + oldHp + " NewHP: " + this.hp + " OldMax: " + oldMax + " NewMax: " + this.max_hp);
     }
 }

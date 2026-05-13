@@ -1,19 +1,30 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SpellUIContainer : MonoBehaviour
 {
     public GameObject[] spellUIs;
     public PlayerController player;
 
+    public void RefreshSpells(List<Spell> spells)
+    {
+        for (int i = 0; i < spellUIs.Length; i++)
+        {
+            bool hasSpell = i < spells.Count;
+
+            spellUIs[i].SetActive(hasSpell);
+
+            if (hasSpell)
+            {
+                spellUIs[i].GetComponent<SpellUI>().SetSpell(spells[i]);
+            }
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // we only have one spell (right now)
-        spellUIs[0].SetActive(true);
-        for(int i = 1; i< spellUIs.Length; ++i)
-        {
-            spellUIs[i].SetActive(false);
-        }
+        
     }
 
     // Update is called once per frame
