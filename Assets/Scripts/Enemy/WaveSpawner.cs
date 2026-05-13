@@ -27,6 +27,7 @@ public class WaveSpawner : MonoBehaviour
     public void StartLevel(Level selectedLevel) {
         this.selectedLevel = selectedLevel;
         currentWave = 1;
+        GameManager.Instance.currentWave = currentWave;
         EventBus.Instance.StartWave(currentWave);
         StartCoroutine(SpawnWave());
         waveStats.StartWave(currentWave);
@@ -35,6 +36,7 @@ public class WaveSpawner : MonoBehaviour
     public void NextWave()
     {
         currentWave++;
+        GameManager.Instance.currentWave = currentWave;
         EventBus.Instance.StartWave(currentWave);
         waveStats.StartWave(currentWave);
 

@@ -6,9 +6,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 [JsonObject(MemberSerialization.Fields)]
-public class Chaos : SpellModifier {
+public class Homing : SpellModifier {
     public static JObject config;
     protected string damage_multiplier;
+    protected string mana_adder;
     protected string projectile_trajectory;
 
     void SetAttributes()
@@ -23,8 +24,14 @@ public class Chaos : SpellModifier {
 
     public override int GetDamage()
     {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower}, {"wave", (float)GameManager.Instance.currentWave} });
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
         return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
+    }
+
+    public override int GetManaCost()
+    {
+        int manaAddAmount = RPNEvaluator.RPNEvaluator.Evaluate(mana_adder, new Dictionary<string, int> { {"power", owner.spellPower} });
+        return innerSpell.GetManaCost() + manaAddAmount;
     }
 
     public override string GetTrajectory()
@@ -32,7 +39,7 @@ public class Chaos : SpellModifier {
         return projectile_trajectory;
     }
 
-    public Chaos(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
+    public Homing(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();
     }
 }

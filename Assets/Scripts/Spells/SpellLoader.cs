@@ -68,6 +68,10 @@ public class SpellLoader
                     Chaos.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Chaos(owner, innerSpell) );
                     break;
+                case "homing":
+                    Homing.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Homing(owner, innerSpell) );
+                    break;
             }
         }
     }
