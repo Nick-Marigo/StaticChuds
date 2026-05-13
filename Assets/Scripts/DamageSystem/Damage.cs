@@ -1,17 +1,22 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class Damage 
 {
     public int amount;
+    public Type type;
+
     public enum Type
     {
         PHYSICAL, ARCANE, NATURE, FIRE, ICE, DARK, LIGHT
     }
-    public Type type;
-    public Damage(int amount, Type type)
+
+    /* If something is read into stringizedType via NewtonSoft, the type will
+     * be set to that, otherwise, it will use whatever is passed to the constructor */
+    public Damage(int amount, string type)
     {
         this.amount = amount;
-        this.type = type;
+        this.type = TypeFromString(type);
     }
 
     public static Type TypeFromString(string type)

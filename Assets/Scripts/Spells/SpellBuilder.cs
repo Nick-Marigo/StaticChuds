@@ -10,10 +10,15 @@ public class SpellBuilder
 
     public Spell Build(SpellCaster owner)
     {
-        return new Spell(owner);
+        // TODO, always picks Arcane Bolt
+        Spell spell = SpellLoader.BaseSpells[0](owner);
+        // Wrap the base spell with a modifier
+        spell = SpellLoader.SpellModifiers[0](owner, spell);
+        // Wrapping a second time
+        spell = SpellLoader.SpellModifiers[0](owner, spell);
+        return spell;
     }
 
-   
     public SpellBuilder()
     {        
     }
