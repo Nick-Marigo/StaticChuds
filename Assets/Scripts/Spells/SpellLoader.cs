@@ -40,6 +40,14 @@ public class SpellLoader
                     ArcaneBolt.config = config;
                     baseSpells.Add( (owner) => new ArcaneBolt(owner) );
                     break;
+                case "magic_missile":
+                    MagicMissile.config = config;
+                    baseSpells.Add( (owner) => new MagicMissile(owner) );
+                    break;
+                case "arcane_blast":
+                    ArcaneBlast.config = config;
+                    baseSpells.Add( (owner) => new ArcaneBlast(owner) );
+                    break;
                 case "damage_amp":
                     DamageAmplifier.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );

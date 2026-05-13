@@ -53,7 +53,7 @@ public class SpellCaster
         this.mana = Mathf.RoundToInt(perc * newMana);
 
         this.mana_reg = newManaRegen;
-        this.power = newSpellPower;
+        this.spellPower = newSpellPower;
 
         //Debug.Log("OldMana: " + oldMana + " NewMana: " + this.mana + " OldMax: " + oldMax + " NewMax: " + this.max_mana);
     }
