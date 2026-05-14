@@ -16,8 +16,27 @@ public class SpellUIContainer : MonoBehaviour
 
             if (hasSpell)
             {
-                spellUIs[i].GetComponent<SpellUI>().SetSpell(spells[i]);
+                SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
+                spellUI.SetSpell(spells[i]);
+                spellUI.ShowDropButton(false);
             }
+        }
+    }
+
+    public void DropSpell(int index)
+    {
+        player.spellcaster.RemoveSpellAt(index);
+        RefreshSpells(player.spellcaster.spells);
+    }
+
+    public void ShowDropButtons(bool show)
+    {
+        for (int i = 0; i < spellUIs.Length; i++)
+        {
+            if (!spellUIs[i].activeSelf) continue;
+
+            SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
+            spellUI.ShowDropButton(show);
         }
     }
 

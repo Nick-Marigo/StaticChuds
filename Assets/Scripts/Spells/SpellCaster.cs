@@ -38,8 +38,7 @@ public class SpellCaster
         this.max_mana = mana;
         this.mana_reg = mana_reg;
         this.team = team;
-        //spell = new SpellBuilder().Build(this);
-        spells.Add(new SpellBuilder().Build(this));
+        spells.Add(new SpellBuilder().BuildArcaneBolt(this));
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)

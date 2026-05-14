@@ -67,6 +67,7 @@ public class UIManager : MonoBehaviour
                 universalButton.SetActive(true);
                 buttonText.text = "Next";
                 rewardScreenManager.ShowReward();
+                
                 break;
 
             case GameManager.GameState.WAVESTATS:
