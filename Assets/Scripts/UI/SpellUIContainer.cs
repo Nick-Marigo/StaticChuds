@@ -21,6 +21,8 @@ public class SpellUIContainer : MonoBehaviour
                 spellUI.ShowDropButton(false);
             }
         }
+
+        UpdateSelectedHighlight(player.spellcaster.selectedSpellIndex);
     }
 
     public void DropSpell(int index)
@@ -37,6 +39,17 @@ public class SpellUIContainer : MonoBehaviour
 
             SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
             spellUI.ShowDropButton(show);
+        }
+    }
+
+    public void UpdateSelectedHighlight(int selectedIndex)
+    {
+        for (int i = 0; i < spellUIs.Length; i++)
+        {
+            if (!spellUIs[i].activeSelf) continue;
+
+            SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
+            spellUI.ShowHighlight(i == selectedIndex);
         }
     }
 

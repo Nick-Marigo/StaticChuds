@@ -28,6 +28,14 @@ public class SpellUI : MonoBehaviour
         GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
     }
 
+    public void ShowHighlight(bool show)
+    {
+        if(highlight != null)
+        {
+            highlight.SetActive(show);
+        }    
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

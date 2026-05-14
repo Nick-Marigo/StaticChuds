@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour
     void SelectSpell(int spellSelected)
     {
         spellcaster.SelectSpell(spellSelected);
+        spellUIContainer.UpdateSelectedHighlight(spellcaster.selectedSpellIndex);
         Spell selected = spellcaster.GetSelectedSpell();
         
         Debug.Log("Selected slot: " + spellSelected + " Spell modifier: " + selected.GetType().Name);

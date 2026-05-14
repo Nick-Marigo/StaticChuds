@@ -50,6 +50,7 @@ public class SpellCaster
         if (mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
         {
             mana -= selectedSpell.GetManaCost();
+            selectedSpell.last_cast = Time.time;
             yield return selectedSpell.Cast(where, target, team);
         }
         yield break;
