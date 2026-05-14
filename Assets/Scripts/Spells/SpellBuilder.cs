@@ -17,7 +17,8 @@ public class SpellBuilder
     public Spell Build(SpellCaster owner)
     {
         // TODO, always picks Arcane Bolt
-        Spell spell = SpellLoader.BaseSpells[0](owner);
+        int spellIndex = UnityEngine.Random.Range(0, SpellLoader.BaseSpells.Count);
+        Spell spell = SpellLoader.BaseSpells[spellIndex](owner);
 
         // Wrap the base spell with a modifier
         int modifierIndex = UnityEngine.Random.Range(0, SpellLoader.SpellModifiers.Count);

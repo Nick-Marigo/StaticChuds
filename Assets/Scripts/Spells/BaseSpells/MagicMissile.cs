@@ -25,7 +25,7 @@ public class MagicMissile : BaseSpell
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, target - where, statSource.GetSpeed(), OnHit);
         yield return new WaitForEndOfFrame();
     }
 

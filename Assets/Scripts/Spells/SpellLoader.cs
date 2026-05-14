@@ -48,6 +48,10 @@ public class SpellLoader
                     ArcaneBlast.config = config;
                     baseSpells.Add( (owner) => new ArcaneBlast(owner) );
                     break;
+                case "arcane_spray":
+                    ArcaneSpray.config = config;
+                    baseSpells.Add( (owner) => new ArcaneSpray(owner) );
+                    break;
                 case "damage_amp":
                     DamageAmplifier.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );

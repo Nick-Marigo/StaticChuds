@@ -28,7 +28,7 @@ public class BaseSpell : Spell {
 
     public override float GetCooldown()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluate(cooldown, new Dictionary<string, int> { {"power", owner.spellPower} });
+        return RPNEvaluator.RPNEvaluator.Evaluatef(cooldown, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
     }
 
     protected virtual void OnHit(Hittable other, Vector3 impact) {

@@ -31,7 +31,6 @@ public class RewardScreenManager : MonoBehaviour
         if (!added)
         {
             Debug.Log("Spell inventory full. Drop a spell first. ");
-            player.spellUIContainer.ShowDropButtons(true);
             rewardSpellUI.ShowDropButton(true);
             return;
         }
@@ -43,13 +42,13 @@ public class RewardScreenManager : MonoBehaviour
         GameManager.Instance.state = GameManager.GameState.WAVESTATS;
     }
 
-    public void DropReward()
+    public void ClearReward()
     {
         rewardSpell = null;
         rewardSpellUI.ShowDropButton(false);
         player.spellUIContainer.ShowDropButtons(false);
-        GameManager.Instance.state = GameManager.GameState.WAVESTATS;
     }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
