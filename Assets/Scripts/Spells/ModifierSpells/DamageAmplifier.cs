@@ -31,7 +31,7 @@ public class DamageAmplifier : SpellModifier {
     {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, 
                 new Dictionary<string, float> { {"power", (float)owner.spellPower } });
-        return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
+        return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);
     }
 
     public DamageAmplifier(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {

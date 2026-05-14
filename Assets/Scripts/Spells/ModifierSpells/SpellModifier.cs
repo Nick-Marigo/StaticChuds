@@ -17,6 +17,11 @@ public abstract class SpellModifier : Spell {
         return GetDisplayName() + "\n" + name + ": " + description + "\n" + innerSpell.GetFullDescription();
     }
 
+    public override int GetDamage()
+    {
+        return innerSpell.GetDamage();
+    }
+
     public override float GetSpeed()
     {
         return innerSpell.GetSpeed();

@@ -21,6 +21,16 @@ public class BaseSpell : Spell {
 
     public BaseSpell(SpellCaster owner) : base(owner) {}
 
+    public override int GetManaCost()
+    {
+        return RPNEvaluator.RPNEvaluator.Evaluate(mana_cost, new Dictionary<string, int> { {"power", owner.spellPower} });
+    }
+
+    public override float GetCooldown()
+    {
+        return RPNEvaluator.RPNEvaluator.Evaluate(cooldown, new Dictionary<string, int> { {"power", owner.spellPower} });
+    }
+
     protected virtual void OnHit(Hittable other, Vector3 impact) {
         if (other.team != team) {
             other.Damage(new Damage(statSource.GetDamage(), damage.type));

@@ -24,11 +24,11 @@ public class SpellBuilder
         spell = SpellLoader.SpellModifiers[modifierIndex](owner, spell);
 
         // 50% chance that is gets a second modifier
-        /*if (UnityEngine.Random.value < 0.5f)
+        if (UnityEngine.Random.value < 0.5f)
         {
-            int modifierIndex = UnityEngine.Random.Range(0, SpellLoader.SpellModifiers.Count);
-            spell = SpellLoader.SpellModifiers[modifierIndex](owner, spell);
-        }*/
+            int modifierIndexTwo = UnityEngine.Random.Range(0, SpellLoader.SpellModifiers.Count);
+            spell = SpellLoader.SpellModifiers[modifierIndexTwo](owner, spell);
+        }
 
         Debug.Log("Built spell with modifier: " + spell.GetType().Name);
         return spell;
