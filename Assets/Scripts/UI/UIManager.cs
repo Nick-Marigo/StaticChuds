@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     [Header("External References")]
     [SerializeField] WaveSpawner waveSpawner;
     [SerializeField] GameOverManager gameOverManager;
+    [SerializeField] RewardScreenManager rewardScreenManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -64,7 +65,9 @@ public class UIManager : MonoBehaviour
                 background.SetActive(true);
                 rewardScreen.SetActive(true);
                 universalButton.SetActive(true);
-                buttonText.text = "Next";
+                buttonText.text = "Skip Reward";
+                rewardScreenManager.ShowReward();
+                
                 break;
 
             case GameManager.GameState.WAVESTATS:
@@ -88,6 +91,7 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.GameState.WAVEEND == GameManager.Instance.state)
         {
+            rewardScreenManager.ClearReward();
             GameManager.Instance.state = GameManager.GameState.WAVESTATS;
         }
         else if (GameManager.GameState.WAVESTATS == GameManager.Instance.state)

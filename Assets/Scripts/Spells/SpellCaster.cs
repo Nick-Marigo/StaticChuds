@@ -38,8 +38,7 @@ public class SpellCaster
         this.max_mana = mana;
         this.mana_reg = mana_reg;
         this.team = team;
-        //spell = new SpellBuilder().Build(this);
-        spells.Add(new SpellBuilder().Build(this));
+        spells.Add(new SpellBuilder().BuildArcaneBolt(this));
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
@@ -51,6 +50,7 @@ public class SpellCaster
         if (mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
         {
             mana -= selectedSpell.GetManaCost();
+            selectedSpell.last_cast = Time.time;
             yield return selectedSpell.Cast(where, target, team);
         }
         yield break;

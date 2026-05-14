@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Buffers;
 
 public class ArcaneBlast : BaseSpell
 {
@@ -28,27 +27,25 @@ public class ArcaneBlast : BaseSpell
         return Mathf.RoundToInt(total);
     }
 
-    public int CalculateN()
+    int CalculateN()
     {
         return RPNEvaluator.RPNEvaluator.Evaluate(N, new Dictionary<string, int> { {"power", owner.spellPower} });
-        
     }
 
     protected override void OnHit(Hittable other, Vector3 impact)
     {
         if (other.team != team)
         {
-            int finalDamage = owner.spell.GetDamage();
-            Debug.Log("ArcaneBlast Intial: " + finalDamage);
+            int finalDamage = statSource.GetDamage();
             other.Damage(new Damage(finalDamage, damage.type));
 
             int count = CalculateN();
             for (int i = 0; i < count; i++)
             {
-                //TODO: change this from random to sphere 
-                Vector3 randomDir = Random.onUnitSphere;
+                float angle = i * 360f / count;
+                Vector3 direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0f);
 
-                GameManager.Instance.projectileManager.CreateProjectile(secondary_projectile.sprite, secondary_projectile.trajectory, impact, randomDir, float.Parse(secondary_projectile.speed), OnSecondaryHit, float.Parse(secondary_projectile.lifetime));
+                GameManager.Instance.projectileManager.CreateProjectile(secondary_projectile.sprite, statSource.GetTrajectory(), impact, direction, statSource.GetSpeed(), OnSecondaryHit, float.Parse(secondary_projectile.lifetime));
             }
         }
     }
@@ -58,7 +55,6 @@ public class ArcaneBlast : BaseSpell
         if(other.team != team)
         {
             int secDamage = RPNEvaluator.RPNEvaluator.Evaluate(secondary_damage, new Dictionary<string, int> { {"power", owner.spellPower} });
-            Debug.Log("ArcaneBlast second: " + secDamage);
             other.Damage(new Damage(secDamage, damage.type));
         }
     }

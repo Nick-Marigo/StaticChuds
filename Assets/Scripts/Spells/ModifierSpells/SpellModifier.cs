@@ -7,6 +7,21 @@ public abstract class SpellModifier : Spell {
     override public Hittable.Team team { get { return innerSpell.team; } }
     override public Projectile projectile { get { return innerSpell.projectile; } }
 
+    public override string GetDisplayName()
+    {
+        return name + " " + innerSpell.GetDisplayName();
+    }
+
+    public override string GetFullDescription()
+    {
+        return GetDisplayName() + "\n" + name + ": " + description + "\n" + innerSpell.GetFullDescription();
+    }
+
+    public override int GetDamage()
+    {
+        return innerSpell.GetDamage();
+    }
+
     public override float GetSpeed()
     {
         return innerSpell.GetSpeed();

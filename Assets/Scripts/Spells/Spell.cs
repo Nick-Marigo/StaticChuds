@@ -29,6 +29,21 @@ public abstract class Spell
         return name;
     }
 
+    public virtual string GetDescription()
+    {
+        return description;
+    }
+
+    public virtual string GetDisplayName()
+    {
+        return name;
+    }
+
+    public virtual string GetFullDescription()
+    {
+        return name + ": " + description;
+    }
+
     public virtual int GetDamage() {
         return 10;
     }
