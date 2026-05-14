@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
         spellUIContainer.RefreshSpells(spellcaster.spells);
         spellui.SetSpell(spellcaster.GetSelectedSpell());
 
-        spellcaster.AddSpell(new SpellBuilder().Build(spellcaster));
-        spellUIContainer.RefreshSpells(spellcaster.spells);
+        //spellcaster.AddSpell(new SpellBuilder().Build(spellcaster));
+        //spellUIContainer.RefreshSpells(spellcaster.spells);
     }
 
     void OnAttack(InputValue value)
