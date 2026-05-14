@@ -31,7 +31,7 @@ public class RewardScreenManager : MonoBehaviour
         if (!added)
         {
             Debug.Log("Spell inventory full. Drop a spell first. ");
-            rewardSpellUI.ShowDropButton(true);
+            player.spellUIContainer.ShowDropButtons(true);
             return;
         }
 

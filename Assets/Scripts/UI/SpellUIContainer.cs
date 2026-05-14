@@ -29,6 +29,7 @@ public class SpellUIContainer : MonoBehaviour
     {
         player.spellcaster.RemoveSpellAt(index);
         RefreshSpells(player.spellcaster.spells);
+        ShowDropButtons(false);
     }
 
     public void ShowDropButtons(bool show)
