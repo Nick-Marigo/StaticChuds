@@ -64,8 +64,8 @@ public class UIManager : MonoBehaviour
             case GameManager.GameState.WAVEEND:
                 background.SetActive(true);
                 rewardScreen.SetActive(true);
-                universalButton.SetActive(true);
-                buttonText.text = "Next";
+                //universalButton.SetActive(true);
+                //buttonText.text = "Next";
                 rewardScreenManager.ShowReward();
                 
                 break;

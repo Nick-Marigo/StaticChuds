@@ -27,18 +27,12 @@ public class DamageAmplifier : SpellModifier {
         return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
     }
 
-    /*override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
-        //this.team = team;
-        //GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, 15f, OnHit);
-        //yield return new WaitForEndOfFrame();
-        yield return innerSpell.Cast(where, target, team);
+    public override int GetManaCost()
+    {
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, 
+                new Dictionary<string, float> { {"power", (float)owner.spellPower } });
+        return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
     }
-
-    protected virtual void OnHit(Hittable other, Vector3 impact) {
-        if (other.team != team) {
-            other.Damage(new Damage(GetDamage(), damage.type));
-        }
-    }*/
 
     public DamageAmplifier(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();

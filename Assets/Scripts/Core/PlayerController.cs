@@ -39,12 +39,8 @@ public class PlayerController : MonoBehaviour
         // tell UI elements what to show
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
-        //spellui.SetSpell(spellcaster.spell);
         spellUIContainer.RefreshSpells(spellcaster.spells);
         spellui.SetSpell(spellcaster.GetSelectedSpell());
-
-        //spellcaster.AddSpell(new SpellBuilder().Build(spellcaster));
-        //spellUIContainer.RefreshSpells(spellcaster.spells);
     }
 
     void OnAttack(InputValue value)
@@ -105,9 +101,9 @@ public class PlayerController : MonoBehaviour
     void SelectSpell(int spellSelected)
     {
         spellcaster.SelectSpell(spellSelected);
-        spellui.SetSpell(spellcaster.GetSelectedSpell());
+        Spell selected = spellcaster.GetSelectedSpell();
         
-        Debug.Log("Selected slot: " + spellSelected + " Spell modifier: " + spellSelected.GetType().Name);
+        Debug.Log("Selected slot: " + spellSelected + " Spell modifier: " + selected.GetType().Name);
         
     }
 
