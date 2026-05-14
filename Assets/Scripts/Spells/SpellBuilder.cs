@@ -12,7 +12,7 @@ public class SpellBuilder
     {
         //return SpellLoader.BaseSpells[0](owner);
         Spell spell = SpellLoader.BaseSpells[0](owner);
-        spell = SpellLoader.SpellModifiers[6](owner, spell);
+        spell = SpellLoader.SpellModifiers[7](owner, spell);
         return spell;
     }
 

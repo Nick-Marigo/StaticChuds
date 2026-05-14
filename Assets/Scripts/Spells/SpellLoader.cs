@@ -76,9 +76,13 @@ public class SpellLoader
                     Homing.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Homing(owner, innerSpell) );
                     break;
-                case "gotyourback":
+                case "gotYourBack":
                     GotYourBack.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new GotYourBack(owner, innerSpell) );
+                    break;
+                case "riskyDamage":
+                    RiskyDamage.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new RiskyDamage(owner, innerSpell) );
                     break;
             }
         }

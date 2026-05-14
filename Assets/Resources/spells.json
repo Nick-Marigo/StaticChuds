@@ -77,10 +77,16 @@
        "mana_adder": "10",
        "projectile_trajectory": "homing"
    },
-   "gotyourback": {
+   "gotYourBack": {
     "name": "Got Your Back",
     "description": "Shoot another projectile in the opposite direction, increase mana cost",
     "mana_multiplier": "1.5"
+   },
+   "riskyDamage": {
+    "name": "Risky Damage",
+    "description": "Damage varies each time",
+    "damageMin_multiplier": "0.1",
+    "damageMax_multiplier": "2.0"
    }
 
 }
