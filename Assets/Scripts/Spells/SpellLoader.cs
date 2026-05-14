@@ -84,6 +84,10 @@ public class SpellLoader
                     RiskyDamage.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new RiskyDamage(owner, innerSpell) );
                     break;
+                case "rapidfire":
+                    RapidFire.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new RapidFire(owner, innerSpell) );
+                    break;
             }
         }
     }

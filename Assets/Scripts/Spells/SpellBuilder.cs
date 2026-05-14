@@ -10,10 +10,7 @@ public class SpellBuilder
     // Builds an Arcane Bolt with no modifiers for starting spell
     public Spell BuildArcaneBolt(SpellCaster owner)
     {
-        //return SpellLoader.BaseSpells[0](owner);
-        Spell spell = SpellLoader.BaseSpells[0](owner);
-        spell = SpellLoader.SpellModifiers[7](owner, spell);
-        return spell;
+        return SpellLoader.BaseSpells[0](owner);
     }
 
     // Builds an Arcane Bolt with modifiers

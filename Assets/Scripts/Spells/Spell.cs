@@ -72,7 +72,7 @@ public abstract class Spell
     {
         return projectile.trajectory;
     }
-
+    
     public bool IsReady()
     {
         return (last_cast + GetCooldown() < Time.time);

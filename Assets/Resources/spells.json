@@ -78,15 +78,20 @@
        "projectile_trajectory": "homing"
    },
    "gotYourBack": {
-    "name": "Got Your Back",
-    "description": "Shoot another projectile in the opposite direction, increase mana cost",
-    "mana_multiplier": "1.5"
+        "name": "Got Your Back",
+        "description": "Shoot another projectile in the opposite direction; increase mana cost",
+        "mana_multiplier": "1.5"
    },
    "riskyDamage": {
-    "name": "Risky Damage",
-    "description": "Damage varies each time",
-    "damageMin_multiplier": "0.1",
-    "damageMax_multiplier": "2.0"
+        "name": "Risky Damage",
+        "description": "Damage varies each time a spell is casted",
+        "damageMin_multiplier": "0.1",
+        "damageMax_multiplier": "2.0"
+   },
+   "rapidfire": {
+        "name": "Rapid Fire",
+        "description": "Spells have low cooldown with increse mana cost",
+        "cooldown_multiplier": "0.1",
+        "mana_multiplier": "1.2"
    }
-
 }
