@@ -133,5 +133,19 @@
                 "location": "random"
             }
         ]
+   },
+   {
+       "name": "Dev",
+       "waves": 10,
+       "spawns": [
+            {
+                "enemy": "zombie",
+                "count": "3",
+                "hp": "base 5 wave * +",
+                "delay": "5",
+                "sequence": [3],
+                "location": "random bone"
+            }
+        ]
    }
 ]
