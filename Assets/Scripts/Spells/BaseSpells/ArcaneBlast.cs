@@ -65,7 +65,7 @@ public class ArcaneBlast : BaseSpell
         Projectile p = this.projectile;
         float speed = RPNEvaluator.RPNEvaluator.Evaluatef(p.speed, new Dictionary<string, float> { {"power", (float)owner.spellPower}});
 
-        GameManager.Instance.projectileManager.CreateProjectile(0, projectile.trajectory, where, target - where, speed, this.OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(0, statSource.GetTrajectory(), where, target - where, speed, this.OnHit);
         yield return new WaitForEndOfFrame();
     }
 
