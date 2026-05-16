@@ -2,7 +2,7 @@
    "arcane_bolt":  {
        "name": "Arcane Bolt",
        "description": "A straight-flying bolt.",
-       "icon": 1,
+       "icon": 0,
        "damage": {"amount": "25 power 5 / +", "type": "arcane"},
        "mana_cost": "10",
        "cooldown": "0.3",
@@ -11,7 +11,7 @@
    "magic_missile":  {
        "name": "Magic Missile",
        "description": "A homing bolt.",
-       "icon": 2,
+       "icon": 4,
        "damage": {"amount": "10 power 3 / +", "type": "arcane"},
        "mana_cost": "20",
        "cooldown": "3",
@@ -20,7 +20,7 @@
    "arcane_blast":  {
        "name": "Arcane Blast",
        "description": "A bolt that explodes into smaller bolts on impact.",
-       "icon": 2,
+       "icon": 1,
        "N": "8 power 5 / +",
        "damage": {"amount": "20 power 3 / +", "type": "arcane"},
        "secondary_damage": "5 power 10 / +",
@@ -32,7 +32,7 @@
    "arcane_spray":  {
        "name": "Arcane Spray",
        "description": "A large number of short-range bolts in a cone.",
-       "icon": 1,
+       "icon": 2,
        "N": "7 power 25 / +",
        "spray": "0.3",
        "damage": {"amount": "3 power 5 / +", "type": "arcane"},

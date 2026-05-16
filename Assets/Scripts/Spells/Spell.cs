@@ -17,6 +17,7 @@ public abstract class Spell
     public virtual Hittable.Team team { get; protected set; }
     public virtual DamageInfo damage { get; protected set; }
     public virtual Projectile projectile { get; protected set; }
+    public virtual int icon { get; protected set; }
     public Spell statSource;
 
     public Spell(SpellCaster owner) {
@@ -61,11 +62,6 @@ public abstract class Spell
     public virtual float GetCooldown()
     {
         return 0.75f;
-    }
-
-    public virtual int GetIcon()
-    {
-        return 0;
     }
 
     public virtual string GetTrajectory()

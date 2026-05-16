@@ -25,7 +25,7 @@ public class SpellUI : MonoBehaviour
     public void SetSpell(Spell spell)
     {
         this.spell = spell;
-        GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
+        GameManager.Instance.spellIconManager.PlaceSprite(spell.icon, icon.GetComponent<Image>());
     }
 
     public void ShowHighlight(bool show)

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 [JsonObject(MemberSerialization.OptOut)]
 public class BaseSpell : Spell {
     [JsonProperty]
-    protected int icon;
+    override public int icon { get; protected set; }
     [JsonProperty]
     protected string mana_cost;
     [JsonProperty]
