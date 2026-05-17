@@ -8,7 +8,6 @@ public class SpellCaster
     public int max_mana;
     public int mana_reg;
     public Hittable.Team team;
-    //public Spell spell;
     public List<Spell> spells = new List<Spell>();
     public Spell spell
     {

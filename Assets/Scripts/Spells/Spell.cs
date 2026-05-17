@@ -27,21 +27,21 @@ public abstract class Spell
     public Spell(SpellCaster owner) {
         this.owner = owner;
         this.statSource = this;
-        UpdateDicts();
+        UpdateDicts(GameManager.Instance.currentWave);
 
-        EventManager.waveStarted += UpdateDicts;
+        EventBus.Instance.OnWaveStart += UpdateDicts;
     }
 
     // On waveStart, all the dictionary values are updated to
     // reflect the current game state
-    protected void UpdateDicts() {
+    protected void UpdateDicts(int waveNum) {
         intRpnVals = new Dictionary<string, int> {
             {"power", owner.spellPower},
-            {"wave", GameManager.Instance.currentWave}
+            {"wave", waveNum}
         };
         floatRpnVals = new Dictionary<string, float> {
             {"power", owner.spellPower},
-            {"wave", GameManager.Instance.currentWave}
+            {"wave", waveNum} 
         };
     }
 
@@ -91,9 +91,5 @@ public abstract class Spell
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
         yield return new WaitForEndOfFrame();
-    }
-
-    void OnDestroy() {
-        EventManager.waveStarted -= UpdateDicts;
     }
 }

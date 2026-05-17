@@ -42,7 +42,6 @@ public class WaveSpawner : MonoBehaviour
 
         if (currentWave <= selectedLevel.waves)
         {
-            EventManager.InvokeWaveStarted();
             StartCoroutine(SpawnWave());
             return;
         }
