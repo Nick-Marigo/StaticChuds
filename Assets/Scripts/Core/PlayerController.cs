@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     public bool isDead = false;
 
+    public Vector3 position{get { return transform.position; }}
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,7 +52,7 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
-        StartCoroutine(spellcaster.Cast(transform.position, mouseWorld));
+        StartCoroutine(spellcaster.Cast(position, mouseWorld));
     }
 
     void OnMove(InputValue value)

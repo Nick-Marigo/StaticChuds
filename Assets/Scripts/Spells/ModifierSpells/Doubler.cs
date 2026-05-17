@@ -11,6 +11,8 @@ public class Doubler : SpellModifier {
     protected string delay;
     protected string mana_multiplier;
     protected string cooldown_multiplier;
+    [JsonIgnore]
+    private PlayerController playerController;
 
     void SetAttributes()
     {
@@ -44,11 +46,13 @@ public class Doubler : SpellModifier {
         float delayTime = RPNEvaluator.RPNEvaluator.Evaluatef(delay, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
         yield return new WaitForSeconds(delayTime);
 
-        // Let the inner spell handle its own casting behavior
-        yield return innerSpell.Cast(where, target, team);
+        // Let the inner spell handle its own casting behavior and
+        // get current pos from playerController
+        yield return innerSpell.Cast(playerController.position, target, team);
     }
 
     public Doubler(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();
+        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 }
