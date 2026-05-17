@@ -12,16 +12,11 @@ public class RewardScreenManager : MonoBehaviour
 
     public void ShowReward()
     {
-        rewardSpell = new SpellBuilder().Build(player.spellcaster);
+        rewardSpell = SpellBuilder.Build(player.spellcaster);
         rewardSpellUI.SetSpell(rewardSpell);
         rewardSpellUI.ShowDropButton(false);
 
         rewardDescription.text = rewardSpell.GetFullDescription();
-    }
-
-    public void GenerateReward(PlayerController player)
-    {
-        rewardSpell = new SpellBuilder().Build(player.spellcaster);
     }
 
     public void AcceptReward()

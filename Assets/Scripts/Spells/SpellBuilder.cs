@@ -8,13 +8,13 @@ using System.Collections.Generic;
 public class SpellBuilder 
 {
     // Builds an Arcane Bolt with no modifiers for starting spell
-    public Spell BuildArcaneBolt(SpellCaster owner)
+    public static Spell BuildArcaneBolt(SpellCaster owner)
     {
         return SpellLoader.BaseSpells[0](owner);
     }
 
     // Builds an Arcane Bolt with modifiers
-    public Spell Build(SpellCaster owner)
+    public static Spell Build(SpellCaster owner)
     {
         int spellIndex = UnityEngine.Random.Range(0, SpellLoader.BaseSpells.Count);
         Spell spell = SpellLoader.BaseSpells[spellIndex](owner);
@@ -33,10 +33,4 @@ public class SpellBuilder
         Debug.Log("Built spell with modifier: " + spell.GetType().Name);
         return spell;
     }
-
-    public SpellBuilder()
-    {
-        
-    }
-
 }
