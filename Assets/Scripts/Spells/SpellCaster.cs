@@ -19,7 +19,6 @@ public class SpellCaster
     }
     public int selectedSpellIndex = 0;
     public const int MAXSPELLS = 4;
-    // TODO <- I think this is done? I assume you mean scale it.
     public int spellPower = 5;
 
     public IEnumerator ManaRegeneration()

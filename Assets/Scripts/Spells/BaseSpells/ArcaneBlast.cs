@@ -21,15 +21,9 @@ public class ArcaneBlast : BaseSpell
         serializer.Populate(config.CreateReader(), this);
     }
 
-    override public int GetDamage() {
-        float total = RPNEvaluator.RPNEvaluator.Evaluatef(damage.amount, 
-                new Dictionary<string, int> { {"power", owner.spellPower} });
-        return Mathf.RoundToInt(total);
-    }
-
     int CalculateN()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluate(N, new Dictionary<string, int> { {"power", owner.spellPower} });
+        return RPNEvaluator.RPNEvaluator.Evaluate(N, intRpnVals);
     }
 
     protected override void OnHit(Hittable other, Vector3 impact)
@@ -54,7 +48,7 @@ public class ArcaneBlast : BaseSpell
     {
         if(other.team != team)
         {
-            int secDamage = RPNEvaluator.RPNEvaluator.Evaluate(secondary_damage, new Dictionary<string, int> { {"power", owner.spellPower} });
+            int secDamage = RPNEvaluator.RPNEvaluator.Evaluate(secondary_damage, intRpnVals);
             other.Damage(new Damage(secDamage, damage.type));
         }
     }
@@ -63,7 +57,7 @@ public class ArcaneBlast : BaseSpell
         this.team = team;
 
         Projectile p = this.projectile;
-        float speed = RPNEvaluator.RPNEvaluator.Evaluatef(p.speed, new Dictionary<string, float> { {"power", (float)owner.spellPower}});
+        float speed = RPNEvaluator.RPNEvaluator.Evaluatef(p.speed, floatRpnVals);
 
         GameManager.Instance.projectileManager.CreateProjectile(0, statSource.GetTrajectory(), where, target - where, speed, this.OnHit);
         yield return new WaitForEndOfFrame();

@@ -28,7 +28,7 @@ public class Homing : SpellModifier {
         return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
     }
 
-    public override int GetManaCost()
+    override public int GetManaCost()
     {
         int manaAddAmount = RPNEvaluator.RPNEvaluator.Evaluate(mana_adder, new Dictionary<string, int> { {"power", owner.spellPower} });
         return innerSpell.GetManaCost() + manaAddAmount;

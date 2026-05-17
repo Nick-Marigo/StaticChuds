@@ -24,15 +24,15 @@ public class Doubler : SpellModifier {
             serializer.Populate(config.CreateReader(), this);
     }
 
-    public override int GetManaCost()
+    override public int GetManaCost()
     {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, floatRpnVals);
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);
     }
 
-    public override float GetCooldown()
+    override public float GetCooldown()
     {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(cooldown_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(cooldown_multiplier, floatRpnVals);
 
         return innerSpell.GetCooldown() * multiplier;
     }
@@ -43,7 +43,7 @@ public class Doubler : SpellModifier {
         yield return innerSpell.Cast(where, target, team);
 
         // Wait for delay time between casts
-        float delayTime = RPNEvaluator.RPNEvaluator.Evaluatef(delay, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        float delayTime = RPNEvaluator.RPNEvaluator.Evaluatef(delay, floatRpnVals);
         yield return new WaitForSeconds(delayTime);
 
         // Let the inner spell handle its own casting behavior and

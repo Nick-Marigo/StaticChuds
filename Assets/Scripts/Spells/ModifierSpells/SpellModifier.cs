@@ -28,12 +28,12 @@ public abstract class SpellModifier : Spell {
         return innerSpell.GetSpeed();
     }
 
-    public override int GetManaCost()
+    override public int GetManaCost()
     {
         return innerSpell.GetManaCost();
     }
 
-    public override float GetCooldown()
+    override public float GetCooldown()
     {
         return innerSpell.GetCooldown();
     }

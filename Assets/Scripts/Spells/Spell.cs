@@ -20,9 +20,29 @@ public abstract class Spell
     public virtual int icon { get; protected set; }
     public Spell statSource;
 
+    // Dictionaries for RPNE calculations
+    protected Dictionary<string, int> intRpnVals;
+    protected Dictionary<string, float> floatRpnVals;
+
     public Spell(SpellCaster owner) {
         this.owner = owner;
         this.statSource = this;
+        UpdateDicts();
+
+        EventManager.waveStarted += UpdateDicts;
+    }
+
+    // On waveStart, all the dictionary values are updated to
+    // reflect the current game state
+    protected void UpdateDicts() {
+        intRpnVals = new Dictionary<string, int> {
+            {"power", owner.spellPower},
+            {"wave", GameManager.Instance.currentWave}
+        };
+        floatRpnVals = new Dictionary<string, float> {
+            {"power", owner.spellPower},
+            {"wave", GameManager.Instance.currentWave}
+        };
     }
 
     public string GetName()
@@ -45,37 +65,35 @@ public abstract class Spell
         return name + ": " + description;
     }
 
-    public virtual int GetDamage() {
-        return 10;
+    virtual public int GetDamage() {
+        return RPNEvaluator.RPNEvaluator.Evaluate(damage.amount, intRpnVals);
     }
 
     public virtual float GetSpeed()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluatef(projectile.speed, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
-    }
-
-    public virtual int GetManaCost()
-    {
-        return 10;
-    }
-
-    public virtual float GetCooldown()
-    {
-        return 0.75f;
+        return RPNEvaluator.RPNEvaluator.Evaluatef(projectile.speed, floatRpnVals);
     }
 
     public virtual string GetTrajectory()
     {
         return projectile.trajectory;
     }
-    
+
+    virtual public int GetManaCost() { return 0; }
+    virtual public float GetCooldown() { return 0; }
+
     public bool IsReady()
     {
         return (last_cast + GetCooldown() < Time.time);
     }
 
+
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
         yield return new WaitForEndOfFrame();
+    }
+
+    void OnDestroy() {
+        EventManager.waveStarted -= UpdateDicts;
     }
 }

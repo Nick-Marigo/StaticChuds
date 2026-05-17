@@ -21,14 +21,14 @@ public class RapidFire : SpellModifier {
             serializer.Populate(config.CreateReader(), this);
     }
 
-    public override float GetCooldown()
+    override public float GetCooldown()
     {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(cooldown_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
 
         return innerSpell.GetCooldown() * multiplier;
     }
 
-    public override int GetManaCost()
+    override public int GetManaCost()
     {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);

@@ -21,14 +21,14 @@ public class BaseSpell : Spell {
 
     public BaseSpell(SpellCaster owner) : base(owner) {}
 
-    public override int GetManaCost()
+    override public int GetManaCost()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluate(mana_cost, new Dictionary<string, int> { {"power", owner.spellPower} });
+        return RPNEvaluator.RPNEvaluator.Evaluate(mana_cost, intRpnVals);
     }
 
-    public override float GetCooldown()
+    override public float GetCooldown()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluatef(cooldown, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        return RPNEvaluator.RPNEvaluator.Evaluatef(cooldown, floatRpnVals);
     }
 
     protected virtual void OnHit(Hittable other, Vector3 impact) {

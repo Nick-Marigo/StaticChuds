@@ -21,7 +21,7 @@ public class Splitter : SpellModifier {
             serializer.Populate(config.CreateReader(), this);
     }
 
-    public override int GetManaCost()
+    override public int GetManaCost()
     {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);

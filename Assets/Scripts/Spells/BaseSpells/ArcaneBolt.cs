@@ -17,12 +17,8 @@ public class ArcaneBolt : BaseSpell {
         serializer.Populate(config.CreateReader(), this);
     }
 
-    override public int GetDamage() {
-        return RPNEvaluator.RPNEvaluator.Evaluate(damage.amount, 
-                new Dictionary<string, int> { {"power", owner.spellPower } });
-    }
-
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+        Debug.Log("spellpower: " + owner.spellPower + " dict: " + intRpnVals["power"]);
         this.team = team;
         GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, target - where, statSource.GetSpeed(), OnHit);
         yield return new WaitForEndOfFrame();

@@ -19,24 +19,19 @@ public class ArcaneSpray : BaseSpell {
         serializer.Populate(config.CreateReader(), this);
     }
 
-    override public int GetDamage() {
-        return RPNEvaluator.RPNEvaluator.Evaluate(damage.amount, 
-                new Dictionary<string, int> { {"power", owner.spellPower } });
-    }
-
     int CalculateN()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluate(N, new Dictionary<string, int> { {"power", owner.spellPower} });
+        return RPNEvaluator.RPNEvaluator.Evaluate(N, intRpnVals);
     }
 
     float CalculateSpray()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluatef(spray, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        return RPNEvaluator.RPNEvaluator.Evaluatef(spray, floatRpnVals);
     }
 
     float CalculateLifeTime()
     {
-        return RPNEvaluator.RPNEvaluator.Evaluatef(projectile.lifetime, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        return RPNEvaluator.RPNEvaluator.Evaluatef(projectile.lifetime, floatRpnVals);
     }
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {

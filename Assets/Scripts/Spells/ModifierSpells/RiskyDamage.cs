@@ -23,10 +23,10 @@ public class RiskyDamage : SpellModifier {
     override public int GetDamage() {
 
         float damageMin = RPNEvaluator.RPNEvaluator.Evaluatef(damageMin_multiplier, 
-            new Dictionary<string, float> { {"power", (float)owner.spellPower } });
+            floatRpnVals);
 
         float damageMax = RPNEvaluator.RPNEvaluator.Evaluatef(damageMax_multiplier, 
-            new Dictionary<string, float> { {"power", (float)owner.spellPower } });
+            floatRpnVals);
 
         float damageMultiplier = UnityEngine.Random.Range(damageMin, damageMax);
 
