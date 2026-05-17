@@ -4,7 +4,7 @@
        "description": "A straight-flying bolt.",
        "icon": 0,
        "damage": {"amount": "25 power 5 / +", "type": "arcane"},
-       "mana_cost": "10 wave *",
+       "mana_cost": "10",
        "cooldown": "0.3",
        "projectile": {"trajectory": "straight", "speed": "8 power 5 / +", "sprite": 0}
    },

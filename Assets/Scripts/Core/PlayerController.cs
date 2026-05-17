@@ -31,12 +31,13 @@ public class PlayerController : MonoBehaviour
 
     public void InitPlayer()
     {
-        spellcaster = new SpellCaster(125, 8, Hittable.Team.PLAYER);
-        StartCoroutine(spellcaster.ManaRegeneration());
-        
         hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
+
+        spellcaster = new SpellCaster(Hittable.Team.PLAYER);
+        ScaleStats(GameManager.Instance.currentWave);
+        StartCoroutine(spellcaster.ManaRegeneration());
 
         // tell UI elements what to show
         healthui.SetHealth(hp);
@@ -93,7 +94,6 @@ public class PlayerController : MonoBehaviour
 
         hp.SetMaxHP(newHp);
         spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
-
     }
 
     void OnSpell1() => SelectSpell(0);

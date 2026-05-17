@@ -30,11 +30,8 @@ public class SpellCaster
         }
     }
 
-    public SpellCaster(int mana, int mana_reg, Hittable.Team team)
+    public SpellCaster(Hittable.Team team)
     {
-        this.mana = mana;
-        this.max_mana = mana;
-        this.mana_reg = mana_reg;
         this.team = team;
         spells.Add(SpellBuilder.BuildArcaneBolt(this));
     }
