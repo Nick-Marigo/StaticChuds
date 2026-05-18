@@ -21,8 +21,7 @@ public class SpellBuilder
 
         // Wrap the base spell with a modifier
         int modifierIndex = UnityEngine.Random.Range(0, SpellLoader.SpellModifiers.Count);
-        spell = SpellLoader.SpellModifiers[4](owner, spell);
-        spell = SpellLoader.SpellModifiers[3](owner, spell);
+        spell = SpellLoader.SpellModifiers[modifierIndex](owner, spell);
 
         // 50% chance that is gets a second modifier
         if (UnityEngine.Random.value < 0.5f)

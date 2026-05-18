@@ -20,6 +20,11 @@ public abstract class Spell
     public virtual int icon { get; protected set; }
     public Spell statSource;
 
+    public virtual void SetStatsSource(Spell source)
+    {
+        statSource = source;
+    }
+
     // Dictionaries for RPNE calculations
     protected Dictionary<string, int> intRpnVals;
     protected Dictionary<string, float> floatRpnVals;

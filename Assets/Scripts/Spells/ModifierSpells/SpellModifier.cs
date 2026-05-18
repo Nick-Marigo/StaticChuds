@@ -49,8 +49,14 @@ public abstract class SpellModifier : Spell {
         yield return innerSpell.Cast(where, target, team);
     }
 
+    public override void SetStatsSource(Spell source)
+    {
+        statSource = source;
+        innerSpell.SetStatsSource(source);
+    }
+
     public SpellModifier(SpellCaster owner, Spell innerSpell) : base(owner) {
         this.innerSpell = innerSpell;
-        innerSpell.statSource = this;
+        SetStatsSource(this);
     }
 }

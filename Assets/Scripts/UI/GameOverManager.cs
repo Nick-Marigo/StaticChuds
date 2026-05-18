@@ -13,16 +13,23 @@ public class GameOverManager : MonoBehaviour
     [SerializeField]
     public PlayerController player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    void OnEnable()
     {
-        
+        GameManager.Instance.OnChangedState += DisplayGameOver;
     }
 
-    // Update is called once per frame
-    //TOREMOVE
-    /*void Update()
+    void OnDisable()
     {
-        if(GameManager.Instance.state == GameManager.GameState.GAMEOVER)
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnChangedState -= DisplayGameOver;
+        }
+    }
+
+    void DisplayGameOver(GameManager.GameState newState)
+    {
+        if(newState == GameManager.GameState.GAMEOVER)
         {
             if(player.isDead)
             {
@@ -35,12 +42,7 @@ public class GameOverManager : MonoBehaviour
             gameOverUI.SetActive(true);
             waveStats.DisplayStats();
         }
-        else
-        {
-            gameOverUI.SetActive(false);
-            //waveStats.HideStats();
-        }
-    }*/
+    }
 
 
 
