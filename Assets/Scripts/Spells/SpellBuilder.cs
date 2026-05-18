@@ -13,7 +13,7 @@ public class SpellBuilder
         return SpellLoader.BaseSpells[0](owner);
     }
 
-    // Builds an Arcane Bolt with modifiers
+    // Builds a base spell with mods
     public static Spell Build(SpellCaster owner)
     {
         int spellIndex = UnityEngine.Random.Range(0, SpellLoader.BaseSpells.Count);
@@ -21,7 +21,8 @@ public class SpellBuilder
 
         // Wrap the base spell with a modifier
         int modifierIndex = UnityEngine.Random.Range(0, SpellLoader.SpellModifiers.Count);
-        spell = SpellLoader.SpellModifiers[0](owner, spell);
+        spell = SpellLoader.SpellModifiers[4](owner, spell);
+        spell = SpellLoader.SpellModifiers[3](owner, spell);
 
         // 50% chance that is gets a second modifier
         if (UnityEngine.Random.value < 0.5f)
