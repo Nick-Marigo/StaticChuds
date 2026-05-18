@@ -24,13 +24,13 @@ public class Homing : SpellModifier {
 
     public override int GetDamage()
     {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, floatRpnVals);
         return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
     }
 
     override public int GetManaCost()
     {
-        int manaAddAmount = RPNEvaluator.RPNEvaluator.Evaluate(mana_adder, new Dictionary<string, int> { {"power", owner.spellPower} });
+        int manaAddAmount = RPNEvaluator.RPNEvaluator.Evaluate(mana_adder, intRpnVals);
         return innerSpell.GetManaCost() + manaAddAmount;
     }
 

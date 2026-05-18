@@ -23,14 +23,14 @@ public class Splitter : SpellModifier {
 
     override public int GetManaCost()
     {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, floatRpnVals);
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);
     }
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
 
-        float angleValue = RPNEvaluator.RPNEvaluator.Evaluatef(angle, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        float angleValue = RPNEvaluator.RPNEvaluator.Evaluatef(angle, floatRpnVals);
 
         // Get original direction from caster to target
         Vector3 direction = target - where;

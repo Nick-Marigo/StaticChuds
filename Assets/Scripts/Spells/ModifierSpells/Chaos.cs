@@ -23,7 +23,7 @@ public class Chaos : SpellModifier {
 
     public override int GetDamage()
     {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower}, {"wave", (float)GameManager.Instance.currentWave} });
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, floatRpnVals);
         return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
     }
 

@@ -22,7 +22,7 @@ public class GotYourBack : SpellModifier {
 
     override public int GetManaCost()
     {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, new Dictionary<string, float> { {"power", (float)owner.spellPower} });
+        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, floatRpnVals);
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);
     }
 

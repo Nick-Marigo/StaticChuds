@@ -22,14 +22,14 @@ public class DamageAmplifier : SpellModifier {
 
     override public int GetDamage() {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, 
-                new Dictionary<string, float> { {"power", (float)owner.spellPower } });
+                floatRpnVals);
         return Mathf.RoundToInt(innerSpell.GetDamage() * multiplier);
     }
 
     override public int GetManaCost()
     {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(mana_multiplier, 
-                new Dictionary<string, float> { {"power", (float)owner.spellPower } });
+                floatRpnVals);
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);
     }
 
