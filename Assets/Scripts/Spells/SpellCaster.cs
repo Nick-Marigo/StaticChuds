@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class SpellCaster 
 {
-    public int mana;
+    public int mana = 0;
     public int max_mana;
     public int mana_reg;
     public Hittable.Team team;
@@ -87,9 +87,10 @@ public class SpellCaster
         //int oldMana = this.mana;
         //int oldMax = this.max_mana;
 
-        float perc = this.mana * 1.0f / this.max_mana;
+        this.mana = newMana;
         this.max_mana = newMana;
-        this.mana = Mathf.RoundToInt(perc * newMana);
+        //float perc = this.mana * 1.0f / this.max_mana;
+        //this.mana = Mathf.RoundToInt(perc * newMana);
 
         this.mana_reg = newManaRegen;
         this.spellPower = newSpellPower;
