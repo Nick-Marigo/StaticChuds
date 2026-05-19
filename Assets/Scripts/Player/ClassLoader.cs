@@ -33,11 +33,11 @@ public class ClassesLoader
             return null;
         }
 
-        foreach (KeyValuePair<string, Classes> kvp in classes)
+        /*foreach (KeyValuePair<string, Classes> kvp in classes)
         {
             string name = kvp.Key;
             Classes info = kvp.Value;
-            
+
             Debug.Log("Class: " + name);
             Debug.Log("sprite: " + info.sprite);
             Debug.Log("health: " + info.health);
@@ -46,7 +46,7 @@ public class ClassesLoader
             Debug.Log("spellpower: " + info.spellpower);
             Debug.Log("speed: " + info.speed);
 
-        }
+        }*/
 
         return classes;
     }
