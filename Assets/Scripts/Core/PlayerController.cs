@@ -20,12 +20,15 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 position{get { return transform.position; }}
 
+    private Dictionary<string, Classes> classes;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
+        classes = ClassesLoader.GetClasses();
         InitPlayer();
     }
 
