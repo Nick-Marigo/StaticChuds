@@ -1,7 +1,8 @@
 using UnityEngine;
 
 public class GainManaEffect : Effect {
-    public GainManaEffect(string description, string type, string amount) {
+    public GainManaEffect(Relic owner, string description, string type, string amount) {
+        this.relic = owner;
         this.description = description;
         this.type = type;
         this.amount = amount;

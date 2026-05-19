@@ -3,20 +3,20 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization;
 
-[JsonObject(MemberSerialization.Fields)]
+[JsonObject(MemberSerialization.OptIn)]
 public class Relic {
-    // TODO give relics an owner
-    string name;
-    int sprite;
+    [JsonProperty]
+    public string name { get; protected set; }
+    [JsonProperty]
+    protected int sprite;
     [JsonProperty("trigger")]
     TriggerGenerator triggerGen;
     [JsonProperty("effect")]
     EffectGenerator effectGen;
 
-    [JsonIgnore]
     public Trigger trigger;
-    [JsonIgnore]
     public Effect effect;
+    public GameObject owner;
 
     [JsonConstructor]
     public Relic() {
@@ -27,16 +27,18 @@ public class Relic {
      * using the generator classes */
     [OnDeserialized]
     void OnDeserialization(StreamingContext context) {
-        trigger = triggerGen.GenerateTrigger();
+        // REMOVE
+        owner = GameManager.Instance.player;
+
+        trigger = triggerGen.GenerateTrigger(this);
         if (trigger == null) {
             Debug.Log("failed to load trigger for " + name + " relic");
             return;
         }
-        effect = effectGen.GenerateEffect();
+        effect = effectGen.GenerateEffect(this);
         if (effect == null) {
             Debug.Log("failed to load effect for " + name + " relic");
             return;
         }
-        trigger.effect = effect;
     }
 }

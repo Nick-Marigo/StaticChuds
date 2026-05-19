@@ -1,4 +1,3 @@
-using UnityEngine;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.Fields)]
@@ -6,8 +5,9 @@ abstract public class Trigger {
     protected string description;
     protected string type;
 
-    // The effect this trigger invokes
-    public Effect effect;
+    // The relic this trigger belongs to
+    [JsonIgnore]
+    protected Relic relic;
 
     abstract protected void InvokeEffect();
 }

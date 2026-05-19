@@ -7,5 +7,9 @@ abstract public class Effect {
     protected string amount;
     protected string until;
 
+    // The Relic this effect belongs to
+    [JsonIgnore]
+    protected Relic relic;
+
     abstract public void PerformEffect();
 }
