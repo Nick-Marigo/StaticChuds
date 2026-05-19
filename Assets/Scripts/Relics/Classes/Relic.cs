@@ -7,18 +7,27 @@ using System.Runtime.Serialization;
 public class Relic {
     string name;
     int sprite;
-    TriggerGenerator trigger;
-    EffectGenerator effect;
+    [JsonProperty("trigger")]
+    TriggerGenerator triggerGen;
+    [JsonProperty("effect")]
+    EffectGenerator effectGen;
 
-    public Trigger Trigger;
-    public Effect Effect;
+    [JsonIgnore]
+    public Trigger trigger;
+    [JsonIgnore]
+    public Effect effect;
 
     [JsonConstructor]
     public Relic() {
 
     }
 
+    /* After the Relic is deserialized, it generates
+     * the appropiate Effect and Trigger using the
+     * generator classes */
     [OnDeserialized]
     void OnDeserialization(StreamingContext context) {
+        triggerGen.GenerateTrigger();
+        effectGen.GenerateEffect();
     }
 }

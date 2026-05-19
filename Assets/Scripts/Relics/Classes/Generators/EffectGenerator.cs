@@ -7,4 +7,13 @@ public class EffectGenerator {
     protected string type;
     protected string amount;
     protected string until;
+
+    public Effect GenerateEffect() {
+        switch(type) {
+            case "gain-mana": 
+                return new GainManaEffect(description, type, amount);
+            default: 
+                return null;
+        }
+    }
 }
