@@ -1,3 +1,4 @@
+using UnityEngine;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.Fields)]

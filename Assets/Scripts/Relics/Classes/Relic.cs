@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 
 [JsonObject(MemberSerialization.Fields)]
 public class Relic {
+    // TODO give relics an owner
     string name;
     int sprite;
     [JsonProperty("trigger")]
@@ -22,12 +23,20 @@ public class Relic {
 
     }
 
-    /* After the Relic is deserialized, it generates
-     * the appropiate Effect and Trigger using the
-     * generator classes */
+    /* After the Relic is deserialized, it generates the appropiate Effect and Trigger 
+     * using the generator classes */
     [OnDeserialized]
     void OnDeserialization(StreamingContext context) {
-        triggerGen.GenerateTrigger();
-        effectGen.GenerateEffect();
+        trigger = triggerGen.GenerateTrigger();
+        if (trigger == null) {
+            Debug.Log("failed to load trigger for " + name + " relic");
+            return;
+        }
+        effect = effectGen.GenerateEffect();
+        if (effect == null) {
+            Debug.Log("failed to load effect for " + name + " relic");
+            return;
+        }
+        trigger.effect = effect;
     }
 }

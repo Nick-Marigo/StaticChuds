@@ -9,6 +9,7 @@ public class EffectGenerator {
     protected string until;
 
     public Effect GenerateEffect() {
+        Debug.Log(type);
         switch(type) {
             case "gain-mana": 
                 return new GainManaEffect(description, type, amount);
