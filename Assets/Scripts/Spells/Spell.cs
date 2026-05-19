@@ -20,6 +20,17 @@ public abstract class Spell
     public virtual int icon { get; protected set; }
     public Spell statSource;
 
+    public Spell(SpellCaster owner) {
+        this.owner = owner;
+        this.statSource = this;
+        UpdateDicts(GameManager.Instance.currentWave);
+        EventBus.Instance.OnWaveStart += UpdateDicts;
+    }
+
+    void OnDestroy() {
+        EventBus.Instance.OnWaveStart -= UpdateDicts;
+    }
+
     public virtual void SetStatsSource(Spell source)
     {
         statSource = source;
@@ -29,13 +40,6 @@ public abstract class Spell
     protected Dictionary<string, int> intRpnVals;
     protected Dictionary<string, float> floatRpnVals;
 
-    public Spell(SpellCaster owner) {
-        this.owner = owner;
-        this.statSource = this;
-        UpdateDicts(GameManager.Instance.currentWave);
-
-        EventBus.Instance.OnWaveStart += UpdateDicts;
-    }
 
     // On waveStart, all the dictionary values are updated to
     // reflect the current game state
