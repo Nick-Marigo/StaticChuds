@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.Fields)]
-abstract class Effect {
+abstract public class Effect {
     protected string description;
     protected string type;
     protected string amount;
