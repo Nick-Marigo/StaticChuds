@@ -22,6 +22,11 @@ public class WaveSpawner : MonoBehaviour
     {
         enemies = EnemyLoader.GetEnemies();
         GameManager.Instance.waveStats = waveStats;
+
+
+        // REMOVE
+        Debug.Log(RelicLoader.Relics[1].effect);
+        Debug.Log(RelicLoader.Relics[1].effect.description);
     }
 
     public void StartLevel(Level selectedLevel) {

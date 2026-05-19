@@ -1,6 +1,9 @@
+using Newtonsoft.Json;
+
+[JsonObject(MemberSerialization.Fields)]
 public class Relic {
     string name;
     int sprite;
-    Trigger trigger;
-    Effect effect;
+    TriggerGenerator trigger;
+    EffectGenerator effect;
 }

@@ -5,120 +5,33 @@ using System.Collections.Generic;
 using System;
 
 public class RelicLoader {
-    /* This class works slightly different from the other loaders, it
-     * populates the spells List with JProperties which are then fully parsed
-     * by the spell classes. This is because the types of attributes in 
-     * each spell type is unique to the spell */
-    private static List<JProperty> spells;
-    private static List<Func<SpellCaster, BaseSpell>> baseSpells;
-    private static List<Func<SpellCaster, Spell, SpellModifier>> spellModifiers;
-
-    /* These lists of lambdas are used to randomly
-     * instantiate new spells and decorators from */
-    public static List<Func<SpellCaster, BaseSpell>> BaseSpells { get
-        {
-            if (spells == null) LoadSpells();
-            return baseSpells;
-        }
-    }
-    public static List<Func<SpellCaster, Spell, SpellModifier>> SpellModifiers { get
-        {
-            if (spells == null) LoadSpells();
-            return spellModifiers;
-        }
+    private static List<Relic> relics;
+    public static List<Relic> Relics { 
+        get {
+            if (relics == null) LoadRelics();
+            return relics;
+        } 
     }
 
-    /* Maps all spell entries in the json to a spell
-     * class. This adds a lamda to create the read spell
-     * and sets that spell's config object */
-    private static void MapSpellsToClass() {
-        foreach (JProperty spell in spells) {
-            JObject config = (JObject) spell.Value;
-            switch(spell.Name) {
-                case "arcane_bolt":
-                    ArcaneBolt.config = config;
-                    baseSpells.Add( (owner) => new ArcaneBolt(owner) );
-                    break;
-                case "magic_missile":
-                    MagicMissile.config = config;
-                    baseSpells.Add( (owner) => new MagicMissile(owner) );
-                    break;
-                case "arcane_blast":
-                    ArcaneBlast.config = config;
-                    baseSpells.Add( (owner) => new ArcaneBlast(owner) );
-                    break;
-                case "arcane_spray":
-                    ArcaneSpray.config = config;
-                    baseSpells.Add( (owner) => new ArcaneSpray(owner) );
-                    break;
-                case "damage_amp":
-                    DamageAmplifier.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );
-                    break;
-                case "speed_amp":
-                    SpeedAmplifier.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new SpeedAmplifier(owner, innerSpell) );
-                    break;
-                case "doubler":
-                    Doubler.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new Doubler(owner, innerSpell) );
-                    break;
-                case "splitter":
-                    Splitter.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new Splitter(owner, innerSpell) );
-                    break;
-                case "chaos":
-                    Chaos.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new Chaos(owner, innerSpell) );
-                    break;
-                case "homing":
-                    Homing.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new Homing(owner, innerSpell) );
-                    break;
-                case "gotYourBack":
-                    GotYourBack.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new GotYourBack(owner, innerSpell) );
-                    break;
-                case "riskyDamage":
-                    RiskyDamage.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new RiskyDamage(owner, innerSpell) );
-                    break;
-                case "rapidfire":
-                    RapidFire.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new RapidFire(owner, innerSpell) );
-                    break;
-            }
-        }
-    }
-
-    private static void LoadSpells() {
-        baseSpells = new();
-        spellModifiers = new();
-        TextAsset spellJson = Resources.Load<TextAsset>("spells");
-        if (spellJson == null)
+    private static void LoadRelics() {
+        TextAsset relicJson = Resources.Load<TextAsset>("relics");
+        if (relicJson == null)
         {
-            Debug.Log("Failed to get spells json from Resources");
+            Debug.Log("Failed to get relics json from Resources");
             return;
         }
 
-        List<JProperty> spells;
-        int status = JsonToJObjectList(spellJson.text, out spells);
+        int status = JsonToList(relicJson.text, out relics);
         if (status == -1) {
-            Debug.Log("Failed to load spell JProperites from JSON");
+            Debug.Log("Failed to load relics from JSON");
             return;
         }
-        SpellLoader.spells = spells;
-        MapSpellsToClass();
     }
 
-    private static int JsonToJObjectList(string json, out List<JProperty> spells)
-    {
-        spells = new List<JProperty>();
-        JObject spellData = JObject.Parse(json); 
-        foreach (JProperty spell in spellData.Children()) {
-            spells.Add(spell);
-        }
-        if (spells.Count == 0) {
+    private static int JsonToList(string json, out List<Relic> relics) {
+        relics = JsonConvert.DeserializeObject<List<Relic>>(json);
+
+        if (relics == null) {
             return -1;
         }
         return 0;

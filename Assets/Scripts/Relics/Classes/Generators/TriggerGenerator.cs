@@ -1,11 +1,7 @@
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.Fields)]
-abstract class Effect {
+public class TriggerGenerator {
     protected string description;
     protected string type;
-    protected string amount;
-    protected string until;
-
-    abstract public void PerformEffect();
 }
