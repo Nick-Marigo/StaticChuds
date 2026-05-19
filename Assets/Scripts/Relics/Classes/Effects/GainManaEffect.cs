@@ -8,5 +8,6 @@ public class GainManaEffect : Effect {
     }
 
     override public void PerformEffect() {
+        Debug.Log("player gained mana");
     }
 }

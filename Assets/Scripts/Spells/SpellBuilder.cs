@@ -29,8 +29,6 @@ public class SpellBuilder
             int modifierIndexTwo = UnityEngine.Random.Range(0, SpellLoader.SpellModifiers.Count);
             spell = SpellLoader.SpellModifiers[modifierIndexTwo](owner, spell);
         }
-
-        Debug.Log("Built spell with modifier: " + spell.GetType().Name);
         return spell;
     }
 }
