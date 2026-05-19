@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.player = gameObject;
         classes = ClassesLoader.GetClasses();
         InitPlayer();
+        // REMOVE
+        RelicLoader.Relics[0].owner = gameObject;
+
+
     }
 
     public void InitPlayer()

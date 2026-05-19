@@ -9,7 +9,6 @@ public class EffectGenerator {
     protected string until;
 
     public Effect GenerateEffect(Relic owner) {
-        Debug.Log(type);
         switch(type) {
             case "gain-mana": 
                 return new GainManaEffect(owner, description, type, amount);

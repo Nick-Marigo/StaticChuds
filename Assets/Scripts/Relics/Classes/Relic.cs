@@ -16,8 +16,8 @@ public class Relic {
 
     public Trigger trigger;
     public Effect effect;
-    public GameObject owner;
-
+    public GameObject owner; 
+ 
     [JsonConstructor]
     public Relic() {
 
@@ -27,8 +27,6 @@ public class Relic {
      * using the generator classes */
     [OnDeserialized]
     void OnDeserialization(StreamingContext context) {
-        // REMOVE
-        owner = GameManager.Instance.player;
 
         trigger = triggerGen.GenerateTrigger(this);
         if (trigger == null) {

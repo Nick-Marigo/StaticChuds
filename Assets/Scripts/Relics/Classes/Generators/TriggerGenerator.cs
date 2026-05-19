@@ -7,7 +7,6 @@ public class TriggerGenerator {
     protected string type;
 
     public Trigger GenerateTrigger(Relic owner) {
-        Debug.Log(type);
         switch(type) {
             case("take-damage"):
                 return new TakeDamageTrigger(owner, description, type);
