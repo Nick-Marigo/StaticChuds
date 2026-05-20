@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 position{get { return transform.position; }}
 
-    private Dictionary<string, Classes> classes;
     Classes currentClass;
 
 
@@ -29,19 +28,13 @@ public class PlayerController : MonoBehaviour
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
-        classes = ClassesLoader.GetClasses();
-        InitPlayer("mage");
+        //InitPlayer();
     }
 
-    public void InitPlayer(string className)
+    public void InitPlayer(Classes className)
     {
-        if (classes == null || !classes.ContainsKey(className))
-        {
-            Debug.Log("Class not found: " + className);
-            return;
-        }
 
-        currentClass = classes[className];
+        currentClass = className;
 
         hp = new Hittable(currentClass.CalculateHP(GameManager.Instance.currentWave), Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
@@ -84,13 +77,13 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         EventBus.Instance.OnWaveStart += ScaleStats;
-        EventBus.Instance.OnClassSelected += InitPlayer;
+        //EventBus.Instance.OnClassSelected += InitPlayer;
     }
 
     void OnDisable()
     {
         EventBus.Instance.OnWaveStart -= ScaleStats;
-        EventBus.Instance.OnClassSelected -= InitPlayer;
+        //EventBus.Instance.OnClassSelected -= InitPlayer;
     }
 
     void ScaleStats(int wave)
@@ -100,7 +93,7 @@ public class PlayerController : MonoBehaviour
         int newMana = currentClass.CalculateMana(wave);
         int newManaRegen = currentClass.CalculateManaRegeneration(wave);
         int newSpellPower = currentClass.CalculateSpellPower(wave);
-        this.speed = currentClass.CalculateSpeed(wave);;                  // Assignment says to do this but what is the point?
+        this.speed = currentClass.CalculateSpeed(wave);
 
         hp.SetMaxHP(newHp);
         spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
