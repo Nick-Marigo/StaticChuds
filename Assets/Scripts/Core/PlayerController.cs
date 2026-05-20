@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         InitPlayer();
         // REMOVE
         Relic r = RelicLoader.Relics["Green Gem"]();
-        //r.Owner = gameObject;
+        r.Owner = gameObject;
     }
 
     public void InitPlayer()

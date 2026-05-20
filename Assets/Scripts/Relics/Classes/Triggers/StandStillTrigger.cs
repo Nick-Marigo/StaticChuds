@@ -1,10 +1,11 @@
-using UnityEngine;
+/*
+public class StandStillTrigger : Trigger {
 
-public class TakeDamageTrigger : Trigger {
-    public TakeDamageTrigger(Relic owner, string description, string type) {
+    public StandStillTrigger(Relic owner, string description, string type, int amount) {
         this.relic = owner;
         this.description = description;
         this.type = type;
+        this.amount = amount;
 
         EventBus.Instance.OnDamage += CatchSubscription;
     }
@@ -14,4 +15,6 @@ public class TakeDamageTrigger : Trigger {
             InvokeEffect();
         }
     }
+
 }
+*/
