@@ -24,9 +24,7 @@ public class GainManaEffect : Effect {
     }
 
     override public void PerformEffect() {
-        if (spellCaster == null) {
-            return;
-        }
+        if (spellCaster == null) return;
 
         // TODO make public dictionaries for calculations
         int waveNum = GameManager.Instance.currentWave;

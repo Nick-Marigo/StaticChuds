@@ -32,7 +32,6 @@ public class MovementTimer : MonoBehaviour {
     void Update() {
         if (timeLeft <= 0) {
             EventBus.Instance.InvokeTimerTriggered(owner);
-            Debug.Log(owner);
             timeLeft = triggerTime;
         }
         timeLeft -= Time.deltaTime;
