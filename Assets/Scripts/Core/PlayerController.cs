@@ -95,16 +95,12 @@ public class PlayerController : MonoBehaviour
 
     void ScaleStats(int wave)
     {
-        Dictionary<string, int> variables = new Dictionary<string, int>
-        {
-            { "wave", wave }
-        };
 
-        int newHp = RPNEvaluator.RPNEvaluator.Evaluate("95 wave 5 * +", variables);
-        int newMana = RPNEvaluator.RPNEvaluator.Evaluate("90 wave 10 * +", variables);
-        int newManaRegen = RPNEvaluator.RPNEvaluator.Evaluate("10 wave +", variables);
-        int newSpellPower = RPNEvaluator.RPNEvaluator.Evaluate("wave 10 *", variables);
-        this.speed = RPNEvaluator.RPNEvaluator.Evaluate("5", variables);                  // Assignment says to do this but what is the point?
+        int newHp = currentClass.CalculateHP(wave);
+        int newMana = currentClass.CalculateMana(wave);
+        int newManaRegen = currentClass.CalculateManaRegeneration(wave);
+        int newSpellPower = currentClass.CalculateSpellPower(wave);
+        this.speed = currentClass.CalculateSpeed(wave);;                  // Assignment says to do this but what is the point?
 
         hp.SetMaxHP(newHp);
         spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
