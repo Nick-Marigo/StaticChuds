@@ -28,6 +28,7 @@ public class Relic : IDisposable {
              * effect and trigger. See more notes in Effect.cs*/
             trigger.ChangeOwner(value);
             effect.ChangeOwner(value);
+            owner = value;
         }
     }
  
