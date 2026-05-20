@@ -16,9 +16,19 @@ public class Relic {
 
     public Trigger trigger;
     public Effect effect;
-    public GameObject owner; 
+
+    private GameObject owner;
+    public GameObject Owner {
+        get {
+            return owner;
+        }
+        set {
+            /* Updates the system reference in
+             * effect. See more notes in Effect.cs*/
+            effect.ChangeOwner(value);
+        }
+    }
  
-    [JsonConstructor]
     public Relic() {
 
     }

@@ -1,3 +1,4 @@
+using UnityEngine;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.Fields)]
@@ -12,4 +13,8 @@ abstract public class Effect {
     protected Relic relic;
 
     abstract public void PerformEffect();
+    /* Called whenever a relic's owner is changed to update the system ref in the effect.
+     * For example, if a effect needs access to the owner's spellcaster, it will update
+     * the ref whenever the relic changes owners through this function*/
+    abstract public void ChangeOwner(GameObject owner);
 }

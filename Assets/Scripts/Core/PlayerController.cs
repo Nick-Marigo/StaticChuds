@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
         classes = ClassesLoader.GetClasses();
         InitPlayer();
         // REMOVE
-        Relic r = RelicLoader.Relics["Jade Elephant"]();
-        r.owner = gameObject;
+        Relic r = RelicLoader.Relics["Green Gem"]();
+        //r.Owner = gameObject;
     }
 
     public void InitPlayer()
