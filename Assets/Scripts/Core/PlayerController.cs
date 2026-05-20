@@ -36,6 +36,13 @@ public class PlayerController : MonoBehaviour
 
         currentClass = className;
 
+        Debug.Log("Player received class: " + className);
+        Debug.Log("HP expression: " + currentClass.health);
+        Debug.Log("Mana expression: " + currentClass.mana);
+        Debug.Log("Mana Regen expression: " + currentClass.mana_regeneration);
+        Debug.Log("Spell Power expression: " + currentClass.spellpower);
+        Debug.Log("Speed expression: " + currentClass.speed);
+
         hp = new Hittable(currentClass.CalculateHP(GameManager.Instance.currentWave), Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
@@ -97,6 +104,14 @@ public class PlayerController : MonoBehaviour
 
         hp.SetMaxHP(newHp);
         spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
+
+        Debug.Log("Play scaling stats");
+        Debug.Log("Wave: " + wave);
+        Debug.Log("HP: " + newHp);
+        Debug.Log("Mana: " + newMana);
+        Debug.Log("Mana Regen: " + newManaRegen);
+        Debug.Log("Spell Power: " + newSpellPower);
+        Debug.Log("Speed: " + this.speed);
     }
 
     void OnSpell1() => SelectSpell(0);
