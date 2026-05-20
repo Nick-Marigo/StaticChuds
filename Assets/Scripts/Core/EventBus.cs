@@ -31,4 +31,10 @@ public class EventBus
     {
         OnWaveStart?.Invoke(waveNum);
     }
+
+    public event Action<string> OnClassSelected;
+    public void SelectClass(string className)
+    {
+        OnClassSelected?.Invoke(className);
+    }
 }

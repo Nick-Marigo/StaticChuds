@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 position{get { return transform.position; }}
 
     private Dictionary<string, Classes> classes;
+    Classes currentClass;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,12 +30,20 @@ public class PlayerController : MonoBehaviour
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
         classes = ClassesLoader.GetClasses();
-        InitPlayer();
+        InitPlayer("mage");
     }
 
-    public void InitPlayer()
+    public void InitPlayer(string className)
     {
-        hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
+        if (classes == null || !classes.ContainsKey(className))
+        {
+            Debug.Log("Class not found: " + className);
+            return;
+        }
+
+        currentClass = classes[className];
+
+        hp = new Hittable(currentClass.CalculateHP(GameManager.Instance.currentWave), Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
 
@@ -75,11 +84,13 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         EventBus.Instance.OnWaveStart += ScaleStats;
+        EventBus.Instance.OnClassSelected += InitPlayer;
     }
 
     void OnDisable()
     {
         EventBus.Instance.OnWaveStart -= ScaleStats;
+        EventBus.Instance.OnClassSelected -= InitPlayer;
     }
 
     void ScaleStats(int wave)
