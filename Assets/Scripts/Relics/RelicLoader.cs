@@ -1,12 +1,14 @@
 using UnityEngine;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System;
 
 public class RelicLoader {
-    private static List<Func<Relic>> relics;
-    public static List<Func<Relic>> Relics { 
+    /* RelicLoader exposes a Dictionary of lambdas that
+     * can be used to instantiate new relics from. The keys are
+     * the relic names.*/
+    private static Dictionary<string, Func<Relic>> relics;
+    public static Dictionary<string, Func<Relic>> Relics { 
         get {
             if (relics == null) LoadRelics();
             return relics;
@@ -21,21 +23,21 @@ public class RelicLoader {
             return;
         }
 
-        int status = JsonToList(relicJson.text, out relics);
+        int status = JsonToDictionary(relicJson.text, out relics);
         if (status == -1) {
             Debug.Log("Failed to load relics from JSON");
             return;
         }
     }
 
-    private static int JsonToList(string json, out List<Func<Relic>> relics) {
-        relics = new List<Func<Relic>>();
+    private static int JsonToDictionary(string json, out Dictionary<string, Func<Relic>> relics) {
+        relics = new();
 
         JArray relicData = JArray.Parse(json);
         foreach(JObject relic in relicData) {
-            relics.Add(() => relic.ToObject<Relic>());
+            string name = (string)relic["name"]; 
+            relics.Add(name, () => relic.ToObject<Relic>());
         }
-        //relics = JsonConvert.DeserializeObject<List<Relic>>(json);
 
         if (relics == null) {
             return -1;
