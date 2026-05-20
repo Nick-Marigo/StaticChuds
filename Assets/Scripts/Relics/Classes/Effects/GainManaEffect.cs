@@ -29,7 +29,10 @@ public class GainManaEffect : Effect {
         }
 
         // TODO make public dictionaries for calculations
-        int manaAmount = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int>());
+        int waveNum = GameManager.Instance.currentWave;
+        int manaAmount = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {
+                {"wave", waveNum}
+        });
         Debug.Log("player gained " + manaAmount + " mana");
         spellCaster.mana += manaAmount;
     }

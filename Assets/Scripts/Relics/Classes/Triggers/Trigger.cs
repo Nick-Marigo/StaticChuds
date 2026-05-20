@@ -18,4 +18,8 @@ abstract public class Trigger {
         }
         relic.effect.PerformEffect();
     }
+
+    virtual public void ChangeOwner(GameObject owner) {
+        return;
+    }
 }

@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
         // REMOVE
         Relic r = RelicLoader.Relics["Green Gem"]();
         r.Owner = gameObject;
+        Relic r1 = RelicLoader.Relics["Jade Elephant"]();
+        r1.Owner = gameObject;
     }
 
     public void InitPlayer()
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        EventBus.Instance.InvokePlayerMoved(this.gameObject);
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
         unit.movement = value.Get<Vector2>()*speed;
     }

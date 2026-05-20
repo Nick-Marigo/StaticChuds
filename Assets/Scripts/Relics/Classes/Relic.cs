@@ -24,7 +24,8 @@ public class Relic {
         }
         set {
             /* Updates the system reference in
-             * effect. See more notes in Effect.cs*/
+             * effect and trigger. See more notes in Effect.cs*/
+            trigger.ChangeOwner(value);
             effect.ChangeOwner(value);
         }
     }
