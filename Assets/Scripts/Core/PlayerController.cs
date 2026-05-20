@@ -31,7 +31,11 @@ public class PlayerController : MonoBehaviour
         classes = ClassesLoader.GetClasses();
         InitPlayer();
         // REMOVE
-        RelicLoader.Relics[0].owner = gameObject;
+        //RelicLoader.Relics[0].owner = gameObject;
+        Debug.Log(RelicLoader.Relics);
+        Relic r = RelicLoader.Relics[0]();
+        Debug.Log(r.name);
+        // FIX
 
 
     }

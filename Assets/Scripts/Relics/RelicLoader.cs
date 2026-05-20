@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System;
 
 public class RelicLoader {
-    private static List<Relic> relics;
-    public static List<Relic> Relics { 
+    private static List<Func<Relic>> relics;
+    public static List<Func<Relic>> Relics { 
         get {
             if (relics == null) LoadRelics();
             return relics;
@@ -28,8 +28,14 @@ public class RelicLoader {
         }
     }
 
-    private static int JsonToList(string json, out List<Relic> relics) {
-        relics = JsonConvert.DeserializeObject<List<Relic>>(json);
+    private static int JsonToList(string json, out List<Func<Relic>> relics) {
+        relics = new List<Func<Relic>>();
+
+        JArray relicData = JArray.Parse(json);
+        foreach(JObject relic in relicData) {
+            relics.Add(() => relic.ToObject<Relic>());
+        }
+        //relics = JsonConvert.DeserializeObject<List<Relic>>(json);
 
         if (relics == null) {
             return -1;
