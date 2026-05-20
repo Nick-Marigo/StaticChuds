@@ -14,4 +14,8 @@ public class TakeDamageTrigger : Trigger {
             InvokeEffect();
         }
     }
+
+    override protected void Unsuscribe() {
+        EventBus.Instance.OnDamage += CatchSubscription;
+    }
 }

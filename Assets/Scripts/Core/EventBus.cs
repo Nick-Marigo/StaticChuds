@@ -16,25 +16,26 @@ public class EventBus
 
     public event Action<Vector3, Damage, Hittable> OnDamage;
     
-    public void DoDamage(Vector3 where, Damage dmg, Hittable target)
-    {
+    public void DoDamage(Vector3 where, Damage dmg, Hittable target) {
         OnDamage?.Invoke(where, dmg, target);
     }
 
-    public void Clear()
-    {
+    public void Clear() {
         OnDamage = null;
     }
 
     public event Action<int> OnWaveStart;
-    public void StartWave(int waveNum)
-    {
+    public void StartWave(int waveNum) {
         OnWaveStart?.Invoke(waveNum);
     }
 
     public event Action<GameObject> PlayerMoved;
-    public void InvokePlayerMoved(GameObject player)
-    {
+    public void InvokePlayerMoved(GameObject player) {
         PlayerMoved?.Invoke(player);
+    }
+
+    public event Action<GameObject> TimerTriggered;
+    public void InvokeTimerTriggered(GameObject owner) {
+        TimerTriggered?.Invoke(owner);
     }
 }

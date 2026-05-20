@@ -1,8 +1,9 @@
+using System;
 using Newtonsoft.Json;
 using UnityEngine;
 
 [JsonObject(MemberSerialization.Fields)]
-abstract public class Trigger {
+abstract public class Trigger : IDisposable {
     protected string description;
     protected string type;
     protected string amount;
@@ -21,5 +22,19 @@ abstract public class Trigger {
 
     virtual public void ChangeOwner(GameObject owner) {
         return;
+    }
+
+    /* IMPORTANT
+     * All triggers that suscribe to an event MUST override this function 
+     * to unsuscribe to events when the object is destroyed */
+    virtual protected void Unsuscribe() {
+    }
+
+    public void Dispose() {
+        Unsuscribe();
+    }
+
+    ~Trigger() {
+        Dispose();
     }
 }

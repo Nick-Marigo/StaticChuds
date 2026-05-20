@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization;
 
 [JsonObject(MemberSerialization.OptIn)]
-public class Relic {
+public class Relic : IDisposable {
     [JsonProperty]
     public string name { get; protected set; }
     [JsonProperty]
@@ -49,5 +50,13 @@ public class Relic {
             Debug.Log("failed to load effect for " + name + " relic");
             return;
         }
+    }
+
+    /* IMPORTANT
+     * You must call Dispose when you want to get rid of a relic. Relics, Effects, and
+     * Triggers have a circular reference, and we must unsuscribe from functions inside
+     * Trigger and Effect to get garbage collected. */
+    public void Dispose() {
+        trigger.Dispose();
     }
 }

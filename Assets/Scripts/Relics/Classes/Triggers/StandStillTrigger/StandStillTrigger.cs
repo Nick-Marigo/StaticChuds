@@ -10,13 +10,12 @@ public class StandStillTrigger : Trigger {
         this.type = type;
         this.amount = amount;
 
-        EventBus.Instance.OnDamage += CatchSubscription;
+        EventBus.Instance.TimerTriggered += CatchSubscription;
     }
 
-    void CatchSubscription(Vector3 pos, Damage dmg, Hittable target) {
-        if (target.team == Hittable.Team.PLAYER) {
-            InvokeEffect();
-        }
+    protected void CatchSubscription(GameObject timerOwner) {
+        if (timerOwner != relic.Owner) return;
+        InvokeEffect();
     }
 
     override public void ChangeOwner(GameObject owner) {
@@ -38,6 +37,10 @@ public class StandStillTrigger : Trigger {
         int timeAmount = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {
                 {"wave", waveNum}
         });
-        movementTimer.standStillTime = timeAmount;
+        movementTimer.TriggerTime = timeAmount;
+    }
+
+    override protected void Unsuscribe() {
+        EventBus.Instance.TimerTriggered -= CatchSubscription;
     }
 }

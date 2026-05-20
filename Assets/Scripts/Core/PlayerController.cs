@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
         r.Owner = gameObject;
         Relic r1 = RelicLoader.Relics["Jade Elephant"]();
         r1.Owner = gameObject;
+        r.Dispose();
+        r = null;
     }
 
     public void InitPlayer()
