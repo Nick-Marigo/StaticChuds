@@ -9,8 +9,12 @@ public class ButtonController : MonoBehaviour
     private LevelSelector levelSelector;
     private string level;
 
+    private ClassesSelector classesSelector;
+    private string selectedClass;
+
     void Start() {
         levelSelector = FindFirstObjectByType<LevelSelector>();
+        classesSelector = FindFirstObjectByType<ClassesSelector>();
     }
 
     // Set label details
@@ -23,5 +27,16 @@ public class ButtonController : MonoBehaviour
     public void StartLevel()
     {
         levelSelector.StartLevel(level);
+    }
+
+    public void SetClass(string text)
+    {
+        selectedClass = text;
+        label.text = text;
+    }
+
+    public void SelectedClass()
+    {
+        classesSelector.SelectClass(selectedClass);
     }
 }

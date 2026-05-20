@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 position{get { return transform.position; }}
 
-    private Dictionary<string, Classes> classes;
+    Classes currentClass;
+    [SerializeField] GameObject playerVisual;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -28,13 +30,22 @@ public class PlayerController : MonoBehaviour
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
-        classes = ClassesLoader.GetClasses();
-        InitPlayer();
+        //InitPlayer();
     }
 
-    public void InitPlayer()
+    public void InitPlayer(Classes className)
     {
-        hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
+
+        currentClass = className;
+        playerVisual.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.playerSpriteManager.Get(currentClass.sprite);
+        /*Debug.Log("Player received class: " + className);
+        Debug.Log("HP expression: " + currentClass.health);
+        Debug.Log("Mana expression: " + currentClass.mana);
+        Debug.Log("Mana Regen expression: " + currentClass.mana_regeneration);
+        Debug.Log("Spell Power expression: " + currentClass.spellpower);
+        Debug.Log("Speed expression: " + currentClass.speed);*/
+
+        hp = new Hittable(currentClass.CalculateHP(GameManager.Instance.currentWave), Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
 
@@ -75,28 +86,34 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         EventBus.Instance.OnWaveStart += ScaleStats;
+        //EventBus.Instance.OnClassSelected += InitPlayer;
     }
 
     void OnDisable()
     {
         EventBus.Instance.OnWaveStart -= ScaleStats;
+        //EventBus.Instance.OnClassSelected -= InitPlayer;
     }
 
     void ScaleStats(int wave)
     {
-        Dictionary<string, int> variables = new Dictionary<string, int>
-        {
-            { "wave", wave }
-        };
 
-        int newHp = RPNEvaluator.RPNEvaluator.Evaluate("95 wave 5 * +", variables);
-        int newMana = RPNEvaluator.RPNEvaluator.Evaluate("90 wave 10 * +", variables);
-        int newManaRegen = RPNEvaluator.RPNEvaluator.Evaluate("10 wave +", variables);
-        int newSpellPower = RPNEvaluator.RPNEvaluator.Evaluate("wave 10 *", variables);
-        this.speed = RPNEvaluator.RPNEvaluator.Evaluate("5", variables);                  // Assignment says to do this but what is the point?
+        int newHp = currentClass.CalculateHP(wave);
+        int newMana = currentClass.CalculateMana(wave);
+        int newManaRegen = currentClass.CalculateManaRegeneration(wave);
+        int newSpellPower = currentClass.CalculateSpellPower(wave);
+        this.speed = currentClass.CalculateSpeed(wave);
 
         hp.SetMaxHP(newHp);
         spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
+
+        /*Debug.Log("Play scaling stats");
+        Debug.Log("Wave: " + wave);
+        Debug.Log("HP: " + newHp);
+        Debug.Log("Mana: " + newMana);
+        Debug.Log("Mana Regen: " + newManaRegen);
+        Debug.Log("Spell Power: " + newSpellPower);
+        Debug.Log("Speed: " + this.speed);*/
     }
 
     void OnSpell1() => SelectSpell(0);

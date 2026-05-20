@@ -4679,7 +4679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1115058367
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4916,52 +4916,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218915916}
   m_CullTransparentMesh: 1
---- !u!1 &1223750539
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1223750540}
-  - component: {fileID: 1223750541}
-  m_Layer: 0
-  m_Name: ClassSelector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1223750540
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223750539}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42.67102, y: 55.2442, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2021125305}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1223750541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223750539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03034e5d7cb6a244095eb21fed210faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClassesSelector
-  difficultySelector: {fileID: 1115058366}
-  button: {fileID: 6791571272867747119, guid: 227c6e6c9e46820498266e49babeefe8, type: 3}
 --- !u!1 &1270515289
 GameObject:
   m_ObjectHideFlags: 0
@@ -6926,7 +6880,6 @@ MonoBehaviour:
   speed: 5
   unit: {fileID: 0}
   isDead: 0
-  playerVisual: {fileID: 232596020}
 --- !u!4 &1718273953
 Transform:
   m_ObjectHideFlags: 0
@@ -57553,6 +57506,52 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1931588808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1931588809}
+  - component: {fileID: 1931588810}
+  m_Layer: 0
+  m_Name: ClassSelector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1931588809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931588808}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 42.67102, y: 55.2442, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2021125305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1931588810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931588808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03034e5d7cb6a244095eb21fed210faa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClassesSelector
+  difficultySelector: {fileID: 1115058366}
+  button: {fileID: 6791571272867747119, guid: 227c6e6c9e46820498266e49babeefe8, type: 3}
 --- !u!1 &1982188283
 GameObject:
   m_ObjectHideFlags: 0
@@ -57900,8 +57899,8 @@ RectTransform:
   - {fileID: 1982188284}
   - {fileID: 2007398912}
   - {fileID: 1792405383}
-  - {fileID: 1223750540}
   - {fileID: 1115058367}
+  - {fileID: 1931588809}
   - {fileID: 1709288114}
   - {fileID: 1862859396}
   - {fileID: 338341327}
@@ -57926,7 +57925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   background: {fileID: 1792405382}
-  classSelector: {fileID: 1223750539}
+  classSelector: {fileID: 1931588808}
   difficultySelector: {fileID: 1115058366}
   rewardScreen: {fileID: 1709288111}
   gameOverScreen: {fileID: 1862859393}
@@ -58444,14 +58443,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GFXManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2963255102610807039, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
-      propertyPath: sprites.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2963255102610807039, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
-      propertyPath: 'sprites.Array.data[3]'
-      value: 
-      objectReference: {fileID: 993646833, guid: e0ba5a7a2ca92e643ad58fc85d241001, type: 3}
     - target: {fileID: 5489274343212671176, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.2238593
