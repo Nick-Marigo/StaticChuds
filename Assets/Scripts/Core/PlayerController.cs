@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 position{get { return transform.position; }}
 
     Classes currentClass;
+    [SerializeField] GameObject playerVisual;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,7 +37,7 @@ public class PlayerController : MonoBehaviour
     {
 
         currentClass = className;
-
+        playerVisual.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.playerSpriteManager.Get(currentClass.sprite);
         Debug.Log("Player received class: " + className);
         Debug.Log("HP expression: " + currentClass.health);
         Debug.Log("Mana expression: " + currentClass.mana);

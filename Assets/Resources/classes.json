@@ -22,5 +22,13 @@
             "mana": "120",
             "spellpower": "wave 5 *",
             "speed": "5 wave 2 / +"
+    },
+    "Monkey": {
+            "sprite": 3,
+            "health": "45 wave 5 * +",
+            "mana_regeneration": "15",
+            "mana": "180",
+            "spellpower": "wave 10 *",
+            "speed": "7 wave 2 / +"
     }
 }
