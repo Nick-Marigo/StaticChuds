@@ -10,8 +10,7 @@ public class RewardScreenManager : MonoBehaviour
 
     Spell rewardSpell;
 
-    public void ShowReward()
-    {
+    public void ShowReward() {
         rewardSpell = SpellBuilder.Build(player.spellcaster);
         rewardSpellUI.SetSpell(rewardSpell);
         rewardSpellUI.ShowDropButton(false);
@@ -19,8 +18,7 @@ public class RewardScreenManager : MonoBehaviour
         rewardDescription.text = rewardSpell.GetFullDescription();
     }
 
-    public void AcceptReward()
-    {
+    public void AcceptReward() {
         bool added = player.spellcaster.AddSpell(rewardSpell);
 
         if (!added)
