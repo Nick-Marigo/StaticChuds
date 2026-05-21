@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Screens")]
     [SerializeField] GameObject background;
+    [SerializeField] GameObject classSelector;
     [SerializeField] GameObject difficultySelector;
     [SerializeField] GameObject rewardScreen;
     [SerializeField] GameObject gameOverScreen;
@@ -39,6 +40,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUIState(GameManager.GameState newState)
     {
+        classSelector.SetActive(false);
         difficultySelector.SetActive(false);
         rewardScreen.SetActive(false);
         gameOverScreen.SetActive(false);
@@ -49,7 +51,7 @@ public class UIManager : MonoBehaviour
         {
             case GameManager.GameState.PREGAME:
                 background.SetActive(true);
-                difficultySelector.SetActive(true);
+                classSelector.SetActive(true);
                 break;
 
             case GameManager.GameState.COUNTDOWN:
