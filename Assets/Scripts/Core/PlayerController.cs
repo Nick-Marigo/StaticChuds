@@ -9,9 +9,6 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthui;
     public ManaBar manaui;
 
-    // REMOVE
-    Relic r;
-
     public SpellCaster spellcaster;
     public RelicInventory relicInventory;
     public SpellUI spellui;
