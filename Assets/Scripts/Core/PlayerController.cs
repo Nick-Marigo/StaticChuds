@@ -41,8 +41,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void amoryTest() {
+        Debug.Log("amoryTest called");
         EntityAttributePackage attributePackage = gameObject.GetComponent<EntityAttributePackage>();
-        r.SetAttributePackage(attributePackage.LoadAttributes());
+        Debug.Log(attributePackage.GetAttributes());
+        r.SetAttributePackage(attributePackage.GetAttributes());
     }
 
     public void InitPlayer()

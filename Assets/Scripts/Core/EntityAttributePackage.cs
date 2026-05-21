@@ -11,8 +11,13 @@ public class EntityAttributePackage : MonoBehaviour {
     Dictionary<string, AttributeGate> _attributeDict;
     SpellCaster _spellCaster;
 
-    public Dictionary<string, AttributeGate> LoadAttributes() {
-        if (_attributeDict != null) return null;
+    public Dictionary<string, AttributeGate> GetAttributes() {
+        _LoadAttributes();
+        return _attributeDict;
+    }
+
+    void _LoadAttributes() {
+        if (_attributeDict != null) return;
 
         _spellCaster = gameObject.GetComponent<PlayerController>().spellcaster;
 
@@ -21,10 +26,6 @@ public class EntityAttributePackage : MonoBehaviour {
                 Get = () => _spellCaster.mana,
                 Set = (value) => _spellCaster.mana = (int)value
                 });
-
-        Debug.Log("Package is " + _attributeDict);
-
-        return _attributeDict;
     }
 }
 

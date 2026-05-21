@@ -14,8 +14,8 @@ public class GainManaEffect : Effect {
         int additionalMana = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int>());
         Debug.Log("player gained " + additionalMana + " mana");
         Debug.Log(attributePackage);
-        //int mana = (int)attributePackage["mana"].Get();
-        //attributePackage["mana"].Set(mana + additionalMana);
+        int mana = (int)attributePackage["mana"].Get();
+        attributePackage["mana"].Set(mana + additionalMana);
         //spellCaster.mana += manaAmount;
     }
 
