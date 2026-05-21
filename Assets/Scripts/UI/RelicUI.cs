@@ -11,10 +11,10 @@ public class RelicUI : MonoBehaviour
     public GameObject highlight;
     public TextMeshProUGUI label;
 
-    public void SetRelic(Relic relic)
+    public void SetRelicDisplay(Relic relic)
     {
-        label.text = relic.name;
-        GameManager.Instance.relicIconManager.PlaceSprite(relic.GetSprite(), icon);
+        label.text = "";
+        GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
     }
 
     // TODO: Subcribe to event maybe?

@@ -6924,6 +6924,7 @@ MonoBehaviour:
   manaui: {fileID: 71109453}
   spellui: {fileID: 2085212185}
   spellUIContainer: {fileID: 1982188287}
+  relicUIManager: {fileID: 1202924362}
   speed: 5
   unit: {fileID: 0}
   isDead: 0

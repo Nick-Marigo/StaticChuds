@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RelicUIManager : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class RelicUIManager : MonoBehaviour
 
     List<GameObject> relicUIObjects = new List<GameObject>();
 
-    void RefreshRelicUI()
+    public void RefreshRelicUI()
     {
         foreach (GameObject obj in relicUIObjects)
         {
@@ -23,10 +24,10 @@ public class RelicUIManager : MonoBehaviour
         {
             GameObject relicUIObj = Instantiate(relicUIPrefab, transform);
 
-            relicUIObj.transform.localPosition = new Vector3(40 * index, 0, 0);
-            relicUI relicUI = relicUIObj.GetComponent<relicUI>();
+            relicUIObj.transform.localPosition = new Vector3(40 * i, 0, 0);
+            RelicUI relicUI = relicUIObj.GetComponent<RelicUI>();
 
-            relicUI.SetRelic(relic);
+            relicUI.SetRelicDisplay(relic);
             relicUIObjects.Add(relicUIObj);
             i++;
         }

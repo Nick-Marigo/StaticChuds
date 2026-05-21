@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
         //REMOVE: adds a test relic
         Relic relic = relicInventory.FetchUnusedRelic();
         relicInventory.EquipRelic(relic);
+        relicUIManager.RefreshRelicUI();
         //Debug.Log(relicInventory.GetEquippedRelics()["Green Gem"]);
         
         ScaleStats(GameManager.Instance.currentWave);
