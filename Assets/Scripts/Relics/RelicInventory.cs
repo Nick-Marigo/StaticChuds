@@ -24,8 +24,8 @@ public class RelicInventory {
     }
 
     public Relic FetchUnusedRelic() {
-        Relic relic = _potentialRelics["green_gem"](); 
-        _potentialRelics.Remove("green_gem");
+        Relic relic = _potentialRelics["Green Gem"](); 
+        _potentialRelics.Remove("Green Gem");
         return relic;
     }
 
