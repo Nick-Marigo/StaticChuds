@@ -2,11 +2,13 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-[JsonObject(MemberSerialization.Fields)]
+[JsonObject(MemberSerialization.OptIn)]
 abstract public class Trigger {
-    protected string description;
+    [JsonProperty]
+    public string description { get; protected set; }
+    [JsonProperty]
     protected string type;
-    [JsonIgnore]
+
     public Effect effect;
 
     // Attribute Packages are used to access and change attributes

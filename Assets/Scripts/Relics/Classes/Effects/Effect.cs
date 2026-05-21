@@ -2,11 +2,15 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-[JsonObject(MemberSerialization.Fields)]
+[JsonObject(MemberSerialization.OptIn)]
 abstract public class Effect {
-    protected string description;
+    [JsonProperty]
+    public string description { get; protected set; }
+    [JsonProperty]
     protected string type;
+    [JsonProperty]
     protected string amount;
+    [JsonProperty]
     protected string until;
 
     // Attribute Packages are used to access and change attributes
