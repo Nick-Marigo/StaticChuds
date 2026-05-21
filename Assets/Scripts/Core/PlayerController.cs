@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     Relic r;
 
     public SpellCaster spellcaster;
+    public RelicInventory relicInventory;
     public SpellUI spellui;
     public SpellUIContainer spellUIContainer;
     public int speed;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         hp.team = Hittable.Team.PLAYER;
 
         spellcaster = new SpellCaster(Hittable.Team.PLAYER);
+        relicInventory = new RelicInventory(gameObject.GetComponent<EntityAttributePackage>());
         ScaleStats(GameManager.Instance.currentWave);
         StartCoroutine(spellcaster.ManaRegeneration());
 
