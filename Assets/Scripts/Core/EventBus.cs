@@ -38,4 +38,9 @@ public class EventBus
     public void InvokeTimerTriggered(GameObject owner) {
         TimerTriggered?.Invoke(owner);
     }
+
+    public event Action<SpellCaster> SpellCast;
+    public void InvokeSpellCast(SpellCaster caster) {
+        SpellCast?.Invoke(caster);
+    }
 }

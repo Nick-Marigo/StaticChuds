@@ -39,6 +39,8 @@ public class SpellCaster
     public IEnumerator Cast(Vector3 where, Vector3 target)
     {        
         if (spells.Count == 0) yield break;
+        
+        EventBus.Instance.InvokeSpellCast(this);
 
         Spell selectedSpell = spells[selectedSpellIndex];
 

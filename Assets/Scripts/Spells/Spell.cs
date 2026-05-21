@@ -23,12 +23,13 @@ public abstract class Spell
     public Spell(SpellCaster owner) {
         this.owner = owner;
         this.statSource = this;
-        UpdateDicts(GameManager.Instance.currentWave);
-        EventBus.Instance.OnWaveStart += UpdateDicts;
+        UpdateDicts(owner);
+        EventBus.Instance.SpellCast += UpdateDicts;
     }
 
+    // FIX
     void OnDestroy() {
-        EventBus.Instance.OnWaveStart -= UpdateDicts;
+        EventBus.Instance.SpellCast -= UpdateDicts;
     }
 
     public virtual void SetStatsSource(Spell source)
@@ -43,7 +44,9 @@ public abstract class Spell
 
     // On waveStart, all the dictionary values are updated to
     // reflect the current game state
-    protected void UpdateDicts(int waveNum) {
+    protected void UpdateDicts(SpellCaster caster) {
+        if (caster != owner) return;
+        int waveNum = GameManager.Instance.currentWave;
         intRpnVals = new Dictionary<string, int> {
             {"power", owner.spellPower},
             {"wave", waveNum}
