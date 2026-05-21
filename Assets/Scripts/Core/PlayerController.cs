@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public RelicInventory relicInventory;
     public SpellUI spellui;
     public SpellUIContainer spellUIContainer;
+    public RelicUIManager relicUIManager;
     public int speed;
 
     public Unit unit;

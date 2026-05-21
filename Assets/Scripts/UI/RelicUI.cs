@@ -11,6 +11,18 @@ public class RelicUI : MonoBehaviour
     public GameObject highlight;
     public TextMeshProUGUI label;
 
+    public void SetRelic(Relic relic)
+    {
+        label.text = relic.name;
+        GameManager.Instance.relicIconManager.PlaceSprite(relic.GetSprite(), icon);
+    }
+
+    // TODO: Subcribe to event maybe?
+    public void ShowHighLight(bool show)
+    {
+        highlight.SetActive(show);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
