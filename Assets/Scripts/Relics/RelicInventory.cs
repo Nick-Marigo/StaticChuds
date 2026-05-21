@@ -23,4 +23,8 @@ public class RelicInventory {
     public void EquipRelic(Relic relic) {
        relic.attributePackageRequested += () => relic.SetAttributePackage(_attributePackage.GetAttributes()); 
     }
+    
+    public Dictionary<string, Relic> GetEquippedRelics() {
+        return _equippedRelics;
+    }
 }
