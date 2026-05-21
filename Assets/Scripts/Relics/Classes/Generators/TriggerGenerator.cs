@@ -6,10 +6,10 @@ public class TriggerGenerator {
     protected string description;
     protected string type;
 
-    public Trigger GenerateTrigger(Relic owner) {
+    public Trigger GenerateTrigger() {
         switch(type) {
             case("take-damage"):
-                return new TakeDamageTrigger(owner, description, type);
+                return new TakeDamageTrigger(description, type);
             default:
                 return null;
         }

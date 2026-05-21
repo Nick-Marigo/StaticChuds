@@ -8,10 +8,10 @@ public class EffectGenerator {
     protected string amount;
     protected string until;
 
-    public Effect GenerateEffect(Relic owner) {
+    public Effect GenerateEffect() {
         switch(type) {
             case "gain-mana": 
-                return new GainManaEffect(owner, description, type, amount);
+                return new GainManaEffect(description, type, amount);
             default: 
                 return null;
         }

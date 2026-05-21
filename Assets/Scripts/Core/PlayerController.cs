@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthui;
     public ManaBar manaui;
 
+    // REMOVE
+    Relic r;
+
     public SpellCaster spellcaster;
     public SpellUI spellui;
     public SpellUIContainer spellUIContainer;
@@ -31,8 +34,15 @@ public class PlayerController : MonoBehaviour
         classes = ClassesLoader.GetClasses();
         InitPlayer();
         // REMOVE
-        Relic r = RelicLoader.Relics["Jade Elephant"]();
-        r.owner = gameObject;
+        EntityAttributePackage attributePackage = gameObject.GetComponent<EntityAttributePackage>();
+        r = RelicLoader.Relics["Green Gem"]();
+        r.attributePackageRequested += amoryTest;
+        
+    }
+
+    void amoryTest() {
+        EntityAttributePackage attributePackage = gameObject.GetComponent<EntityAttributePackage>();
+        r.SetAttributePackage(attributePackage.LoadAttributes());
     }
 
     public void InitPlayer()

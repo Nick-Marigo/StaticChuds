@@ -1,8 +1,7 @@
 using UnityEngine;
 
 public class TakeDamageTrigger : Trigger {
-    public TakeDamageTrigger(Relic owner, string description, string type) {
-        this.relic = owner;
+    public TakeDamageTrigger(string description, string type) {
         this.description = description;
         this.type = type;
 
@@ -16,11 +15,6 @@ public class TakeDamageTrigger : Trigger {
     }
 
     override protected void InvokeEffect() {
-        if (relic.effect == null) {
-            Debug.Log("relic " + relic.name + " has a trigger but no effect");
-            return;
-        }
-        relic.effect.PerformEffect();
-
+        effect.PerformEffect();
     }
 }
