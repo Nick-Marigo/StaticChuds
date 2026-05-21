@@ -34,7 +34,7 @@ public class GainSpellPowerEffect : Effect {
     }
 
     void StopEffect(GameObject owner) {
-        if (owner != relic.Owner) return;
+        if (owner != relic.Owner || !_effectActive) return;
         _effectActive = false;
         spellCaster.spellPower -= extraSpellPower;
         Debug.Log("spellpower back to " + spellCaster.spellPower);
