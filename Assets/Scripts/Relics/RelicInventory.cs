@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class RelicInventory {
     EntityAttributePackage _attributePackage;
@@ -12,6 +13,14 @@ public class RelicInventory {
         _equippedRelics = new();
 
         _attributePackage = attributePackage;
+
+        // REMOVE: debugging for JSON loading
+        /*
+        foreach (KeyValuePair<string, Func<Relic>> relic in _potentialRelics) {
+            Relic r = relic.Value();
+            Debug.Log($"{r.name}, trigger: {r.trigger.description}, effect: {r.effect.description}");
+        }
+        */
     }
 
     public Relic FetchUnusedRelic() {
@@ -21,9 +30,10 @@ public class RelicInventory {
     }
 
     public void EquipRelic(Relic relic) {
-       relic.attributePackageRequested += () => relic.SetAttributePackage(_attributePackage.GetAttributes()); 
+        _equippedRelics.Add(relic.name, relic);
+        relic.attributePackageRequested += () => relic.SetAttributePackage(_attributePackage.GetAttributes()); 
     }
-    
+
     public Dictionary<string, Relic> GetEquippedRelics() {
         return _equippedRelics;
     }

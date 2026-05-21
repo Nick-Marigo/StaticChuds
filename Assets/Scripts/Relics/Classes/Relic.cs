@@ -10,7 +10,7 @@ public class Relic {
     [JsonProperty]
     public string name { get; protected set; }
     [JsonProperty]
-    protected int sprite;
+    public int sprite { get; protected set; }
     [JsonProperty("trigger")]
     TriggerGenerator triggerGen;
     [JsonProperty("effect")]
