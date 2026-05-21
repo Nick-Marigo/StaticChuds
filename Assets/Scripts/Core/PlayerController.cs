@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthui;
     public ManaBar manaui;
 
+    public PlayerEventWrapper eventWrapper { get; private set; }
     public SpellCaster spellcaster;
     public RelicInventory relicInventory;
     public SpellUI spellui;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
 
+        eventWrapper = new PlayerEventWrapper();
         spellcaster = new SpellCaster(Hittable.Team.PLAYER);
         relicInventory = new RelicInventory(gameObject.GetComponent<EntityAttributePackage>());
         //REMOVE: adds a test relic

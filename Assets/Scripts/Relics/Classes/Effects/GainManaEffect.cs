@@ -16,7 +16,5 @@ public class GainManaEffect : Effect {
         Debug.Log(attributePackage);
         int mana = (int)attributePackage["mana"].Get();
         attributePackage["mana"].Set(mana + additionalMana);
-        //spellCaster.mana += manaAmount;
     }
-
 }

@@ -26,6 +26,10 @@ public class EntityAttributePackage : MonoBehaviour {
                 Get = () => _spellCaster.mana,
                 Set = (value) => _spellCaster.mana = (int)value
                 });
+        _attributeDict.Add("move_event", new AttributeGate {
+                Get = () => _spellCaster.mana,
+                Set = (value) => _spellCaster.mana = (int)value
+                });
     }
 }
 
