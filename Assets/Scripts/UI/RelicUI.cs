@@ -10,14 +10,12 @@ public class RelicUI : MonoBehaviour
 
     [SerializeField] Image icon;
     [SerializeField] GameObject highlight;
-    [SerializeField] TextMeshProUGUI name;
+    [SerializeField] TextMeshProUGUI relicName;
     [SerializeField] TextMeshProUGUI description;
     [SerializeField] GameObject takeButton;
 
     public void SetRelicDisplay(Relic relic)
     {
-        name.text = "";
-        description.text = "";
         GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
     }
 
@@ -44,10 +42,10 @@ public class RelicUI : MonoBehaviour
 
     public void SetRelicRewardDisplay(Relic relic)
     {
-        name.text = relic.name;
+        relicName.text = relic.name;
 
         description.text = relic.trigger.description;
-        description.text += relic.effect.description;
+        description.text = description.text + " " + relic.effect.description;
         GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
         
 

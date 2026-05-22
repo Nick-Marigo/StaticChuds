@@ -9,7 +9,9 @@ public class RewardScreenManager : MonoBehaviour
     [SerializeField] SpellUI rewardSpellUI;
     [SerializeField] TextMeshProUGUI rewardDescription;
 
-
+    [SerializeField] RelicUI[] relicChoiceUI;
+    [SerializeField] RelicUIManager relicUIManager;
+    [SerializeField] TextMeshProUGUI relicRewardMessage;
     List<Relic> relicChoices = new List<Relic>();
 
 
@@ -37,7 +39,15 @@ public class RewardScreenManager : MonoBehaviour
         player.spellUIContainer.ShowDropButtons(false);
         rewardSpell = null;
 
-        GameManager.Instance.state = GameManager.GameState.WAVESTATS;
+        if (GameManager.Instance.currentWave % 3 == 0)
+        {
+            GameManager.Instance.state = GameManager.GameState.RELICREWARD;
+        } 
+        else
+        {
+            GameManager.Instance.state = GameManager.GameState.WAVESTATS;
+        }
+
     }
 
     public void ClearReward()
@@ -51,6 +61,33 @@ public class RewardScreenManager : MonoBehaviour
     {
         GetRelicChoices();
 
+        if (relicChoices.Count == 0)
+        {
+            relicRewardMessage.text = "No more Relics to choose from!";
+
+            for (int i = 0; i < relicChoiceUI.Length; i++)
+            {
+                relicChoiceUI[i].gameObject.SetActive(false);
+            }
+
+            return;
+        }
+
+        relicRewardMessage.text = "Choose a Relic!";
+
+        for (int i = 0; i < relicChoiceUI.Length; i++)
+        {
+            if (i < relicChoices.Count)
+            {
+                relicChoiceUI[i].gameObject.SetActive(true);
+                relicChoiceUI[i].SetRelicRewardDisplay(relicChoices[i]);
+            }
+            else
+            {
+                relicChoiceUI[i].gameObject.SetActive(false);
+            }
+        }
+
     }
 
     void GetRelicChoices()
@@ -63,7 +100,6 @@ public class RewardScreenManager : MonoBehaviour
 
             if (relicReward == null)
             {
-                //Set some text that says no more relics
                 break;
             }
 
@@ -74,14 +110,23 @@ public class RewardScreenManager : MonoBehaviour
         }
     }
 
-    void TakeRelic1() => TakeRelic(0);
-    void TakeRelic2() => TakeRelic(1);
-    void TakeRelic3() => TakeRelic(2);
+    public void TakeRelic1() => TakeRelic(0);
+    public void TakeRelic2() => TakeRelic(1);
+    public void TakeRelic3() => TakeRelic(2);
 
     void TakeRelic(int takenRelic)
     {
+        if (takenRelic < 0 || takenRelic >= relicChoices.Count)
+        {
+            return;
+        }
+
         Relic relic = relicChoices[takenRelic];
         player.relicInventory.EquipRelic(relic);
+
+        relicUIManager.RefreshRelicUI();
+
+        GameManager.Instance.state = GameManager.GameState.WAVESTATS;
 
     }
 }

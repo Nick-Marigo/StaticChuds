@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject classSelector;
     [SerializeField] GameObject difficultySelector;
     [SerializeField] GameObject rewardScreen;
+    [SerializeField] GameObject relicRewardScreen;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject waveStatsDisplay;
 
@@ -43,6 +44,7 @@ public class UIManager : MonoBehaviour
         classSelector.SetActive(false);
         difficultySelector.SetActive(false);
         rewardScreen.SetActive(false);
+        relicRewardScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         waveStatsDisplay.SetActive(false);
         universalButton.SetActive(false);
@@ -72,7 +74,7 @@ public class UIManager : MonoBehaviour
                 break;
             case GameManager.GameState.RELICREWARD:
                 background.SetActive(true);
-                rewardScreen.SetActive(true);
+                relicRewardScreen.SetActive(true);
                 universalButton.SetActive(true);
                 buttonText.text = "Skip Reward";
                 rewardScreenManager.ShowRelicReward();
