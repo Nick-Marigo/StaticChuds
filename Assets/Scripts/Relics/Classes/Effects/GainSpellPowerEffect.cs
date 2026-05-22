@@ -13,7 +13,13 @@ public class GainSpellPowerEffect : Effect {
         this.amount = amount;
         this.until = until;
 
-        _SubscribeToStopCondition();
+        Action<int> subscriber = null;
+        subscriber = (_) => {
+            _SubscribeToStopCondition();
+            EventBus.Instance.OnWaveStart -= subscriber;
+        };
+
+        EventBus.Instance.OnWaveStart += subscriber;
     }
 
     /* This function suscribes the StopEffect function to the correct event based on

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -9,7 +10,14 @@ public class StandStillTrigger : Trigger {
         this.type = type;
         this.amount = amount;
 
-        _InitializeMovementTimer();
+        // Unsuscribes _InitializeMovementTimer after first wave start signal
+        Action<int> subscriber = null;
+        subscriber = (_) => {
+            _InitializeMovementTimer();
+            EventBus.Instance.OnWaveStart -= subscriber;
+        };
+
+        EventBus.Instance.OnWaveStart += subscriber;
     }
 
     protected void CatchSubscription() {
@@ -18,7 +26,6 @@ public class StandStillTrigger : Trigger {
 
     void _InitializeMovementTimer() {
         InvokeAttributePackageRequested(); 
-        Debug.Log(attributePackage);
         PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage["event_wrapper"].Get();
         
         GameObject timerContainer = new GameObject("timer_container", typeof(MovementTimer));
@@ -26,6 +33,8 @@ public class StandStillTrigger : Trigger {
         _movementTimer.movementTimerTriggered += CatchSubscription;
         eventWrapper.playerMoved += _movementTimer.ResetTimer;
         EventBus.Instance.OnWaveStart += _UpdateTimer;
+
+
         
     }
 

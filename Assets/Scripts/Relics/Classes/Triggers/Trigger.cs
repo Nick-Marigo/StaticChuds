@@ -20,11 +20,13 @@ abstract public class Trigger {
     public event Action attributePackageRequested;
     
     public void InvokeAttributePackageRequested() {
-        Debug.Log("asked for package");
         attributePackageRequested?.Invoke();
     }
 
     virtual protected void InvokeEffect() {
         effect.PerformEffect();
+    }
+
+    void ToRemove() {
     }
 }
