@@ -25,7 +25,8 @@ public class RelicInventory {
 
     public Relic FetchUnusedRelic() {
         // MAX: I added this because my UI needs a null return if there are no more relics left to choose from
-        if(!_potentialRelics.ContainsKey("Green Gem") || !_potentialRelics.ContainsKey("Jade Elephant")) {
+        // Change !_potentialRelics.ContainsKey("Jade Elephant") to whatever relic you are testing with, or once finished with all relics change to check if dictionary is empty
+        if(!_potentialRelics.ContainsKey("Jade Elephant")) { 
             return null;
         }
 
