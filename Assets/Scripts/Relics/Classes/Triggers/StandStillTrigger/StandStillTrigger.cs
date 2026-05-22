@@ -18,6 +18,7 @@ public class StandStillTrigger : Trigger {
         };
 
         EventBus.Instance.OnWaveStart += subscriber;
+        EventBus.Instance.OnWaveStart += _UpdateTimer;
     }
 
     protected void CatchSubscription() {
@@ -32,10 +33,6 @@ public class StandStillTrigger : Trigger {
         _movementTimer = timerContainer.GetComponent<MovementTimer>();
         _movementTimer.movementTimerTriggered += CatchSubscription;
         eventWrapper.playerMoved += _movementTimer.ResetTimer;
-        EventBus.Instance.OnWaveStart += _UpdateTimer;
-
-
-        
     }
 
     // Update the timer when a new wave starts

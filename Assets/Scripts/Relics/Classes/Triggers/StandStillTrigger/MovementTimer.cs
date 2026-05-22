@@ -6,6 +6,7 @@ using System;
 public class MovementTimer : MonoBehaviour {
     private float _triggerTime;
     private float _timeLeft;
+    private bool _timerSet = false;
 
     public event Action movementTimerTriggered;
 
@@ -14,6 +15,7 @@ public class MovementTimer : MonoBehaviour {
         set { 
             _triggerTime = value;
             _timeLeft = value; 
+            _timerSet = true;
         }
     }
 
@@ -22,6 +24,8 @@ public class MovementTimer : MonoBehaviour {
     }
 
     void Update() {
+        if (!_timerSet) return;
+
         if (_timeLeft <= 0) {
             movementTimerTriggered?.Invoke();
             _timeLeft = _triggerTime;
