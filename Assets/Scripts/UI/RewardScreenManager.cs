@@ -73,4 +73,15 @@ public class RewardScreenManager : MonoBehaviour
             }
         }
     }
+
+    void TakeRelic1() => TakeRelic(0);
+    void TakeRelic2() => TakeRelic(1);
+    void TakeRelic3() => TakeRelic(2);
+
+    void TakeRelic(int takenRelic)
+    {
+        Relic relic = relicChoices[takenRelic];
+        player.relicInventory.EquipRelic(relic);
+
+    }
 }
