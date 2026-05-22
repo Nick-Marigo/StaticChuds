@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class RewardScreenManager : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class RewardScreenManager : MonoBehaviour
     [SerializeField] PlayerController player;
     [SerializeField] SpellUI rewardSpellUI;
     [SerializeField] TextMeshProUGUI rewardDescription;
+
+
+    List<Relic> relicChoices = new List<Relic>();
+
 
     Spell rewardSpell;
 
@@ -42,15 +47,30 @@ public class RewardScreenManager : MonoBehaviour
         player.spellUIContainer.ShowDropButtons(false);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void ShowRelicReward()
     {
-        
+        GetRelicChoices();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void GetRelicChoices()
     {
-        
+        relicChoices.Clear();
+
+        while (relicChoices.Count < 3)
+        {
+            Relic relicReward = player.relicInventory.FetchUnusedRelic();
+
+            if (relicReward == null)
+            {
+                //Set some text that says no more relics
+                break;
+            }
+
+            if (!relicChoices.Contains(relicReward))
+            {
+                relicChoices.Add(relicReward);
+            }
+        }
     }
 }

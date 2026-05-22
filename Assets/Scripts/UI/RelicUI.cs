@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class RelicUI : MonoBehaviour
 {
@@ -17,10 +18,25 @@ public class RelicUI : MonoBehaviour
         GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
     }
 
-    // TODO: Subcribe to event maybe?
-    public void ShowHighLight(bool show)
+    // TODO: Subcribe to an event
+    public IEnumerator EnableHighlight(float delay)
     {
-        highlight.SetActive(show);
+        highlight.SetActive(true);
+        if (delay > 0)
+        {
+            yield return new WaitForSeconds(delay);
+            highlight.SetActive(false);
+        }
+        else
+        {
+            yield break;
+        }
+    }
+
+    // TODO: Subcribe to an event
+    public void DisableHighlight()
+    {
+        highlight.SetActive(false);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

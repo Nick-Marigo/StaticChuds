@@ -12,7 +12,8 @@ public class GameManager
         WAVEEND,
         COUNTDOWN,
         GAMEOVER,
-        WAVESTATS
+        WAVESTATS,
+        RELICREWARD
     }
 
     public event Action<GameState> OnChangedState;

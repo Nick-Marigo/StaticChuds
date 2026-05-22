@@ -69,9 +69,14 @@ public class UIManager : MonoBehaviour
                 universalButton.SetActive(true);
                 buttonText.text = "Skip Reward";
                 rewardScreenManager.ShowReward();
-                
                 break;
-
+            case GameManager.GameState.RELICREWARD:
+                background.SetActive(true);
+                rewardScreen.SetActive(true);
+                universalButton.SetActive(true);
+                buttonText.text = "Skip Reward";
+                rewardScreenManager.ShowRelicReward();
+                break;
             case GameManager.GameState.WAVESTATS:
                 background.SetActive(true);
                 waveStatsDisplay.SetActive(true);
@@ -92,6 +97,11 @@ public class UIManager : MonoBehaviour
     public void OnUniversalButtonClick()
     {
         if (GameManager.GameState.WAVEEND == GameManager.Instance.state)
+        {
+                rewardScreenManager.ClearReward();
+                GameManager.Instance.state = GameManager.GameState.WAVESTATS;
+        }
+        else if (GameManager.GameState.RELICREWARD == GameManager.Instance.state)
         {
             rewardScreenManager.ClearReward();
             GameManager.Instance.state = GameManager.GameState.WAVESTATS;
