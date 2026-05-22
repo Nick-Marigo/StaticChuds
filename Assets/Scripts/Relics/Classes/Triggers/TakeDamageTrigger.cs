@@ -13,8 +13,4 @@ public class TakeDamageTrigger : Trigger {
             InvokeEffect();
         }
     }
-
-    override protected void InvokeEffect() {
-        effect.PerformEffect();
-    }
 }

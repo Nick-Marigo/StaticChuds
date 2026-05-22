@@ -1,4 +1,3 @@
-/*
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -10,37 +9,33 @@ public class StandStillTrigger : Trigger {
         this.type = type;
         this.amount = amount;
 
-        _movementTimer.TimerTriggered += CatchSubscription;
+        _InitializeMovementTimer();
     }
 
     protected void CatchSubscription() {
         InvokeEffect();
     }
 
-    override public void ChangeOwner(GameObject owner) {
-        // Delete any old movementTimers on obj
-        if (relic.Owner != null) {
-            MovementTimer mt = relic.Owner.GetComponent<MovementTimer>();
-            if (mt != null) {
-                Object.Destroy(mt);
-            }
-        }
+    void _InitializeMovementTimer() {
+        InvokeAttributePackageRequested(); 
+        PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage["event_wrapper"].Get();
+        
+        GameObject timerContainer = new GameObject("timer_container", typeof(MovementTimer));
+        _movementTimer = timerContainer.GetComponent<MovementTimer>();
+        _movementTimer.movementTimerTriggered += CatchSubscription;
+        eventWrapper.playerMoved += _movementTimer.ResetTimer;
+        EventBus.Instance.OnWaveStart += _UpdateTimer;
+        
+    }
 
-        if (owner == null) return;
-        // Add a MovementTimer to the owner GameObject and save a ref to it
-        owner.AddComponent<MovementTimer>();
-        _movementTimer = owner.GetComponent<MovementTimer>();
-
-        // Set the stand still time
-        int waveNum = GameManager.Instance.currentWave;
-        int timeAmount = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {
+    // Update the timer when a new wave starts
+    void _UpdateTimer(int waveNum) {
+        int timeAmount = RPNEvaluator.RPNEvaluator.Evaluate(amount, 
+                new Dictionary<string, int> {
                 {"wave", waveNum}
-        });
+                });
         _movementTimer.TriggerTime = timeAmount;
     }
-
-    override protected void Unsuscribe() {
-        EventBus.Instance.TimerTriggered -= CatchSubscription;
-    }
+    //FIX add unsubscription (for movement timer too)
+    //TODO add player switching support
 }
-*/

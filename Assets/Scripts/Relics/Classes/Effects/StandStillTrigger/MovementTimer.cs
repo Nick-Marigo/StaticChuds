@@ -1,8 +1,8 @@
 using UnityEngine;
+using System;
 
 /* This class attaches a timer to a player and invokes an event whenever some number of
  * seconds have passed without the player moving */
-/*
 public class MovementTimer : MonoBehaviour {
     private float _triggerTime;
     private float _timeLeft;
@@ -17,25 +17,15 @@ public class MovementTimer : MonoBehaviour {
         }
     }
 
-    void ResetTimer(GameObject player) {
-        if (player != gameObject) return;
+    public void ResetTimer() {
         _timeLeft = _triggerTime;
-    }
-
-    void OnEnable() {
-        EventBus.Instance.PlayerMoved += ResetTimer;
-    }
-
-    void OnDisable() {
-        EventBus.Instance.PlayerMoved -= ResetTimer;
     }
 
     void Update() {
         if (_timeLeft <= 0) {
-            TimerTriggered?.Invoke();
+            movementTimerTriggered?.Invoke();
             _timeLeft = _triggerTime;
         }
         _timeLeft -= Time.deltaTime;
     }
 }
-*/

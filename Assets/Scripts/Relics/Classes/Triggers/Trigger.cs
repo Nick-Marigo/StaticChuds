@@ -8,6 +8,8 @@ abstract public class Trigger {
     public string description { get; protected set; }
     [JsonProperty]
     protected string type;
+    [JsonProperty]
+    protected string amount;
 
     public Effect effect;
 
@@ -16,5 +18,11 @@ abstract public class Trigger {
     public Dictionary<string, EntityAttributePackage.AttributeGate> attributePackage;
     public event Action attributePackageRequested;
     
-    abstract protected void InvokeEffect();
+    public void InvokeAttributePackageRequested() {
+        attributePackageRequested?.Invoke();
+    }
+
+    virtual protected void InvokeEffect() {
+        effect.PerformEffect();
+    }
 }

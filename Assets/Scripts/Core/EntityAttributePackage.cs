@@ -10,6 +10,7 @@ public class EntityAttributePackage : MonoBehaviour {
 
     Dictionary<string, AttributeGate> _attributeDict;
     SpellCaster _spellCaster;
+    PlayerEventWrapper _eventWrapper;
 
     public Dictionary<string, AttributeGate> GetAttributes() {
         _LoadAttributes();
@@ -19,17 +20,22 @@ public class EntityAttributePackage : MonoBehaviour {
     void _LoadAttributes() {
         if (_attributeDict != null) return;
 
-        _spellCaster = gameObject.GetComponent<PlayerController>().spellcaster;
+        _SetPlayerSystems();
 
         _attributeDict = new();
         _attributeDict.Add("mana", new AttributeGate {
                 Get = () => _spellCaster.mana,
                 Set = (value) => _spellCaster.mana = (int)value
                 });
-        _attributeDict.Add("move_event", new AttributeGate {
-                Get = () => _spellCaster.mana,
-                Set = (value) => _spellCaster.mana = (int)value
+        _attributeDict.Add("event_wrapper", new AttributeGate {
+                Get = () => _eventWrapper
                 });
+    }
+
+    void _SetPlayerSystems() {
+        PlayerController playerController = gameObject.GetComponent<PlayerController>();
+        _spellCaster = playerController.spellcaster;
+        _eventWrapper = playerController.eventWrapper;
     }
 }
 
