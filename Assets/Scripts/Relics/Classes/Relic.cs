@@ -23,6 +23,7 @@ public class Relic {
     // attributes from the relic holder
     public event Action attributePackageRequested;
     public void InvokeAttributePackageRequested() {
+        Debug.Log("asked here too");
         attributePackageRequested?.Invoke();
     }
 

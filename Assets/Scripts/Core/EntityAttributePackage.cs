@@ -27,6 +27,10 @@ public class EntityAttributePackage : MonoBehaviour {
                 Get = () => _spellCaster.mana,
                 Set = (value) => _spellCaster.mana = (int)value
                 });
+        _attributeDict.Add("spellpower", new AttributeGate {
+                Get = () => _spellCaster.spellPower,
+                Set = (value) => _spellCaster.spellPower = (int)value
+                });
         _attributeDict.Add("event_wrapper", new AttributeGate {
                 Get = () => _eventWrapper
                 });

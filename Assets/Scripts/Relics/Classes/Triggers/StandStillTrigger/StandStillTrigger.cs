@@ -18,6 +18,7 @@ public class StandStillTrigger : Trigger {
 
     void _InitializeMovementTimer() {
         InvokeAttributePackageRequested(); 
+        Debug.Log(attributePackage);
         PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage["event_wrapper"].Get();
         
         GameObject timerContainer = new GameObject("timer_container", typeof(MovementTimer));

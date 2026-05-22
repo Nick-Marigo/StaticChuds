@@ -12,6 +12,8 @@ public class EffectGenerator {
         switch(type) {
             case "gain-mana": 
                 return new GainManaEffect(description, type, amount);
+            case "gain-spellpower": 
+                return new GainSpellPowerEffect(description, type, amount, until);
             default: 
                 return null;
         }

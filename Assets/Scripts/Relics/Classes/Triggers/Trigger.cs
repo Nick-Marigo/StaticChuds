@@ -1,3 +1,4 @@
+using UnityEngine;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ abstract public class Trigger {
     public event Action attributePackageRequested;
     
     public void InvokeAttributePackageRequested() {
+        Debug.Log("asked for package");
         attributePackageRequested?.Invoke();
     }
 
