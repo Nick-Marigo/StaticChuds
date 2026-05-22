@@ -37,6 +37,7 @@ public class Relic {
      * using the generator classes */
     [OnDeserialized]
     void OnDeserialization(StreamingContext context) {
+        Debug.Log($"creating relic: {name}");
 
         trigger = triggerGen.GenerateTrigger();
         if (trigger == null) {

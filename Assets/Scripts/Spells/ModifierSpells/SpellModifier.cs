@@ -45,7 +45,7 @@ public abstract class SpellModifier : Spell {
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
-        Debug.Log("Modifier cast called on: " + this.GetType().Name);
+        //Debug.Log("Modifier cast called on: " + this.GetType().Name);
         yield return innerSpell.Cast(where, target, team);
     }
 

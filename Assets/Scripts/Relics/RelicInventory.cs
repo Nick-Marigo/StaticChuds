@@ -24,13 +24,15 @@ public class RelicInventory {
     }
 
     public Relic FetchUnusedRelic() {
+        Relic relic = _potentialRelics["Jade Elephant"](); 
+        _potentialRelics.Remove("Jade Elephant");
         // MAX: I added this because my UI needs a null return if there are no more relics left to choose from
         if(!_potentialRelics.ContainsKey("Green Gem")) {
             return null;
         }
 
-        Relic relic = _potentialRelics["Green Gem"](); 
-        _potentialRelics.Remove("Green Gem");
+        Relic relic = _potentialRelics["Jade Elephant"](); 
+        _potentialRelics.Remove("Jade Elephant");
         return relic;
     }
 
