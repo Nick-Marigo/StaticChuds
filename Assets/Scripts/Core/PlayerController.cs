@@ -58,6 +58,9 @@ public class PlayerController : MonoBehaviour
         relicInventory.EquipRelic(relic);
         //Debug.Log(relicInventory.GetEquippedRelics()["Green Gem"]);
         
+        // TODO break up this function
+        unit.unitMoved += eventWrapper.InvokePlayerMoved;
+        
         ScaleStats(GameManager.Instance.currentWave);
         StartCoroutine(spellcaster.ManaRegeneration());
 

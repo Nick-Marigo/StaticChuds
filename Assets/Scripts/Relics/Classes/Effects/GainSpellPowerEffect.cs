@@ -36,7 +36,7 @@ public class GainSpellPowerEffect : Effect {
     }
 
     void _StopEffect() {
-        if (_effectActive == false) return;
+        if (!_effectActive) return;
 
         _effectActive = false;
         InvokeAttributePackageRequested();

@@ -28,7 +28,7 @@ public class MovementTimer : MonoBehaviour {
 
         if (_timeLeft <= 0) {
             movementTimerTriggered?.Invoke();
-            _timeLeft = _triggerTime;
+            ResetTimer();
         }
         _timeLeft -= Time.deltaTime;
     }

@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour
     public float distance;
     public event Action<float> OnMove;
 
+    public event Action unitMoved;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,7 +32,12 @@ public class Unit : MonoBehaviour
 
     public void Move(Vector2 ds)
     {
+        // Emit and event if the player is not giving input
+        if (ds != Vector2.zero) {
+            unitMoved?.Invoke();
+        }
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        // Shape cast to determine if you will hit anything in the next frame
         int n = GetComponent<Rigidbody2D>().Cast(ds, hits, ds.magnitude * 2);
         if (n == 0)
         {
