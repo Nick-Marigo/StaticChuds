@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public RelicInventory relicInventory;
     public SpellUI spellui;
     public SpellUIContainer spellUIContainer;
+    public RelicUIManager relicUIManager;
     public int speed;
 
     public Unit unit;
@@ -54,8 +55,9 @@ public class PlayerController : MonoBehaviour
         spellcaster = new SpellCaster(Hittable.Team.PLAYER);
         relicInventory = new RelicInventory(gameObject.GetComponent<EntityAttributePackage>());
         //REMOVE: adds a test relic
-        Relic relic = relicInventory.FetchUnusedRelic();
-        relicInventory.EquipRelic(relic);
+        //Relic relic = relicInventory.FetchUnusedRelic();
+        //relicInventory.EquipRelic(relic);
+        //relicUIManager.RefreshRelicUI();
         //Debug.Log(relicInventory.GetEquippedRelics()["Green Gem"]);
         
         // TODO break up this function
