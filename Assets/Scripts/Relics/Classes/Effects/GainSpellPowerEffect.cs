@@ -20,7 +20,12 @@ public class GainSpellPowerEffect : Effect {
         };
 
         EventBus.Instance.OnWaveStart += subscriber;
-        EventBus.Instance.OnWaveStart += (_) => _StopEffect();
+        // Since stats are reset when the wave starts, we must
+        // make sure we do not mutate it with extraspellpower
+        EventBus.Instance.OnWaveStart += (_) => {
+            _extraSpellPower = 0;
+            _StopEffect();
+        };
     }
 
     /* This function suscribes the StopEffect function to the correct event based on
@@ -42,9 +47,9 @@ public class GainSpellPowerEffect : Effect {
         _effectActive = false;
         InvokeAttributePackageRequested();
         int spellpower = (int)attributePackage["spellpower"].Get();
-        Debug.Log("received spellpower: " + spellpower);
+        //Debug.Log("received spellpower: " + spellpower);
         attributePackage["spellpower"].Set(spellpower - _extraSpellPower);
-        Debug.Log("spellpower back to " + attributePackage["spellpower"].Get());
+        //Debug.Log("spellpower back to " + attributePackage["spellpower"].Get());
     }
 
     override public void PerformEffect() {

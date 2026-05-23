@@ -19,6 +19,7 @@ public class SpellCaster
     public int selectedSpellIndex = 0;
     public const int MAXSPELLS = 4;
     public int spellPower = 5;
+    //public int spellPower { get { return _spellpower; } set { Debug.Log($"power changed to: {value}"); _spellpower = value; }}
 
     public IEnumerator ManaRegeneration()
     {
