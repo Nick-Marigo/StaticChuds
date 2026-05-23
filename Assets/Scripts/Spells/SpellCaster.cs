@@ -44,6 +44,7 @@ public class SpellCaster
 
         if (mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
         {
+            selectedSpell.UpdateDicts(GameManager.Instance.currentWave);
             mana -= selectedSpell.GetManaCost();
             selectedSpell.last_cast = Time.time;
             yield return selectedSpell.Cast(where, target, team);

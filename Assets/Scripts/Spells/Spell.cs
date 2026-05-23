@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 [JsonObject(MemberSerialization.OptIn)]
 public abstract class Spell 
@@ -27,10 +26,6 @@ public abstract class Spell
         EventBus.Instance.OnWaveStart += UpdateDicts;
     }
 
-    void OnDestroy() {
-        EventBus.Instance.OnWaveStart -= UpdateDicts;
-    }
-
     public virtual void SetStatsSource(Spell source)
     {
         statSource = source;
@@ -43,7 +38,7 @@ public abstract class Spell
 
     // On waveStart, all the dictionary values are updated to
     // reflect the current game state
-    protected void UpdateDicts(int waveNum) {
+    public void UpdateDicts(int waveNum) {
         intRpnVals = new Dictionary<string, int> {
             {"power", owner.spellPower},
             {"wave", waveNum}

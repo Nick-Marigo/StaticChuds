@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GainSpellPowerEffect : Effect {
-    int extraSpellPower;
+    int _extraSpellPower;
     bool _effectActive = false;
 
 
@@ -41,7 +41,8 @@ public class GainSpellPowerEffect : Effect {
         _effectActive = false;
         InvokeAttributePackageRequested();
         int spellpower = (int)attributePackage["spellpower"].Get();
-        attributePackage["spellpower"].Set(spellpower - extraSpellPower);
+        Debug.Log("received spellpower: " + spellpower);
+        attributePackage["spellpower"].Set(spellpower - _extraSpellPower);
         Debug.Log("spellpower back to " + attributePackage["spellpower"].Get());
     }
 
@@ -51,11 +52,11 @@ public class GainSpellPowerEffect : Effect {
         _effectActive = true;
         InvokeAttributePackageRequested();
         int waveNum = GameManager.Instance.currentWave;
-        extraSpellPower = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {
+        _extraSpellPower = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {
             {"wave", waveNum}
         });
         int spellpower = (int)attributePackage["spellpower"].Get();
-        attributePackage["spellpower"].Set(spellpower + extraSpellPower);
+        attributePackage["spellpower"].Set(spellpower + _extraSpellPower);
         Debug.Log("spellpower increased to " + attributePackage["spellpower"].Get());
     }
 }
