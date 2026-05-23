@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -47,8 +48,7 @@ public class RelicUI : MonoBehaviour
         description.text = relic.trigger.description;
         description.text = description.text + " " + relic.effect.description;
         GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
-        
-
+        var button = takeButton.GetComponent<Button>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

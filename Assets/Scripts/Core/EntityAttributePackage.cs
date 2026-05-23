@@ -47,7 +47,6 @@ public class EntityAttributePackage : MonoBehaviour {
             Debug.Log($"ERROR-EntityAttributePackage: entity has no SpellCaster");
         }
         _eventWrapper = playerController.eventWrapper;
-        Debug.Log($"setting player systems on {playerController} {_spellCaster} {_eventWrapper}");
     }
 }
 

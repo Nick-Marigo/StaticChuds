@@ -1971,7 +1971,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 220180077}
         m_TargetAssemblyTypeName: RewardScreenManager, Assembly-CSharp
-        m_MethodName: TakeRelic1
+        m_MethodName: TakeRelic3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3269,7 +3269,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 220180077}
         m_TargetAssemblyTypeName: RewardScreenManager, Assembly-CSharp
-        m_MethodName: TakeRelic1
+        m_MethodName: TakeRelic2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -24,7 +24,6 @@ abstract public class Effect : iRequestAttributePackage {
     /* This function suscribes the StopEffect function to the correct event based on
      * what was passed into the "until" attribute */
     void _SubscribeToStopCondition() {
-        Debug.Log(attributePackage.AttributeDict);
         PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage.AttributeDict["event_wrapper"].Get();
         switch(until){
             case("move"):
