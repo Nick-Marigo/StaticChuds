@@ -27,6 +27,7 @@ public class ProjectileController : MonoBehaviour
         if (collision.gameObject.CompareTag("unit"))
         {
             var ec = collision.gameObject.GetComponent<EnemyController>();
+
             if (ec != null)
             {
                 OnHit(ec.hp, transform.position);

@@ -24,7 +24,7 @@ public class RelicInventory {
 
     public List<Relic> FetchUnusedRelics(int n) {
         List<Relic> potentialRelics = new();
-        Relic r = RelicLoader.Relics["Golden Mask"](); 
+        Relic r = RelicLoader.Relics["Cursed Scroll"](); 
         potentialRelics.Add(r);
         return potentialRelics; 
 

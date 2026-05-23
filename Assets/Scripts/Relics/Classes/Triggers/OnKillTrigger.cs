@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class OnKillTrigger : Trigger {
 
    public OnKillTrigger(string description, string type) {
@@ -5,5 +7,8 @@ public class OnKillTrigger : Trigger {
         this.type = type;
    }
 
-
+    override public void Activate() {
+        base.Activate();
+        EventBus.Instance.enemyKilled += InvokeEffect;
+    }
 }
