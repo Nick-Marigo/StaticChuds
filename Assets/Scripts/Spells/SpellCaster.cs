@@ -21,6 +21,7 @@ public class SpellCaster {
     //public int spellPower { get { return _spellpower; } set { Debug.Log($"power changed to: {value}"); _spellpower = value; }}
 
     public EntityAttributePackage _attributePackage;
+    private PlayerEventWrapper _eventWrapper;
     
     public IEnumerator ManaRegeneration()
     {
@@ -43,17 +44,20 @@ public class SpellCaster {
     {        
         if (spells.Count == 0) yield break;
 
+        if (_eventWrapper == null) {
+            _eventWrapper = (PlayerEventWrapper)_attributePackage.AttributeDict["event_wrapper"].Get();
+        }
+
         Spell selectedSpell = spells[selectedSpellIndex];
 
         if (mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
         {
-            PlayerEventWrapper ev = (PlayerEventWrapper)_attributePackage.AttributeDict["event_wrapper"].Get();
-            ev.InvokeSpellCast();
 
             selectedSpell.UpdateDicts(GameManager.Instance.currentWave);
             mana -= selectedSpell.GetManaCost();
             selectedSpell.last_cast = Time.time;
             yield return selectedSpell.Cast(where, target, team);
+            _eventWrapper.InvokeSpellCast();
         }
         yield break;
     }

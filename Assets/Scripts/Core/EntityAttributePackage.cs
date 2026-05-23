@@ -8,6 +8,7 @@ public class EntityAttributePackage : MonoBehaviour {
         public Action<object> Set;
     }
 
+
     Dictionary<string, AttributeGate> _attributeDict;
     public Dictionary<string, AttributeGate> AttributeDict {
         get {
@@ -15,6 +16,7 @@ public class EntityAttributePackage : MonoBehaviour {
             return _attributeDict;
         }
     }
+
 
     SpellCaster _spellCaster;
     PlayerEventWrapper _eventWrapper;
@@ -41,7 +43,11 @@ public class EntityAttributePackage : MonoBehaviour {
     void _SetPlayerSystems() {
         PlayerController playerController = gameObject.GetComponent<PlayerController>();
         _spellCaster = playerController.spellcaster;
+        if (_spellCaster == null) {
+            Debug.Log($"ERROR-EntityAttributePackage: entity has no SpellCaster");
+        }
         _eventWrapper = playerController.eventWrapper;
+        Debug.Log($"setting player systems on {playerController} {_spellCaster} {_eventWrapper}");
     }
 }
 
