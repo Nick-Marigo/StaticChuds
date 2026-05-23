@@ -9,13 +9,15 @@ public class EntityAttributePackage : MonoBehaviour {
     }
 
     Dictionary<string, AttributeGate> _attributeDict;
+    public Dictionary<string, AttributeGate> AttributeDict {
+        get {
+            _LoadAttributes();
+            return _attributeDict;
+        }
+    }
+
     SpellCaster _spellCaster;
     PlayerEventWrapper _eventWrapper;
-
-    public Dictionary<string, AttributeGate> GetAttributes() {
-        _LoadAttributes();
-        return _attributeDict;
-    }
 
     void _LoadAttributes() {
         if (_attributeDict != null) return;

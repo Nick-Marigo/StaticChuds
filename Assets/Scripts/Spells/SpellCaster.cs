@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +21,13 @@ public class SpellCaster
     public const int MAXSPELLS = 4;
     public int spellPower = 5;
     //public int spellPower { get { return _spellpower; } set { Debug.Log($"power changed to: {value}"); _spellpower = value; }}
+
+    public EntityAttributePackage attributePackage;
+    public event Action attributePackageRequested;
+    
+    public void InvokeAttributePackageRequested() {
+        attributePackageRequested?.Invoke();
+    }
 
     public IEnumerator ManaRegeneration()
     {

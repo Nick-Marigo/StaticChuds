@@ -15,7 +15,7 @@ abstract public class Effect {
 
     // Attribute Packages are used to access and change attributes
     // on the player
-    public Dictionary<string, EntityAttributePackage.AttributeGate> attributePackage;
+    public EntityAttributePackage attributePackage;
     public event Action attributePackageRequested;
     public void InvokeAttributePackageRequested() {
         attributePackageRequested?.Invoke();

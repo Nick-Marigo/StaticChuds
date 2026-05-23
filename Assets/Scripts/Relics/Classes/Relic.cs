@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization;
 using System;
 
@@ -28,7 +26,7 @@ public class Relic {
 
     // This function is called by the player to provide
     // attribute packages to the trigger and effect
-    public void SetAttributePackage (Dictionary<string, EntityAttributePackage.AttributeGate> package) {
+    public void SetAttributePackage (EntityAttributePackage package) {
         trigger.attributePackage = package;
         effect.attributePackage = package;
     }

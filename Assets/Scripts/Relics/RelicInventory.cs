@@ -4,11 +4,11 @@ using System.Collections.Generic;
 public class RelicInventory {
     EntityAttributePackage _attributePackage;
 
-    Dictionary<string, Func<Relic>> _potentialRelics;
+    List<string> _potentialRelics;
     Dictionary<string, Relic> _equippedRelics;
 
     public RelicInventory (EntityAttributePackage attributePackage) {
-        _potentialRelics = RelicLoader.Relics;
+        _potentialRelics = new(RelicLoader.RelicNames);
         _equippedRelics = new();
 
         _attributePackage = attributePackage;
@@ -23,20 +23,23 @@ public class RelicInventory {
     }
 
     public Relic FetchUnusedRelic() {
-        // MAX: I added this because my UI needs a null return if there are no more relics left to choose from
-        // Change !_potentialRelics.ContainsKey("Jade Elephant") to whatever relic you are testing with, or once finished with all relics change to check if dictionary is empty
-        if(!_potentialRelics.ContainsKey("Jade Elephant")) { 
+        if(_potentialRelics.Count == 0) { 
             return null;
         }
 
-        Relic relic = _potentialRelics["Jade Elephant"](); 
-        _potentialRelics.Remove("Jade Elephant");
+        // TO REMOVE
+        return RelicLoader.Relics["Golden Mask"]();
+
+        int randIdx = UnityEngine.Random.Range(0, _potentialRelics.Count);
+        string chosenRelic = _potentialRelics[randIdx];
+        Relic relic = RelicLoader.Relics[chosenRelic](); 
+        _potentialRelics.RemoveAt(randIdx);
         return relic;
     }
 
     public void EquipRelic(Relic relic) {
         _equippedRelics.Add(relic.name, relic);
-        relic.attributePackageRequested += () => relic.SetAttributePackage(_attributePackage.GetAttributes()); 
+        relic.attributePackageRequested += () => relic.SetAttributePackage(_attributePackage); 
     }
 
     public Dictionary<string, Relic> GetEquippedRelics() {
