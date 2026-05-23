@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 
 public class PlayerController : MonoBehaviour
@@ -55,10 +54,9 @@ public class PlayerController : MonoBehaviour
         spellcaster = new SpellCaster(Hittable.Team.PLAYER);
         relicInventory = new RelicInventory(gameObject.GetComponent<EntityAttributePackage>());
         //REMOVE: adds a test relic
-        //Relic relic = relicInventory.FetchUnusedRelic();
-        //relicInventory.EquipRelic(relic);
-        //relicUIManager.RefreshRelicUI();
-        //Debug.Log(relicInventory.GetEquippedRelics()["Green Gem"]);
+        Relic relic = relicInventory.FetchUnusedRelic();
+        relicInventory.EquipRelic(relic);
+        relicUIManager.RefreshRelicUI();
         
         // TODO break up this function
         unit.unitMoved += eventWrapper.InvokePlayerMoved;

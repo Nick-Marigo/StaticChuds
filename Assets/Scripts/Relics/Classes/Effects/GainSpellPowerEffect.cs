@@ -20,6 +20,7 @@ public class GainSpellPowerEffect : Effect {
         };
 
         EventBus.Instance.OnWaveStart += subscriber;
+        EventBus.Instance.OnWaveStart += (_) => _StopEffect();
     }
 
     /* This function suscribes the StopEffect function to the correct event based on
