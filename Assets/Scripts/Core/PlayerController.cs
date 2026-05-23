@@ -141,4 +141,8 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    void _ProvideAttributePackage(iRequestAttributePackage requester) {
+        requester.attributePackage = null;
+    }
+
 }

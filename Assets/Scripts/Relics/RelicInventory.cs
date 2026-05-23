@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 public class RelicInventory {
@@ -39,7 +38,7 @@ public class RelicInventory {
 
     public void EquipRelic(Relic relic) {
         _equippedRelics.Add(relic.name, relic);
-        relic.attributePackageRequested += () => relic.SetAttributePackage(_attributePackage); 
+        relic.attributePackageRequested += () => relic.attributePackage = _attributePackage;
     }
 
     public Dictionary<string, Relic> GetEquippedRelics() {

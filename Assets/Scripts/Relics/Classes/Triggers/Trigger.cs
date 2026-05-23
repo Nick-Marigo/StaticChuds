@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 [JsonObject(MemberSerialization.OptIn)]
-abstract public class Trigger {
+abstract public class Trigger : iRequestAttributePackage {
     [JsonProperty]
     public string description { get; protected set; }
     [JsonProperty]
@@ -16,7 +16,7 @@ abstract public class Trigger {
 
     // Attribute Packages are used to access and change attributes
     // on the player
-    public EntityAttributePackage attributePackage;
+    public EntityAttributePackage attributePackage { set; get; }
     public event Action attributePackageRequested;
     
     public void InvokeAttributePackageRequested() {

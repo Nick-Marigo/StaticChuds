@@ -1,9 +1,8 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 [JsonObject(MemberSerialization.OptIn)]
-abstract public class Effect {
+abstract public class Effect : iRequestAttributePackage {
     [JsonProperty]
     public string description { get; protected set; }
     [JsonProperty]
@@ -15,7 +14,7 @@ abstract public class Effect {
 
     // Attribute Packages are used to access and change attributes
     // on the player
-    public EntityAttributePackage attributePackage;
+    public EntityAttributePackage attributePackage { set; get; }
     public event Action attributePackageRequested;
     public void InvokeAttributePackageRequested() {
         attributePackageRequested?.Invoke();
