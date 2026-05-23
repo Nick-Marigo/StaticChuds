@@ -1,15 +1,55 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class RelicUI : MonoBehaviour
 {
     public PlayerController player;
     public int index;
 
-    public Image icon;
-    public GameObject highlight;
-    public TextMeshProUGUI label;
+    [SerializeField] Image icon;
+    [SerializeField] GameObject highlight;
+    [SerializeField] TextMeshProUGUI relicName;
+    [SerializeField] TextMeshProUGUI description;
+    [SerializeField] GameObject takeButton;
+
+    public void SetRelicDisplay(Relic relic)
+    {
+        GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
+    }
+
+    // TODO: Subcribe to an event
+    public IEnumerator EnableHighlight(float delay)
+    {
+        highlight.SetActive(true);
+        if (delay > 0)
+        {
+            yield return new WaitForSeconds(delay);
+            highlight.SetActive(false);
+        }
+        else
+        {
+            yield break;
+        }
+    }
+
+    // TODO: Subcribe to an event
+    public void DisableHighlight()
+    {
+        highlight.SetActive(false);
+    }
+
+    public void SetRelicRewardDisplay(Relic relic)
+    {
+        relicName.text = relic.name;
+
+        description.text = relic.trigger.description;
+        description.text = description.text + " " + relic.effect.description;
+        GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
+        
+
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
