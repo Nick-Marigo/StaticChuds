@@ -7,7 +7,7 @@ public class GainManaEffect : Effect {
         this.description = description;
         this.type = type;
         this.amount = amount;
-        }
+    }
 
     override public void PerformEffect() {
         InvokeAttributePackageRequested();
@@ -15,6 +15,6 @@ public class GainManaEffect : Effect {
         Debug.Log("player gained " + additionalMana + " mana");
         Debug.Log(attributePackage);
         int mana = (int)attributePackage.AttributeDict["mana"].Get();
-        //attributePackage.AttributeDict["mana"].Set(mana + additionalMana);
+        attributePackage.AttributeDict["mana"].Set(mana + additionalMana);
     }
 }

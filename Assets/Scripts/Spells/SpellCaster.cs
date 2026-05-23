@@ -1,10 +1,8 @@
-using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpellCaster 
-{
+public class SpellCaster {
     public int mana = 0;
     public int max_mana;
     public int mana_reg;
@@ -22,13 +20,8 @@ public class SpellCaster
     public int spellPower = 5;
     //public int spellPower { get { return _spellpower; } set { Debug.Log($"power changed to: {value}"); _spellpower = value; }}
 
-    public EntityAttributePackage attributePackage;
-    public event Action attributePackageRequested;
+    public EntityAttributePackage _attributePackage;
     
-    public void InvokeAttributePackageRequested() {
-        attributePackageRequested?.Invoke();
-    }
-
     public IEnumerator ManaRegeneration()
     {
         while (true)
@@ -39,9 +32,10 @@ public class SpellCaster
         }
     }
 
-    public SpellCaster(Hittable.Team team)
+    public SpellCaster(EntityAttributePackage attributePackage, Hittable.Team team)
     {
         this.team = team;
+        _attributePackage = attributePackage;
         spells.Add(SpellBuilder.BuildArcaneBolt(this));
     }
 
@@ -53,6 +47,9 @@ public class SpellCaster
 
         if (mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
         {
+            PlayerEventWrapper ev = (PlayerEventWrapper)_attributePackage.AttributeDict["event_wrapper"].Get();
+            ev.InvokeSpellCast();
+
             selectedSpell.UpdateDicts(GameManager.Instance.currentWave);
             mana -= selectedSpell.GetManaCost();
             selectedSpell.last_cast = Time.time;

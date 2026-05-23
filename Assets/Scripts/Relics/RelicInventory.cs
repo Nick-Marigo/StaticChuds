@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Collections.Generic;
 
 public class RelicInventory {
@@ -14,31 +15,45 @@ public class RelicInventory {
 
         // REMOVE: debugging for JSON loading
         /*
-        foreach (KeyValuePair<string, Func<Relic>> relic in _potentialRelics) {
-            Relic r = relic.Value();
-            Debug.Log($"{r.name}, trigger: {r.trigger.description}, effect: {r.effect.description}");
-        }
-        */
+           foreach (KeyValuePair<string, Func<Relic>> relic in _potentialRelics) {
+           Relic r = relic.Value();
+           Debug.Log($"{r.name}, trigger: {r.trigger.description}, effect: {r.effect.description}");
+           }
+           */
     }
 
-    public Relic FetchUnusedRelic() {
-        if(_potentialRelics.Count == 0) { 
-            return null;
+    public List<Relic> FetchUnusedRelics(int n) {
+        List<Relic> potentialRelics = new();
+        Relic r = RelicLoader.Relics["Golden Mask"](); 
+        potentialRelics.Add(r);
+        return potentialRelics; 
+
+        List<string> potentialDisplayedRelics = new(_potentialRelics);
+
+        for (int i = 0; i < n; i++) {
+            if(potentialDisplayedRelics.Count == 0) break;
+
+            int randIdx = UnityEngine.Random.Range(0, _potentialRelics.Count);
+            string chosenRelic = potentialDisplayedRelics[randIdx];
+
+            Relic relic = RelicLoader.Relics[chosenRelic](); 
+            potentialDisplayedRelics.RemoveAt(randIdx);
+
+            potentialRelics.Add(relic);
         }
 
-        // TO REMOVE
-        return RelicLoader.Relics["Golden Mask"]();
-
-        int randIdx = UnityEngine.Random.Range(0, _potentialRelics.Count);
-        string chosenRelic = _potentialRelics[randIdx];
-        Relic relic = RelicLoader.Relics[chosenRelic](); 
-        _potentialRelics.RemoveAt(randIdx);
-        return relic;
+        return potentialRelics;
     }
 
     public void EquipRelic(Relic relic) {
         _equippedRelics.Add(relic.name, relic);
+        _potentialRelics.Remove(relic.name);
+        // Give the relic an attribute package
         relic.attributePackageRequested += () => relic.attributePackage = _attributePackage;
+        // Relics can only be activated after their attribute package request event has
+        // been subscribed to (they do not work without an owner)
+        relic.Activate();
+
     }
 
     public Dictionary<string, Relic> GetEquippedRelics() {

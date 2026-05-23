@@ -2,8 +2,11 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 
+
 public class RewardScreenManager : MonoBehaviour
 {
+    const int _numRewardRelics = 3;
+
     public GameObject rewardUI;
     [SerializeField] PlayerController player;
     [SerializeField] SpellUI rewardSpellUI;
@@ -39,7 +42,9 @@ public class RewardScreenManager : MonoBehaviour
         player.spellUIContainer.ShowDropButtons(false);
         rewardSpell = null;
 
-        if (GameManager.Instance.currentWave % 3 == 0)
+        // TO FIX
+        //if (GameManager.Instance.currentWave % 3 == 0)
+        if (true)
         {
             GameManager.Instance.state = GameManager.GameState.RELICREWARD;
         } 
@@ -93,21 +98,7 @@ public class RewardScreenManager : MonoBehaviour
     void GetRelicChoices()
     {
         relicChoices.Clear();
-
-        while (relicChoices.Count < 3)
-        {
-            Relic relicReward = player.relicInventory.FetchUnusedRelic();
-
-            if (relicReward == null)
-            {
-                break;
-            }
-
-            if (!relicChoices.Contains(relicReward))
-            {
-                relicChoices.Add(relicReward);
-            }
-        }
+        relicChoices = player.relicInventory.FetchUnusedRelics(_numRewardRelics);
     }
 
     public void TakeRelic1() => TakeRelic(0);

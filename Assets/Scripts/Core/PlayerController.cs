@@ -22,14 +22,16 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 position{get { return transform.position; }}
 
+    EntityAttributePackage _attributePackage;
+
     Classes currentClass;
     [SerializeField] GameObject playerVisual;
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    void Start() {
+        _attributePackage = gameObject.GetComponent<EntityAttributePackage>();
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
     }
@@ -51,12 +53,14 @@ public class PlayerController : MonoBehaviour
         hp.team = Hittable.Team.PLAYER;
 
         eventWrapper = new PlayerEventWrapper();
-        spellcaster = new SpellCaster(Hittable.Team.PLAYER);
-        relicInventory = new RelicInventory(gameObject.GetComponent<EntityAttributePackage>());
+        spellcaster = new SpellCaster(_attributePackage, Hittable.Team.PLAYER);
+        relicInventory = new RelicInventory(_attributePackage);
+        /*
         //REMOVE: adds a test relic
         Relic relic = relicInventory.FetchUnusedRelic();
         relicInventory.EquipRelic(relic);
         relicUIManager.RefreshRelicUI();
+        */
         
         // TODO break up this function
         unit.unitMoved += eventWrapper.InvokePlayerMoved;
@@ -142,7 +146,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void _ProvideAttributePackage(iRequestAttributePackage requester) {
-        requester.attributePackage = null;
+        Debug.Log($"Package given to{requester} is {_attributePackage}");
+        requester.attributePackage = _attributePackage;
     }
 
 }

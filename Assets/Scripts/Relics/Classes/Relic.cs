@@ -29,6 +29,12 @@ public class Relic : iRequestAttributePackage {
         attributePackageRequested?.Invoke();
     }
 
+    public void Activate() {
+        Debug.Log("activating " + name);
+        trigger.Activate();
+        effect.Activate();
+    }
+
     void _SetAttributePackages (EntityAttributePackage package) {
         trigger.attributePackage = package;
         effect.attributePackage = package;
