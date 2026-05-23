@@ -24,16 +24,18 @@ public class RelicInventory {
 
     public List<Relic> FetchUnusedRelics(int n) {
         List<Relic> potentialRelics = new();
+        /*
         Relic r = RelicLoader.Relics["Cursed Scroll"](); 
         potentialRelics.Add(r);
         return potentialRelics; 
+        */
 
         List<string> potentialDisplayedRelics = new(_potentialRelics);
 
         for (int i = 0; i < n; i++) {
             if(potentialDisplayedRelics.Count == 0) break;
 
-            int randIdx = UnityEngine.Random.Range(0, _potentialRelics.Count);
+            int randIdx = UnityEngine.Random.Range(0, potentialDisplayedRelics.Count);
             string chosenRelic = potentialDisplayedRelics[randIdx];
 
             Relic relic = RelicLoader.Relics[chosenRelic](); 
