@@ -36,6 +36,8 @@ public class Hittable
         this.max_hp = hp;
         this.team = team;
         this.owner = owner;
+
+        OnDeath += () => Debug.Log("someone died");
     }
 
     public void SetMaxHP(int max_hp)
