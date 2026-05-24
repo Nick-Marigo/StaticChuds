@@ -16,20 +16,24 @@ public class RelicUI : MonoBehaviour
     [SerializeField] GameObject takeButton;
 
     private Relic relic;
-    private Action<float> _highlightAdapter;
+    private Action<float> _highlightOnAdapter;
+    private Action _highlightOffAdapter;
 
     public void SetRelicDisplay(Relic relic)
     {
         this.relic = relic;
         GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
         // Subscribe to highlight highlight events
-        _highlightAdapter = (float delay) => StartCoroutine(EnableHighlight(delay));
-        relic.effect.highlightRequested += _highlightAdapter;
+        _highlightOnAdapter = (float delay) => StartCoroutine(EnableHighlight(delay));
+        _highlightOffAdapter = () => DisableHighlight();
+        relic.effect.highlightRequested += _highlightOnAdapter;
+        relic.effect.highlightStopRequested += _highlightOffAdapter;
     }
 
     void OnDisable() {
         if (relic != null) {
-            relic.effect.highlightRequested -= _highlightAdapter;
+            relic.effect.highlightRequested -= _highlightOnAdapter;
+            relic.effect.highlightStopRequested -= _highlightOffAdapter;
         }
     }
     // TODO: Subcribe to an event

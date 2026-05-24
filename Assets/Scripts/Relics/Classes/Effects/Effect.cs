@@ -25,10 +25,8 @@ abstract public class Effect : iRequestAttributePackage {
 
     // Highlight event caught by the ui
     public event Action<float> highlightRequested;
-    public void InvokeHighlightRequested(int dur) {
-        highlightRequested?.Invoke(dur);
-    }
-    
+    public event Action highlightStopRequested;
+
     /* This function suscribes the StopEffect function to the correct event based on
      * what was passed into the "until" attribute */
     void _SubscribeToStopCondition() {
@@ -59,8 +57,9 @@ abstract public class Effect : iRequestAttributePackage {
     }
 
     public event Action effectStopped;
-    public void InvokeEffectStopped() {
+
+    virtual protected void _StopEffect() { 
+        highlightStopRequested?.Invoke();
         effectStopped?.Invoke();
     }
-    virtual protected void _StopEffect() { effectStopped?.Invoke(); }
 }

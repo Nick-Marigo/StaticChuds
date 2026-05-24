@@ -28,8 +28,8 @@ public class GainSpellPowerEffect : Effect {
         if (!_effectActive) return;
 
         _effectActive = false;
+        base._StopEffect();
         InvokeAttributePackageRequested();
-        InvokeEffectStopped();
         int spellpower = (int)attributePackage.AttributeDict["spellpower"].Get();
         attributePackage.AttributeDict["spellpower"].Set(spellpower - _extraSpellPower);
         Debug.Log("spellpower back to " + attributePackage.AttributeDict["spellpower"].Get());
