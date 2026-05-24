@@ -39,6 +39,7 @@ public class GainSpellPowerEffect : Effect {
         if (_effectActive) return;
 
         _effectActive = true;
+        base.PerformEffect();
         InvokeAttributePackageRequested();
         int waveNum = GameManager.Instance.currentWave;
         _extraSpellPower = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {

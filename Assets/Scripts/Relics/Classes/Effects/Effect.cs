@@ -13,12 +13,20 @@ abstract public class Effect : iRequestAttributePackage {
     [JsonProperty]
     protected string until;
 
+    private float _highlightDur;
+
     // Attribute Packages are used to access and change attributes
     // on the player
     public EntityAttributePackage attributePackage { set; get; }
     public event Action attributePackageRequested;
     public void InvokeAttributePackageRequested() {
         attributePackageRequested?.Invoke();
+    }
+
+    // Highlight event caught by the ui
+    public event Action<float> highlightRequested;
+    public void InvokeHighlightRequested(int dur) {
+        highlightRequested?.Invoke(dur);
     }
     
     /* This function suscribes the StopEffect function to the correct event based on
@@ -39,18 +47,16 @@ abstract public class Effect : iRequestAttributePackage {
 
     /* This function is called when the relic is claimed for setup */
     virtual public void Activate() {
-        // Subscribe to stop condition at start of first wave after creation
-        Action<int> subscriber = null;
-        subscriber = (_) => {
-            _SubscribeToStopCondition();
-            EventBus.Instance.OnWaveStart -= subscriber;
-        };
-
-        EventBus.Instance.OnWaveStart += subscriber;
+        _SubscribeToStopCondition();
+        // Get an attribute package from the owner
         attributePackageRequested?.Invoke();
+        // Set highlight duration based on what was read into until
+        _highlightDur = until == null ? 0.2f : -1f;
     }
 
-    abstract public void PerformEffect();
+    virtual public void PerformEffect() {
+        highlightRequested?.Invoke(_highlightDur);
+    }
 
     public event Action effectStopped;
     public void InvokeEffectStopped() {

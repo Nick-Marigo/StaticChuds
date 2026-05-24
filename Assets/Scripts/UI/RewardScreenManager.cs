@@ -52,7 +52,6 @@ public class RewardScreenManager : MonoBehaviour
         {
             GameManager.Instance.state = GameManager.GameState.WAVESTATS;
         }
-
     }
 
     public void ClearReward()
