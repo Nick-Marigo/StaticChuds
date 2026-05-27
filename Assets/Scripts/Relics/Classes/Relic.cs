@@ -1,12 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization;
 using System;
 
 [JsonObject(MemberSerialization.OptIn)]
-public class Relic {
+public class Relic : iRequestAttributePackage {
     [JsonProperty]
     public string name { get; protected set; }
     [JsonProperty]
@@ -21,14 +19,23 @@ public class Relic {
 
     // This event is invoked to get a Dictionary of
     // attributes from the relic holder
+    EntityAttributePackage _attributePackage;
+    public EntityAttributePackage attributePackage {
+        get { return _attributePackage; }
+        set { _SetAttributePackages(value); }
+    }
     public event Action attributePackageRequested;
     public void InvokeAttributePackageRequested() {
         attributePackageRequested?.Invoke();
     }
 
-    // This function is called by the player to provide
-    // attribute packages to the trigger and effect
-    public void SetAttributePackage (Dictionary<string, EntityAttributePackage.AttributeGate> package) {
+    public void Activate() {
+        Debug.Log("activating " + name);
+        trigger.Activate();
+        effect.Activate();
+    }
+
+    void _SetAttributePackages (EntityAttributePackage package) {
         trigger.attributePackage = package;
         effect.attributePackage = package;
     }

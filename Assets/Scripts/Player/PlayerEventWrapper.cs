@@ -5,4 +5,9 @@ public class PlayerEventWrapper {
     public void InvokePlayerMoved() {
         playerMoved?.Invoke();
     }
+
+    public event Action spellCast;
+    public void InvokeSpellCast() {
+        spellCast?.Invoke();
+    }
 }

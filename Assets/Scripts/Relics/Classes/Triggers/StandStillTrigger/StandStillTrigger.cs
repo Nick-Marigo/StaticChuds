@@ -9,6 +9,10 @@ public class StandStillTrigger : Trigger {
         this.description = description;
         this.type = type;
         this.amount = amount;
+    }
+
+    override public void Activate() {
+        base.Activate();
 
         // Unsuscribes _InitializeMovementTimer after first wave start signal
         Action<int> subscriber = null;
@@ -27,12 +31,13 @@ public class StandStillTrigger : Trigger {
 
     void _InitializeMovementTimer() {
         InvokeAttributePackageRequested(); 
-        PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage["event_wrapper"].Get();
-        
+        PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage.AttributeDict["event_wrapper"].Get();
+
         GameObject timerContainer = new GameObject("timer_container", typeof(MovementTimer));
         _movementTimer = timerContainer.GetComponent<MovementTimer>();
         _movementTimer.movementTimerTriggered += CatchSubscription;
         eventWrapper.playerMoved += _movementTimer.ResetTimer;
+        effect.effectStopped += _movementTimer.ResetTimer;
     }
 
     // Update the timer when a new wave starts

@@ -1,43 +1,61 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RelicInventory {
     EntityAttributePackage _attributePackage;
 
-    Dictionary<string, Func<Relic>> _potentialRelics;
+    List<string> _potentialRelics;
     Dictionary<string, Relic> _equippedRelics;
 
     public RelicInventory (EntityAttributePackage attributePackage) {
-        _potentialRelics = RelicLoader.Relics;
+        _potentialRelics = new(RelicLoader.RelicNames);
         _equippedRelics = new();
 
         _attributePackage = attributePackage;
 
         // REMOVE: debugging for JSON loading
         /*
-        foreach (KeyValuePair<string, Func<Relic>> relic in _potentialRelics) {
-            Relic r = relic.Value();
-            Debug.Log($"{r.name}, trigger: {r.trigger.description}, effect: {r.effect.description}");
-        }
-        */
+           foreach (KeyValuePair<string, Func<Relic>> relic in _potentialRelics) {
+           Relic r = relic.Value();
+           Debug.Log($"{r.name}, trigger: {r.trigger.description}, effect: {r.effect.description}");
+           }
+           */
     }
 
-    public Relic FetchUnusedRelic() {
-        // MAX: I added this because my UI needs a null return if there are no more relics left to choose from
-        // Change !_potentialRelics.ContainsKey("Jade Elephant") to whatever relic you are testing with, or once finished with all relics change to check if dictionary is empty
-        if(!_potentialRelics.ContainsKey("Jade Elephant")) { 
-            return null;
+    public List<Relic> FetchUnusedRelics(int n) {
+        List<Relic> potentialRelics = new();
+        /*
+        Relic r = RelicLoader.Relics["Cursed Scroll"](); 
+        potentialRelics.Add(r);
+        return potentialRelics; 
+        */
+
+        List<string> potentialDisplayedRelics = new(_potentialRelics);
+
+        for (int i = 0; i < n; i++) {
+            if(potentialDisplayedRelics.Count == 0) break;
+
+            int randIdx = UnityEngine.Random.Range(0, potentialDisplayedRelics.Count);
+            string chosenRelic = potentialDisplayedRelics[randIdx];
+
+            Relic relic = RelicLoader.Relics[chosenRelic](); 
+            potentialDisplayedRelics.RemoveAt(randIdx);
+
+            potentialRelics.Add(relic);
         }
 
-        Relic relic = _potentialRelics["Jade Elephant"](); 
-        _potentialRelics.Remove("Jade Elephant");
-        return relic;
+        return potentialRelics;
     }
 
     public void EquipRelic(Relic relic) {
         _equippedRelics.Add(relic.name, relic);
-        relic.attributePackageRequested += () => relic.SetAttributePackage(_attributePackage.GetAttributes()); 
+        _potentialRelics.Remove(relic.name);
+        // Give the relic an attribute package
+        relic.attributePackageRequested += () => relic.attributePackage = _attributePackage;
+        // Relics can only be activated after their attribute package request event has
+        // been subscribed to (they do not work without an owner)
+        relic.Activate();
+
     }
 
     public Dictionary<string, Relic> GetEquippedRelics() {

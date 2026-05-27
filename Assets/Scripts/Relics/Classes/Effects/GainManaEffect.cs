@@ -7,14 +7,14 @@ public class GainManaEffect : Effect {
         this.description = description;
         this.type = type;
         this.amount = amount;
-        }
+    }
 
     override public void PerformEffect() {
+        base.PerformEffect();
         InvokeAttributePackageRequested();
         int additionalMana = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int>());
         Debug.Log("player gained " + additionalMana + " mana");
-        Debug.Log(attributePackage);
-        int mana = (int)attributePackage["mana"].Get();
-        attributePackage["mana"].Set(mana + additionalMana);
+        int mana = (int)attributePackage.AttributeDict["mana"].Get();
+        attributePackage.AttributeDict["mana"].Set(mana + additionalMana);
     }
 }

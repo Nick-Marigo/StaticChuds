@@ -8,6 +8,7 @@ public class EntityAttributePackage : MonoBehaviour {
         public Action<object> Set;
     }
 
+
     Dictionary<string, AttributeGate> _attributeDict;
     public Dictionary<string, AttributeGate> AttributeDict {
         get {
@@ -19,11 +20,6 @@ public class EntityAttributePackage : MonoBehaviour {
     PlayerController _playerController;
     SpellCaster _spellCaster;
     PlayerEventWrapper _eventWrapper;
-
-    public Dictionary<string, AttributeGate> GetAttributes() {
-        _LoadAttributes();
-        return _attributeDict;
-    }
 
     void _LoadAttributes() {
         if (_attributeDict != null) return;

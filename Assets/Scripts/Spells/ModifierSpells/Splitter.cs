@@ -29,8 +29,6 @@ public class Splitter : SpellModifier {
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
-        Debug.Log("calling splitter cast");
-
         float angleValue = RPNEvaluator.RPNEvaluator.Evaluatef(angle, floatRpnVals);
 
         // Get original direction from caster to target

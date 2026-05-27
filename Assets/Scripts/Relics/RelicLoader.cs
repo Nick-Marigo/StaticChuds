@@ -7,12 +7,20 @@ public class RelicLoader {
     /* RelicLoader exposes a Dictionary of lambdas that
      * can be used to instantiate new relics from. The keys are
      * the relic names.*/
-    private static Dictionary<string, Func<Relic>> relics;
+    private static Dictionary<string, Func<Relic>> _relics;
     public static Dictionary<string, Func<Relic>> Relics { 
         get {
-            if (relics == null) LoadRelics();
-            return relics;
+            if (_relics == null) LoadRelics();
+            return _relics;
         } 
+    }
+
+    public static List<string> _relicNames = new();
+    public static List<string> RelicNames {
+        get {
+            if (_relics == null) LoadRelics();
+            return _relicNames;
+        }
     }
 
     private static void LoadRelics() {
@@ -23,7 +31,7 @@ public class RelicLoader {
             return;
         }
 
-        int status = JsonToDictionary(relicJson.text, out relics);
+        int status = JsonToDictionary(relicJson.text, out _relics);
         if (status == -1) {
             Debug.Log("Failed to load relics from JSON");
             return;
@@ -37,6 +45,7 @@ public class RelicLoader {
         foreach(JObject relic in relicData) {
             string name = (string)relic["name"]; 
             relics.Add(name, () => relic.ToObject<Relic>());
+            _relicNames.Add(name);
         }
 
         if (relics == null) {

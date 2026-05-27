@@ -1,62 +1,53 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GainSpellPowerEffect : Effect {
-    int extraSpellPower;
+    int _extraSpellPower;
     bool _effectActive = false;
 
 
-    public GainSpellPowerEffect(string description, string type, string amount, string until) {
+    public GainSpellPowerEffect(string description, string type, string amount, string until) : base() {
         this.description = description;
         this.type = type;
         this.amount = amount;
         this.until = until;
+    }
 
-        Action<int> subscriber = null;
-        subscriber = (_) => {
-            _SubscribeToStopCondition();
-            EventBus.Instance.OnWaveStart -= subscriber;
+    override public void Activate(){
+        base.Activate();
+        // Since stats are reset when the wave starts, we must
+        // make sure we do not mutate it with extraspellpower
+        EventBus.Instance.OnWaveStart += (_) => {
+            _extraSpellPower = 0;
+            _StopEffect();
         };
-
-        EventBus.Instance.OnWaveStart += subscriber;
     }
 
-    /* This function suscribes the StopEffect function to the correct event based on
-     * what was passed into the "until" attribute */
-    void _SubscribeToStopCondition() {
-        PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage["event_wrapper"].Get();
-        switch(until){
-            case("move"):
-                eventWrapper.playerMoved += _StopEffect;
-                break;
-            default:
-                return;
-        }
-    }
 
-    void _StopEffect() {
+    override protected void _StopEffect() {
         if (!_effectActive) return;
 
         _effectActive = false;
+        base._StopEffect();
         InvokeAttributePackageRequested();
-        int spellpower = (int)attributePackage["spellpower"].Get();
-        attributePackage["spellpower"].Set(spellpower - extraSpellPower);
-        Debug.Log("spellpower back to " + attributePackage["spellpower"].Get());
+        int spellpower = (int)attributePackage.AttributeDict["spellpower"].Get();
+        attributePackage.AttributeDict["spellpower"].Set(spellpower - _extraSpellPower);
+        Debug.Log("spellpower back to " + attributePackage.AttributeDict["spellpower"].Get());
     }
 
     override public void PerformEffect() {
         if (_effectActive) return;
 
         _effectActive = true;
+        base.PerformEffect();
         InvokeAttributePackageRequested();
         int waveNum = GameManager.Instance.currentWave;
-        extraSpellPower = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {
-            {"wave", waveNum}
-        });
-        int spellpower = (int)attributePackage["spellpower"].Get();
-        attributePackage["spellpower"].Set(spellpower + extraSpellPower);
-        Debug.Log("spellpower increased to " + attributePackage["spellpower"].Get());
+        _extraSpellPower = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int> {
+                {"wave", waveNum}
+                });
+        int spellpower = (int)attributePackage.AttributeDict["spellpower"].Get();
+        attributePackage.AttributeDict["spellpower"].Set(spellpower + _extraSpellPower);
+        Debug.Log("spellpower increased to " + attributePackage.AttributeDict["spellpower"].Get());
     }
 }
 

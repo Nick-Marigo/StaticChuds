@@ -1,4 +1,3 @@
-using UnityEngine;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.Fields)]
@@ -13,6 +12,8 @@ public class TriggerGenerator {
                 return new TakeDamageTrigger(description, type);
             case("stand-still"):
                 return new StandStillTrigger(description, type, amount);
+            case("on-kill"):
+                return new OnKillTrigger(description, type);
             default:
                 return null;
         }

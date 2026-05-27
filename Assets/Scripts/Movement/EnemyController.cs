@@ -50,6 +50,7 @@ public class EnemyController : MonoBehaviour
         if (!dead)
         {
             dead = true;
+            EventBus.Instance.InvokeEnemyKilled();
             GameManager.Instance.waveStats.UpdateTotalEnemies(enemyName);
             GameManager.Instance.RemoveEnemy(gameObject);
             Destroy(gameObject);

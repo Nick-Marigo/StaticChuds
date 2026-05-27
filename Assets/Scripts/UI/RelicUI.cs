@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,19 +15,38 @@ public class RelicUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI description;
     [SerializeField] GameObject takeButton;
 
+    private Relic relic;
+    private Action<float> _highlightOnAdapter;
+    private Action _highlightOffAdapter;
+
     public void SetRelicDisplay(Relic relic)
     {
+        this.relic = relic;
         GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
+        // Subscribe to highlight highlight events
+        _highlightOnAdapter = (float delay) => StartCoroutine(EnableHighlight(delay));
+        _highlightOffAdapter = () => DisableHighlight();
+        relic.effect.highlightRequested += _highlightOnAdapter;
+        relic.effect.highlightStopRequested += _highlightOffAdapter;
     }
 
+    void OnDisable() {
+        if (relic != null) {
+            relic.effect.highlightRequested -= _highlightOnAdapter;
+            relic.effect.highlightStopRequested -= _highlightOffAdapter;
+        }
+    }
     // TODO: Subcribe to an event
     public IEnumerator EnableHighlight(float delay)
     {
+        Debug.Log("highlight called");
+        if (highlight.gameObject == null) yield break;
         highlight.SetActive(true);
         if (delay > 0)
         {
             yield return new WaitForSeconds(delay);
-            highlight.SetActive(false);
+            if (highlight != null)
+                highlight.SetActive(false);
         }
         else
         {
@@ -47,8 +67,6 @@ public class RelicUI : MonoBehaviour
         description.text = relic.trigger.description;
         description.text = description.text + " " + relic.effect.description;
         GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
-        
-
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -56,9 +74,9 @@ public class RelicUI : MonoBehaviour
     {
         // if a player has relics, this is how you *could* show them
         /*
-        Relic r = player.relics[index];
-        GameManager.Instance.relicIconManager.PlaceSprite(r.sprite, icon);
-        */
+           Relic r = player.relics[index];
+           GameManager.Instance.relicIconManager.PlaceSprite(r.sprite, icon);
+           */
     }
 
     // Update is called once per frame
@@ -66,9 +84,9 @@ public class RelicUI : MonoBehaviour
     {
         // Relics could have labels and/or an active-status
         /*
-        Relic r = player.relics[index];
-        label.text = r.GetLabel();
-        highlight.SetActive(r.IsActive());
-        */
+           Relic r = player.relics[index];
+           label.text = r.GetLabel();
+           highlight.SetActive(r.IsActive());
+           */
     }
 }
