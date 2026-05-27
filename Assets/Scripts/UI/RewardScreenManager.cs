@@ -41,6 +41,8 @@ public class RewardScreenManager : MonoBehaviour
         player.spellUIContainer.RefreshSpells(player.spellcaster.spells);
         player.spellUIContainer.ShowDropButtons(false);
         rewardSpell = null;
+
+        GoToNextRewardStep();
     }
 
     public void ClearReward()

@@ -100,8 +100,7 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.GameState.WAVEEND == GameManager.Instance.state)
         {
-                rewardScreenManager.GoToNextRewardStep();
-                //GameManager.Instance.state = GameManager.GameState.WAVESTATS;
+            rewardScreenManager.GoToNextRewardStep();
         }
         else if (GameManager.GameState.RELICREWARD == GameManager.Instance.state)
         {
