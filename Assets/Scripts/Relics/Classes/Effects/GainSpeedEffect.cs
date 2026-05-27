@@ -20,33 +20,22 @@ public class GainSpeedEffect : Effect {
 
         CoroutineManager.Instance.Run(TemporarySpeedBoost());
 
-        /*
-        int tempSpeed = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int>());
-        Debug.Log("player gained " + tempSpeed + " speed");
-        int speed = (int)attributePackage.AttributeDict["speed"].Get();
-        attributePackage.AttributeDict["speed"].Set(speed * tempSpeed);
-
-        int additionalMana = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int>());
-        Debug.Log("player gained " + additionalMana + " mana");
-        int mana = (int)attributePackage.AttributeDict["mana"].Get();
-        attributePackage.AttributeDict["mana"].Set(mana + additionalMana);
-        */
     }
 
     IEnumerator TemporarySpeedBoost()
     {
         isActive = true;
-            
+        base.PerformEffect();
         int amountSpeed = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int>());
 
-        int oldSpeed = (int)attributePackage["speed"].Get();
-        int newSpeed = oldSpeed + amountSpeed;
+        int oldSpeed = (int)attributePackage.AttributeDict["speed"].Get();
+        int newSpeed = oldSpeed * amountSpeed;
 
-        attributePackage["speed"].Set(newSpeed);
+        attributePackage.AttributeDict["speed"].Set(newSpeed);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
-        attributePackage["speed"].Set(oldSpeed);
+        attributePackage.AttributeDict["speed"].Set(oldSpeed);
 
         isActive = false;
 
