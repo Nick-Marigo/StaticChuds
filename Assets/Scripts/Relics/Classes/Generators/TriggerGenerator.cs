@@ -16,6 +16,8 @@ public class TriggerGenerator {
                 return new OnKillTrigger(description, type);
             case("on-kill-enemy"):
                 return new OnKillEnemyTrigger(description, type, amount);
+            case("low-health"):
+                return new LowHealthTrigger(description, type);
             default:
                 return null;
         }

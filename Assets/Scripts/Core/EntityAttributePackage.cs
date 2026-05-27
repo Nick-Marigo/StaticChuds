@@ -19,7 +19,6 @@ public class EntityAttributePackage : MonoBehaviour {
 
     PlayerController _playerController;
     SpellCaster _spellCaster;
-    Hittable _hittable;
     PlayerEventWrapper _eventWrapper;
 
     void _LoadAttributes() {
@@ -47,19 +46,17 @@ public class EntityAttributePackage : MonoBehaviour {
                 Get = () => _playerController.hp.hp,
                 Set = (value) => _playerController.hp.hp = Mathf.Min((int)value, _playerController.hp.max_hp)
                 });
+        _attributeDict.Add("max_health", new AttributeGate {
+                Get = () => _playerController.hp.max_hp,
+                Set = (value) => _playerController.hp.max_hp = (int)value
+                });
     }
 
     void _SetPlayerSystems() {
-        /*PlayerController playerController = gameObject.GetComponent<PlayerController>();*/
         _playerController = gameObject.GetComponent<PlayerController>();
-        //_spellCaster = playerController.spellcaster;
         _spellCaster = _playerController.spellcaster;
         if (_spellCaster == null) {
             Debug.Log($"ERROR-EntityAttributePackage: entity has no SpellCaster");
-        }
-        _hittable = _playerController.hp;
-        if (_hittable == null) {
-            Debug.Log($"ERROR-EntityAttributePackage: entity has no hittable");
         }
         _eventWrapper = _playerController.eventWrapper;
     }

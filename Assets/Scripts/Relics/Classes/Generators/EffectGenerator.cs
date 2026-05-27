@@ -18,6 +18,8 @@ public class EffectGenerator {
                 return new GainSpeedEffect(description, type, amount);
             case "gain-health":
                 return new GainHealthEffect(description, type, amount);
+            case "gain-percent-health":
+                return new GainPercentHealthEffect(description, type, amount);
             default: 
                 return null;
         }

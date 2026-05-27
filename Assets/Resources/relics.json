@@ -80,5 +80,18 @@
             "type": "gain-health",
             "amount": "10"
         }
+    },
+    {
+        "name": "Phoenix Charm",
+        "sprite": 16,
+        "trigger": {
+            "description": "When you drop below half health",
+            "type": "low-health"
+        },
+        "effect": {
+            "description": "you gain 25% of your max health per wave",
+            "type": "gain-percent-health",
+            "amount": "25"
+        }
     }
 ]

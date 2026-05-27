@@ -139,7 +139,7 @@
        "waves": 10,
        "spawns": [
             {
-                "enemy": "warlock",
+                "enemy": "zombie",
                 "count": "3",
                 "hp": "base 5 wave * +",
                 "delay": "5",
