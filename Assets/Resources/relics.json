@@ -66,5 +66,18 @@
             "type": "gain-speed",
             "amount": "2"
         }
+    },
+    {
+        "name": "Heal Ring",
+        "sprite": 14,
+        "trigger": {
+            "description": "When you kill a Warlock enemy",
+            "type": "on-kill"
+        },
+        "effect": {
+            "description": "you gain 10 health",
+            "type": "gain-health",
+            "amount": "10"
+        }
     }
 ]

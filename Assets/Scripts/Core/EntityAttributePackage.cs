@@ -19,6 +19,7 @@ public class EntityAttributePackage : MonoBehaviour {
 
     PlayerController _playerController;
     SpellCaster _spellCaster;
+    Hittable _hittable;
     PlayerEventWrapper _eventWrapper;
 
     void _LoadAttributes() {
@@ -42,6 +43,10 @@ public class EntityAttributePackage : MonoBehaviour {
                 Get = () => _playerController.speed,
                 Set = (value) => _playerController.speed = (int)value
                 });
+        _attributeDict.Add("health", new AttributeGate {
+                Get = () => _hittable.hp,
+                Set = (value) => _hittable.hp = (int)value
+                });
     }
 
     void _SetPlayerSystems() {
@@ -51,6 +56,10 @@ public class EntityAttributePackage : MonoBehaviour {
         _spellCaster = _playerController.spellcaster;
         if (_spellCaster == null) {
             Debug.Log($"ERROR-EntityAttributePackage: entity has no SpellCaster");
+        }
+        _hittable = _playerController.hp;
+        if (_hittable == null) {
+            Debug.Log($"ERROR-EntityAttributePackage: entity has no hittable");
         }
         _eventWrapper = _playerController.eventWrapper;
     }
