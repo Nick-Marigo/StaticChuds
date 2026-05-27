@@ -44,8 +44,8 @@ public class EntityAttributePackage : MonoBehaviour {
                 Set = (value) => _playerController.speed = (int)value
                 });
         _attributeDict.Add("health", new AttributeGate {
-                Get = () => _hittable.hp,
-                Set = (value) => _hittable.hp = (int)value
+                Get = () => _playerController.hp.hp,
+                Set = (value) => _playerController.hp.hp = Mathf.Min((int)value, _playerController.hp.max_hp)
                 });
     }
 

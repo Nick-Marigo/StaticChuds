@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class OnKillTrigger : Trigger {
+public class OnKillEnemyTrigger : Trigger {
 
-   public OnKillTrigger(string description, string type) {
+   public OnKillEnemyTrigger(string description, string type, string amount) {
         this.description = description;
         this.type = type;
+        this.amount = amount;
    }
 
     override public void Activate() {
@@ -14,6 +15,9 @@ public class OnKillTrigger : Trigger {
 
     void OnEnemyKilled(string enemyName)
     {
-        InvokeEffect();
+        if (enemyName == amount)
+        {
+            InvokeEffect();   
+        }
     }
 }

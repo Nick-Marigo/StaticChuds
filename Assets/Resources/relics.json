@@ -71,8 +71,9 @@
         "name": "Heal Ring",
         "sprite": 14,
         "trigger": {
-            "description": "When you kill a Warlock enemy",
-            "type": "on-kill"
+            "description": "When you kill a Warlock",
+            "type": "on-kill-enemy",
+            "amount": "warlock"
         },
         "effect": {
             "description": "you gain 10 health",

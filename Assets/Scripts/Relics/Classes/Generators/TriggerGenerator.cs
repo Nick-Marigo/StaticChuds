@@ -14,6 +14,8 @@ public class TriggerGenerator {
                 return new StandStillTrigger(description, type, amount);
             case("on-kill"):
                 return new OnKillTrigger(description, type);
+            case("on-kill-enemy"):
+                return new OnKillEnemyTrigger(description, type, amount);
             default:
                 return null;
         }
