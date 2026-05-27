@@ -21,15 +21,11 @@ public class LowHealthTrigger : Trigger {
 
         if (target.team == Hittable.Team.PLAYER) {
 
-            int currentHealth = target.hp;
             int healthAfterDamage = target.hp - dmg.amount;
 
             float halfHealth = target.max_hp * 0.5f;
 
-            bool isAboveHalf = currentHealth > halfHealth;
-            bool willBeBelowHalf = healthAfterDamage <= halfHealth;
-
-            if (isAboveHalf && willBeBelowHalf)
+            if (healthAfterDamage < halfHealth)
             {
                 triggeredThisWave = true;
                 InvokeEffect();

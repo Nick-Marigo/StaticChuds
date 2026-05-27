@@ -6,14 +6,15 @@ public class GainSpeedEffect : Effect {
 
     bool isActive = false;
 
-    public GainSpeedEffect(string description, string type, string amount) {
+    public GainSpeedEffect(string description, string type, string amount, string until) : base() {
         this.description = description;
         this.type = type;
         this.amount = amount;
+        this.until = until;
     }
 
     override public void PerformEffect() {
-        //base.PerformEffect();
+        base.PerformEffect();
         InvokeAttributePackageRequested();
 
         if (isActive) return;

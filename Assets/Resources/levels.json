@@ -145,6 +145,13 @@
                 "delay": "5",
                 "sequence": [3],
                 "location": "random bone"
+            },
+            {
+                "enemy": "warlock",
+                "count": "1",
+                "hp": "base 5 wave * +",
+                "damage": "15",
+                "location": "random bone"
             }
         ]
    }

@@ -15,7 +15,7 @@ public class EffectGenerator {
             case "gain-spellpower": 
                 return new GainSpellPowerEffect(description, type, amount, until);
             case "gain-speed":
-                return new GainSpeedEffect(description, type, amount);
+                return new GainSpeedEffect(description, type, amount, until);
             case "gain-health":
                 return new GainHealthEffect(description, type, amount);
             case "gain-percent-health":
