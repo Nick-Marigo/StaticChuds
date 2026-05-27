@@ -1,0 +1,46 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class GainSpeedEffect : Effect {
+
+    bool isActive = false;
+
+    public GainSpeedEffect(string description, string type, string amount, string until) : base() {
+        this.description = description;
+        this.type = type;
+        this.amount = amount;
+        this.until = until;
+    }
+
+    override public void PerformEffect() {
+        base.PerformEffect();
+        InvokeAttributePackageRequested();
+
+        if (isActive) return;
+
+        CoroutineManager.Instance.Run(TemporarySpeedBoost());
+
+    }
+
+    IEnumerator TemporarySpeedBoost()
+    {
+        isActive = true;
+        base.PerformEffect();
+        int amountSpeed = RPNEvaluator.RPNEvaluator.Evaluate(amount, new Dictionary<string, int>());
+
+        int oldSpeed = (int)attributePackage.AttributeDict["speed"].Get();
+        int newSpeed = oldSpeed * amountSpeed;
+
+        attributePackage.AttributeDict["speed"].Set(newSpeed);
+
+        yield return new WaitForSeconds(1f);
+
+        attributePackage.AttributeDict["speed"].Set(oldSpeed);
+
+        isActive = false;
+
+        Debug.Log("Speed boost ended. Going back to old speed: " + oldSpeed);
+    }
+    
+}

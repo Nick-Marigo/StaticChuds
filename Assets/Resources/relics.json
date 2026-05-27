@@ -53,5 +53,46 @@
             "type": "gain-mana",
             "amount": "25"
         }
+    },
+    {
+        "name": "Speed Necklace",
+        "sprite": 6,
+        "trigger": {
+            "description": "When you take damage",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "your speed increases for 2 seconds.",
+            "type": "gain-speed",
+            "amount": "2",
+            "until": "2"
+        }
+    },
+    {
+        "name": "Heal Ring",
+        "sprite": 14,
+        "trigger": {
+            "description": "When you kill a Warlock",
+            "type": "on-kill-enemy",
+            "amount": "warlock"
+        },
+        "effect": {
+            "description": "you gain 10 health",
+            "type": "gain-health",
+            "amount": "10"
+        }
+    },
+    {
+        "name": "Phoenix Charm",
+        "sprite": 16,
+        "trigger": {
+            "description": "When you drop below half health",
+            "type": "low-health"
+        },
+        "effect": {
+            "description": "you gain 25% of your max health per wave",
+            "type": "gain-percent-health",
+            "amount": "25"
+        }
     }
 ]

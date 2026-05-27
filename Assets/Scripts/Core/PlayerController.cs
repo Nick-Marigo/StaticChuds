@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public SpellUIContainer spellUIContainer;
     public RelicUIManager relicUIManager;
     public int speed;
+    private Vector2 movement;
 
     public Unit unit;
 
@@ -88,7 +89,19 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
-        unit.movement = value.Get<Vector2>()*speed;
+        movement = value.Get<Vector2>();
+    }
+
+    void Update()
+    {
+        if (GameManager.Instance.state != GameManager.GameState.INWAVE && GameManager.Instance.state != GameManager.GameState.COUNTDOWN)
+        {
+            unit.movement = Vector2.zero;
+        }
+        else
+        {
+            unit.movement = movement * speed;
+        }
     }
 
     void Die()

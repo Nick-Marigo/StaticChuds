@@ -42,16 +42,7 @@ public class RewardScreenManager : MonoBehaviour
         player.spellUIContainer.ShowDropButtons(false);
         rewardSpell = null;
 
-        // TO FIX
-        //if (GameManager.Instance.currentWave % 3 == 0)
-        if (true)
-        {
-            GameManager.Instance.state = GameManager.GameState.RELICREWARD;
-        } 
-        else
-        {
-            GameManager.Instance.state = GameManager.GameState.WAVESTATS;
-        }
+        GoToNextRewardStep();
     }
 
     public void ClearReward()
@@ -59,6 +50,20 @@ public class RewardScreenManager : MonoBehaviour
         rewardSpell = null;
         rewardSpellUI.ShowDropButton(false);
         player.spellUIContainer.ShowDropButtons(false);
+    }
+
+    public void GoToNextRewardStep()
+    {
+        ClearReward();
+
+        if (GameManager.Instance.currentWave % 1 == 0)
+        {
+            GameManager.Instance.state = GameManager.GameState.RELICREWARD;
+        } 
+        else
+        {
+            GameManager.Instance.state = GameManager.GameState.WAVESTATS;
+        }
     }
 
     public void ShowRelicReward()

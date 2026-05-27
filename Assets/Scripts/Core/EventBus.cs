@@ -32,8 +32,8 @@ public class EventBus
         OnWaveStart?.Invoke(waveNum);
     }
 
-    public event Action enemyKilled;
-    public void InvokeEnemyKilled() {
-        enemyKilled?.Invoke();
+    public event Action<string> enemyKilled;
+    public void InvokeEnemyKilled(string enemyName) {
+        enemyKilled?.Invoke(enemyName);
     }
 }
