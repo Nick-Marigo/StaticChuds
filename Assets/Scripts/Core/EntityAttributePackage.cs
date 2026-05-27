@@ -9,6 +9,14 @@ public class EntityAttributePackage : MonoBehaviour {
     }
 
     Dictionary<string, AttributeGate> _attributeDict;
+    public Dictionary<string, AttributeGate> AttributeDict {
+        get {
+            _LoadAttributes();
+            return _attributeDict;
+        }
+    }
+
+    PlayerController _playerController;
     SpellCaster _spellCaster;
     PlayerEventWrapper _eventWrapper;
 
@@ -34,12 +42,21 @@ public class EntityAttributePackage : MonoBehaviour {
         _attributeDict.Add("event_wrapper", new AttributeGate {
                 Get = () => _eventWrapper
                 });
+        _attributeDict.Add("speed", new AttributeGate {
+                Get = () => _playerController.speed,
+                Set = (value) => _playerController.speed = (int)value
+                });
     }
 
     void _SetPlayerSystems() {
-        PlayerController playerController = gameObject.GetComponent<PlayerController>();
-        _spellCaster = playerController.spellcaster;
-        _eventWrapper = playerController.eventWrapper;
+        /*PlayerController playerController = gameObject.GetComponent<PlayerController>();*/
+        _playerController = gameObject.GetComponent<PlayerController>();
+        //_spellCaster = playerController.spellcaster;
+        _spellCaster = _playerController.spellcaster;
+        if (_spellCaster == null) {
+            Debug.Log($"ERROR-EntityAttributePackage: entity has no SpellCaster");
+        }
+        _eventWrapper = _playerController.eventWrapper;
     }
 }
 

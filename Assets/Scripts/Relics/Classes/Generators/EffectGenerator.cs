@@ -14,6 +14,8 @@ public class EffectGenerator {
                 return new GainManaEffect(description, type, amount);
             case "gain-spellpower": 
                 return new GainSpellPowerEffect(description, type, amount, until);
+            case "gain-speed":
+                return new GainSpeedEffect(description, type, amount);
             default: 
                 return null;
         }

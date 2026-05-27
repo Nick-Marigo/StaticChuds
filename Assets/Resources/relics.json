@@ -53,5 +53,19 @@
             "type": "gain-mana",
             "amount": "25"
         }
+    },
+    {
+        "name": "Speed Necklace",
+        "sprite": 6,
+        "trigger": {
+            "description": "When you take damage",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "your speed increases for 2 seconds.",
+            "type": "gain-speed",
+            "amount": "2"
+        }
+
     }
 ]
