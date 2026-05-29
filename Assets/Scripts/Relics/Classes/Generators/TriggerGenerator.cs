@@ -18,6 +18,10 @@ public class TriggerGenerator {
                 return new OnKillEnemyTrigger(description, type, amount);
             case("low-health"):
                 return new LowHealthTrigger(description, type);
+            case "new-wave":
+                return new NewWaveTrigger(description, type);
+            case "cast-spell":
+                return new CastSpellTrigger(description, type);
             default:
                 return null;
         }

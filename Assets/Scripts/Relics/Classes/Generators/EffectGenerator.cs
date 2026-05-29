@@ -20,6 +20,10 @@ public class EffectGenerator {
                 return new GainHealthEffect(description, type, amount);
             case "gain-percent-health":
                 return new GainPercentHealthEffect(description, type, amount);
+            case "damage-nearest":
+                return new DamageNearestEnemyEffect(description, type, amount);
+            case "next-spells-free":
+                return new NextSpellsFreeEffect(description, type, amount);
             default: 
                 return null;
         }
