@@ -28,8 +28,8 @@ public class EntityAttributePackage : MonoBehaviour {
 
         _attributeDict = new();
         _attributeDict.Add("mana", new AttributeGate {
-                Get = () => _spellCaster.mana,
-                Set = (value) => _spellCaster.mana = (int)value
+                Get = () => _spellCaster.Mana,
+                Set = (value) => _spellCaster.Mana = (int)value
                 });
         _attributeDict.Add("spellpower", new AttributeGate {
                 Get = () => _spellCaster.spellPower,

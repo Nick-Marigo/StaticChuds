@@ -1,9 +1,19 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class SpellCaster {
-    public int mana = 0;
+    private int _mana = 0;
+    public int Mana {
+        set {
+            manaChanged?.Invoke(value);
+            _mana = value;
+        }
+        get {
+            return _mana;
+        }
+    }
     public int max_mana;
     public int mana_reg;
     public Hittable.Team team;
@@ -22,13 +32,15 @@ public class SpellCaster {
 
     public EntityAttributePackage _attributePackage;
     private PlayerEventWrapper _eventWrapper;
+
+    public event Action<int> manaChanged;
     
     public IEnumerator ManaRegeneration()
     {
         while (true)
         {
-            mana += mana_reg;
-            mana = Mathf.Min(mana, max_mana);
+            _mana += mana_reg;
+            Mana = Mathf.Min(Mana, max_mana);
             yield return new WaitForSeconds(1);
         }
     }
@@ -50,11 +62,11 @@ public class SpellCaster {
 
         Spell selectedSpell = spells[selectedSpellIndex];
 
-        if (mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
+        if (Mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
         {
 
             selectedSpell.UpdateDicts(GameManager.Instance.currentWave);
-            mana -= selectedSpell.GetManaCost();
+            Mana -= selectedSpell.GetManaCost();
             selectedSpell.last_cast = Time.time;
             yield return selectedSpell.Cast(where, target, team);
             _eventWrapper.InvokeSpellCast();
@@ -98,7 +110,7 @@ public class SpellCaster {
         //int oldMana = this.mana;
         //int oldMax = this.max_mana;
 
-        this.mana = newMana;
+        this.Mana = newMana;
         this.max_mana = newMana;
         //float perc = this.mana * 1.0f / this.max_mana;
         //this.mana = Mathf.RoundToInt(perc * newMana);
