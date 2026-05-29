@@ -41,7 +41,7 @@ public class Unit : MonoBehaviour
         int n = GetComponent<Rigidbody2D>().Cast(ds, hits, ds.magnitude * 2);
         if (n == 0)
         {
-			GetComponent<RigidBody2D>().AddForce(ds / Time.deltaTime);
+			transform.Translate(ds);
         }
     }
 
