@@ -1,3 +1,6 @@
+using System.Collections;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 [JsonObject(MemberSerialization.Fields)]
@@ -19,7 +22,7 @@ public class Recoil : SpellModifier {
 		serializer.Populate(config.CreateReader(), this);
 	}
 
-	override public int GetCooldownMultiplier() {
+	override public float GetCooldown() {
         float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(cooldown_multiplier, floatRpnVals);
 
         return innerSpell.GetCooldown() * multiplier;
@@ -28,12 +31,17 @@ public class Recoil : SpellModifier {
 	override public int GetDamage() {
 		float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(damage_multiplier, floatRpnVals);
 
-		return innerSpell.GetDamage() * multiplier;
+		return (int)(innerSpell.GetDamage() * multiplier);
 	}
 
 	public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
 		yield return innerSpell.Cast(where, target, team);
 
-		playerController.GetComponent<RigidBody2D>().AddForce(Vector2.zero);
+		playerController.GetComponent<Rigidbody2D>().AddForce(Vector2.zero);
+	}
+
+	public Recoil(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
+		SetAttributes();
+		playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 	}
 }
