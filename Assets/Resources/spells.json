@@ -93,5 +93,12 @@
         "description": "Spells have low cooldown with increse mana cost",
         "cooldown_multiplier": "0.1",
         "mana_multiplier": "1.2"
+   },
+   "recoil": {
+		"name": "Recoil",
+		"description": "Spells deal more damage but have knockback and a longer cooldown",
+		"cooldown_multiplier": "2.0",
+		"knockback_force": "10.0",
+		"damage_multiplier": "2.0 wave *"
    }
 }
