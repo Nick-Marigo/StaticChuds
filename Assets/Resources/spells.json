@@ -98,7 +98,8 @@
 		"name": "Recoil",
 		"description": "Spells deal more damage but have knockback and a longer cooldown",
 		"cooldown_multiplier": "2.0",
-		"knockback_force": "10.0",
+		"knockback_timer": "0.1",
+		"knockback_force": "400",
 		"damage_multiplier": "2.0 wave *"
    }
 }

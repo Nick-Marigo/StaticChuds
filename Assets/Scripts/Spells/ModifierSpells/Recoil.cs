@@ -8,6 +8,7 @@ public class Recoil : SpellModifier {
 	public static JObject config;
 	protected string cooldown_multiplier;
 	protected string knockback_force;
+	protected string knockback_timer;
 	protected string damage_multiplier;
 	[JsonIgnore]
 	private PlayerController playerController;
@@ -37,7 +38,19 @@ public class Recoil : SpellModifier {
 	public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
 		yield return innerSpell.Cast(where, target, team);
 
-		playerController.GetComponent<Rigidbody2D>().AddForce(Vector2.zero);
+		float knockbackScale = RPNEvaluator.RPNEvaluator.Evaluatef(knockback_force, floatRpnVals);
+
+		playerController.GetComponent<Rigidbody2D>().AddForce((where - target).normalized * knockbackScale);
+
+		int oldSpeed = playerController.speed;
+		playerController.speed = 0;
+
+		yield return new WaitForSeconds(RPNEvaluator.RPNEvaluator.Evaluatef(knockback_timer, floatRpnVals));
+
+		// TODO - this might cause an issue if we're trying
+		// to set the player's speed elsewhere. maybe find
+		// a more resilient way of doing this
+		playerController.speed = oldSpeed;
 	}
 
 	public Recoil(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {

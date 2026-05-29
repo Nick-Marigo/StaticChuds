@@ -88,6 +88,10 @@ public class SpellLoader
                     RapidFire.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new RapidFire(owner, innerSpell) );
                     break;
+                case "recoil":
+                    Recoil.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Recoil(owner, innerSpell) );
+                    break;
             }
         }
     }
