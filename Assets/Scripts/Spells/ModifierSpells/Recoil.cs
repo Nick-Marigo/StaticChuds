@@ -30,4 +30,10 @@ public class Recoil : SpellModifier {
 
 		return innerSpell.GetDamage() * multiplier;
 	}
+
+	public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+		yield return innerSpell.Cast(where, target, team);
+
+		playerController.GetComponent<RigidBody2D>().AddForce(Vector2.zero);
+	}
 }
