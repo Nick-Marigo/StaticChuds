@@ -60658,12 +60658,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 421493446964380599, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: sprites.Array.size
-      value: 17
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 421493446964380599, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: 'sprites.Array.data[16]'
       value: 
       objectReference: {fileID: 1441006190, guid: e621137f9197f0842a52168123ca0298, type: 3}
+    - target: {fileID: 421493446964380599, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: 'sprites.Array.data[17]'
+      value: 
+      objectReference: {fileID: -92911602462005183, guid: e621137f9197f0842a52168123ca0298, type: 3}
+    - target: {fileID: 421493446964380599, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: 'sprites.Array.data[18]'
+      value: 
+      objectReference: {fileID: 3442182896262974441, guid: e621137f9197f0842a52168123ca0298, type: 3}
+    - target: {fileID: 421493446964380599, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: 'sprites.Array.data[19]'
+      value: 
+      objectReference: {fileID: 3789575909830659476, guid: e621137f9197f0842a52168123ca0298, type: 3}
+    - target: {fileID: 421493446964380599, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: 'sprites.Array.data[20]'
+      value: 
+      objectReference: {fileID: 858155016585179328, guid: e621137f9197f0842a52168123ca0298, type: 3}
     - target: {fileID: 2107732465084047900, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: m_Name
       value: GFXManager
