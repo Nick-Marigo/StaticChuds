@@ -40,8 +40,7 @@ public class SpellCaster {
     {
         while (true)
         {
-            _mana += mana_reg;
-            Mana = Mathf.Min(Mana, max_mana);
+            Mana += mana_reg;
             yield return new WaitForSeconds(1);
         }
     }
