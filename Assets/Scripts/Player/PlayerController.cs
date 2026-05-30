@@ -93,14 +93,11 @@ public class PlayerController : MonoBehaviour
         movement = value.Get<Vector2>();
     }
 
-    void Update()
-    {
-        if (GameManager.Instance.state != GameManager.GameState.INWAVE && GameManager.Instance.state != GameManager.GameState.COUNTDOWN)
-        {
+    void Update() {
+        if (GameManager.Instance.state != GameManager.GameState.INWAVE && GameManager.Instance.state != GameManager.GameState.COUNTDOWN) {
             unit.movement = Vector2.zero;
         }
-        else
-        {
+        else {
             unit.movement = movement * speed;
         }
     }

@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpellCaster {
+    public Hittable.Team team;
+
     private int _mana = -1;
     public int Mana {
         set {
@@ -17,7 +19,7 @@ public class SpellCaster {
     }
     public int max_mana;
     public int mana_reg;
-    public Hittable.Team team;
+
     public List<Spell> spells = new List<Spell>();
     public Spell spell
     {
@@ -28,7 +30,6 @@ public class SpellCaster {
     public int selectedSpellIndex = 0;
     public const int MAXSPELLS = 4;
     public int spellPower = 5;
-    //public int spellPower { get { return _spellpower; } set { Debug.Log($"power changed to: {value}"); _spellpower = value; }}
 
     public EntityAttributePackage _attributePackage;
     private PlayerEventWrapper _eventWrapper;
