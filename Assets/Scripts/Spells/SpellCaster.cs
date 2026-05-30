@@ -7,6 +7,7 @@ public class SpellCaster {
     private int _mana = 0;
     public int Mana {
         set {
+            value = Mathf.Clamp(value, 0, max_mana);
             manaChanged?.Invoke(value);
             _mana = value;
         }

@@ -10,6 +10,10 @@ public class ManaBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    private void UpdateManaBar(int mana) {
+        //Debug.Log($"max: {spellCaster.max_mana} current: {mana}");
         if (spellCaster == null) return;
         float perc = spellCaster.Mana * 1.0f / spellCaster.max_mana;
         if (Mathf.Abs(old_perc - perc) > 0.01f) // if changed enough
@@ -18,10 +22,6 @@ public class ManaBar : MonoBehaviour
             slider.transform.localPosition = new Vector3(-(1 - perc) / 2, 0, 0); // reposition
             old_perc = perc;
         }
-    }
-
-    void UpdateManaBar(int mana) {
-        Debug.Log($"max: {spellCaster.max_mana} current: {mana}");
     }
 
     public void SetSpellCaster(SpellCaster sc)
