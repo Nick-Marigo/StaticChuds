@@ -101,5 +101,16 @@
 		"knockback_timer": "0.1",
 		"knockback_force": "400",
 		"damage_multiplier": "2.0 wave *"
+   },
+   "cursed": {
+		"name": "Cursed",
+		"description": "Spells have a longer cooldown",
+		"cooldown_multiplier": "wave 1.05 *"
+   },
+   "blessed": {
+		"name": "Blessed",
+		"description": "Spells have a shorter cooldown and deal much more damage",
+		"cooldown_multiplier": "0.25",
+		"damage_multiplier": "5.0 wave *"
    }
 }
