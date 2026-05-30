@@ -7,7 +7,6 @@ using UnityEngine;
 [JsonObject(MemberSerialization.Fields)]
 public class Shielding : SpellModifier {
 	public static JObject config;
-	protected string cooldown_multiplier;
 	protected string knockback_force;
 	protected string knockback_timer;
 	protected string damage_multiplier;
@@ -22,12 +21,6 @@ public class Shielding : SpellModifier {
 
 		JsonSerializer serializer = new JsonSerializer();
 		serializer.Populate(config.CreateReader(), this);
-	}
-
-	override public float GetCooldown() {
-        float multiplier = RPNEvaluator.RPNEvaluator.Evaluatef(cooldown_multiplier, floatRpnVals);
-
-        return innerSpell.GetCooldown() * multiplier;
 	}
 
 	override public int GetDamage() {
