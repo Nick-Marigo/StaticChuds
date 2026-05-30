@@ -37,7 +37,7 @@ public class Doubler : SpellModifier {
         return innerSpell.GetCooldown() * multiplier;
     }
 
-    public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
+    public override IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team)
     {
         // Let the inner spell handle its own casting behavior
         yield return innerSpell.Cast(where, target, team);
@@ -48,7 +48,7 @@ public class Doubler : SpellModifier {
 
         // Let the inner spell handle its own casting behavior and
         // get current pos from playerController
-        yield return innerSpell.Cast(playerController.position, target, team);
+        yield return innerSpell.Cast(playerController.transform, target, team);
     }
 
     public Doubler(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {

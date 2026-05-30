@@ -26,13 +26,13 @@ public class GotYourBack : SpellModifier {
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);
     }
 
-    public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
+    public override IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team)
     {
         // Let the inner spell handle its own casting behavior
         yield return innerSpell.Cast(where, target, team);
 
         // Let the inner spell handle its own casting behavior
-        yield return innerSpell.Cast(where, where - (target - where), team);
+        yield return innerSpell.Cast(where, where.position - (target - where.position), team);
     }
 
     public GotYourBack(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {

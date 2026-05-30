@@ -17,9 +17,9 @@ public class ArcaneBolt : BaseSpell {
         serializer.Populate(config.CreateReader(), this);
     }
 
-    override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+    override public IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team) {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, target - where, statSource.GetSpeed(), onHitCallbacks);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, target - where.position, statSource.GetSpeed(), onHitCallbacks);
         yield return new WaitForEndOfFrame();
     }
 

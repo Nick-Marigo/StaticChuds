@@ -29,7 +29,11 @@ public class Shielding : SpellModifier {
 		return (int)(innerSpell.GetDamage() * multiplier);
 	}
 
-	public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+	public override string GetTrajectory() {
+		return "orbiting";
+	}
+
+	public override IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team) {
 		yield return innerSpell.Cast(where, target, team);
 	}
 

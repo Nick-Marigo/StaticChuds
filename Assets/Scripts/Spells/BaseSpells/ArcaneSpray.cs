@@ -34,14 +34,14 @@ public class ArcaneSpray : BaseSpell {
         return RPNEvaluator.RPNEvaluator.Evaluatef(projectile.lifetime, floatRpnVals);
     }
 
-    override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+    override public IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team) {
         this.team = team;
 
         int count = CalculateN();
         float sprayAmount = CalculateSpray();
         float lifetime = CalculateLifeTime();
 
-        Vector3 direction = (target - where).normalized;
+        Vector3 direction = (target - where.position).normalized;
         float baseAngle = Mathf.Atan2(direction.y, direction.x);
 
         for (int i = 0; i < count; i++)

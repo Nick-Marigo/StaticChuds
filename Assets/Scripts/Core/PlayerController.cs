@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
-        StartCoroutine(spellcaster.Cast(position, mouseWorld));
+        StartCoroutine(spellcaster.Cast(transform, mouseWorld));
     }
 
     void OnMove(InputValue value)

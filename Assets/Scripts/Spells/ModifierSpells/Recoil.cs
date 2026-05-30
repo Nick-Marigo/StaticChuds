@@ -35,12 +35,12 @@ public class Recoil : SpellModifier {
 		return (int)(innerSpell.GetDamage() * multiplier);
 	}
 
-	public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+	public override IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team) {
 		yield return innerSpell.Cast(where, target, team);
 
 		float knockbackScale = RPNEvaluator.RPNEvaluator.Evaluatef(knockback_force, floatRpnVals);
 
-		playerController.GetComponent<Rigidbody2D>().AddForce((where - target).normalized * knockbackScale);
+		playerController.GetComponent<Rigidbody2D>().AddForce((where.position - target).normalized * knockbackScale);
 
 		int oldSpeed = playerController.speed;
 		playerController.speed = 0;

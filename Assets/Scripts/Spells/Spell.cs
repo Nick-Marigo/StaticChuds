@@ -20,7 +20,7 @@ public abstract class Spell
     public virtual int icon { get; protected set; }
     public Spell statSource;
 
-	public List<Action<Hittable, Vector3>> onHitCallbacks;
+	public List<Action<Hittable, Vector3>> onHitCallbacks = new();
 
     public Spell(SpellCaster owner) {
         this.owner = owner;
@@ -95,7 +95,7 @@ public abstract class Spell
     }
 
 
-    public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
+    public virtual IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team) {
         this.team = team;
         yield return new WaitForEndOfFrame();
     }

@@ -27,20 +27,20 @@ public class Splitter : SpellModifier {
         return Mathf.RoundToInt(innerSpell.GetManaCost() * multiplier);
     }
 
-    public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
+    public override IEnumerator Cast(Transform where, Vector3 target, Hittable.Team team)
     {
         float angleValue = RPNEvaluator.RPNEvaluator.Evaluatef(angle, floatRpnVals);
 
         // Get original direction from caster to target
-        Vector3 direction = target - where;
+        Vector3 direction = target - where.position;
 
         // Rotate the direction by the angle to the left and right around the Z axis
         Vector3 leftDirection = Quaternion.Euler(0, 0, angleValue) * direction;
         Vector3 rightDirection = Quaternion.Euler(0, 0, -angleValue) * direction;
 
         // Convert the directions back into target positions
-        Vector3 leftTarget = where + leftDirection;
-        Vector3 rightTarget = where + rightDirection;
+        Vector3 leftTarget = where.position + leftDirection;
+        Vector3 rightTarget = where.position + rightDirection;
 
         // Let the inner spell handle its own casting behavior
         yield return innerSpell.Cast(where, leftTarget, team);

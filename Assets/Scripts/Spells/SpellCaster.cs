@@ -40,7 +40,7 @@ public class SpellCaster {
         spells.Add(SpellBuilder.BuildArcaneBolt(this));
     }
 
-    public IEnumerator Cast(Vector3 where, Vector3 target)
+    public IEnumerator Cast(Transform where, Vector3 target)
     {        
         if (spells.Count == 0) yield break;
 
