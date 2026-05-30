@@ -13,22 +13,14 @@ public class RelicInventory {
 
         _attributePackage = attributePackage;
 
-        // REMOVE: debugging for JSON loading
-        /*
-           foreach (KeyValuePair<string, Func<Relic>> relic in _potentialRelics) {
-           Relic r = relic.Value();
-           Debug.Log($"{r.name}, trigger: {r.trigger.description}, effect: {r.effect.description}");
-           }
-           */
+        /* Quick equip for testing
+        Relic rel = RelicLoader.Relics["Cursed Scroll"]();
+        EquipRelic(rel);
+        */
     }
 
     public List<Relic> FetchUnusedRelics(int n) {
         List<Relic> potentialRelics = new();
-        /*
-        Relic r = RelicLoader.Relics["Cursed Scroll"](); 
-        potentialRelics.Add(r);
-        return potentialRelics; 
-        */
 
         List<string> potentialDisplayedRelics = new(_potentialRelics);
 
