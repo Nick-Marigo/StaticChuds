@@ -8,7 +8,7 @@ public class RewardScreenManager : MonoBehaviour
     const int _numRewardRelics = 3;
 
     public GameObject rewardUI;
-    [SerializeField] PlayerController player;
+    [SerializeField] PlayerInstance player;
     [SerializeField] SpellUI rewardSpellUI;
     [SerializeField] TextMeshProUGUI rewardDescription;
 

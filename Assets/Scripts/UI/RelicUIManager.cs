@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class RelicUIManager : MonoBehaviour
 {
     public GameObject relicUIPrefab;
-    public PlayerController player;
+    public PlayerInstance player;
 
     List<GameObject> relicUIObjects = new List<GameObject>();
 

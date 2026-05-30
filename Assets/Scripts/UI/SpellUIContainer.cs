@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class SpellUIContainer : MonoBehaviour
 {
     public GameObject[] spellUIs;
-    public PlayerController player;
+    public PlayerInstance player;
 
     public void RefreshSpells(List<Spell> spells)
     {

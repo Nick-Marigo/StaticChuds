@@ -12,7 +12,7 @@ public class Doubler : SpellModifier {
     protected string mana_multiplier;
     protected string cooldown_multiplier;
     [JsonIgnore]
-    private PlayerController playerController;
+    private PlayerInstance playerController;
 
     void SetAttributes()
     {
@@ -53,6 +53,6 @@ public class Doubler : SpellModifier {
 
     public Doubler(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();
-        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerInstance>();
     }
 }

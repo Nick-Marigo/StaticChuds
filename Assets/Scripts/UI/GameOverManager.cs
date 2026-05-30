@@ -11,7 +11,7 @@ public class GameOverManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI gameOverDisplay;
     [SerializeField]
-    public PlayerController player;
+    public PlayerInstance player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void OnEnable()

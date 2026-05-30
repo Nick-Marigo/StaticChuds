@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerInstance : MonoBehaviour
 {
     public Hittable hp;
     public HealthBar healthui;

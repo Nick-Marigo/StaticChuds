@@ -8,7 +8,7 @@ public class ClassesSelector : MonoBehaviour {
     Dictionary<string, Classes> classes;
     GameObject classSelector;
 
-    PlayerController playerController;
+    PlayerInstance playerController;
     [SerializeField] GameObject difficultySelector;
 
     [SerializeField]
@@ -17,7 +17,7 @@ public class ClassesSelector : MonoBehaviour {
     void Start() 
     {
         classes = ClassesLoader.GetClasses();
-        playerController = FindFirstObjectByType<PlayerController>();
+        playerController = FindFirstObjectByType<PlayerInstance>();
         classSelector = this.gameObject;
         GenerateButtons();
     }
