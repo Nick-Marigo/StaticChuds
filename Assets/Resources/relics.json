@@ -65,7 +65,7 @@
             "description": "your speed increases for 2 seconds.",
             "type": "gain-speed",
             "amount": "2",
-            "until": "2"
+            "until": "2 seconds"
         }
     },
     {

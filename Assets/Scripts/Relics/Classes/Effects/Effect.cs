@@ -1,6 +1,9 @@
 using UnityEngine;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 [JsonObject(MemberSerialization.OptIn)]
 abstract public class Effect : iRequestAttributePackage {
@@ -38,6 +41,14 @@ abstract public class Effect : iRequestAttributePackage {
             case("cast-spell"):
                 eventWrapper.spellCast += _StopEffect;
                 break;
+            case var s when Regex.IsMatch(s, @"^\d+ seconds$"):
+                // start coroutine that calls stop effect when it when x seconds pass
+                IEnumerator timer(int time) {
+                    yield return new WaitForSeconds(time);
+                    _StopEffect();
+                }
+                CoroutineManager.Instance.Run(timer(10));
+                break;
             default:
                 return;
         }
@@ -60,6 +71,8 @@ abstract public class Effect : iRequestAttributePackage {
 
     virtual protected void _StopEffect() { 
         highlightStopRequested?.Invoke();
+        // This event is emitted for any modules that might need to know when
+        // their associated event has stopped
         effectStopped?.Invoke();
     }
 }

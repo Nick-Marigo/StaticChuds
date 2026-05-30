@@ -13,10 +13,9 @@ public class RelicInventory {
 
         _attributePackage = attributePackage;
 
-        /* Quick equip for testing
-        Relic rel = RelicLoader.Relics["Cursed Scroll"]();
+        // Quick equip for testing
+        Relic rel = RelicLoader.Relics["Speed Necklace"]();
         EquipRelic(rel);
-        */
     }
 
     public List<Relic> FetchUnusedRelics(int n) {
