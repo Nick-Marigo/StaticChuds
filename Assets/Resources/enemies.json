@@ -26,5 +26,12 @@
         "hp": 100,
         "speed": 2,
         "damage": 20
+   },
+   {
+       "name": "kobold",
+       "sprite": 24,
+       "hp": 10,
+       "speed": 9,
+       "damage": 2
    }
 ]
