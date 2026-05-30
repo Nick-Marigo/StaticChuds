@@ -15,10 +15,11 @@ public class GainSpeedEffect : Effect {
     }
 
     override public void PerformEffect() {
+        if (isActive) return;
+        isActive = true;
         base.PerformEffect();
         InvokeAttributePackageRequested();
 
-        if (isActive) return;
 
         TemporarySpeedBoost();
         //CoroutineManager.Instance.Run(TemporarySpeedBoost());

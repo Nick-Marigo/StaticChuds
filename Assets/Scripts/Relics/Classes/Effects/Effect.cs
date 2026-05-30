@@ -16,7 +16,7 @@ abstract public class Effect : iRequestAttributePackage {
     [JsonProperty]
     protected string until;
 
-    private float _highlightDur;
+    private float _highlightDur = -1; 
 
     // Attribute Packages are used to access and change attributes
     // on the player
@@ -35,6 +35,9 @@ abstract public class Effect : iRequestAttributePackage {
     void _SubscribeToStopCondition() {
         PlayerEventWrapper eventWrapper = (PlayerEventWrapper)attributePackage.AttributeDict["event_wrapper"].Get();
         switch(until){
+            case(null):
+                _highlightDur = 0.2f;
+                break;
             case("move"):
                 eventWrapper.playerMoved += _StopEffect;
                 break;
@@ -42,15 +45,17 @@ abstract public class Effect : iRequestAttributePackage {
                 eventWrapper.spellCast += _StopEffect;
                 break;
             case var s when Regex.IsMatch(s, @"^\d+ seconds$"):
-                // start coroutine that calls stop effect when it when x seconds pass
-                IEnumerator timer(int time) {
+                Match match = Regex.Match(s, @"^(\d+) seconds$");
+                var seconds = float.Parse(match.Groups[1].Value);
+                //Debug.Log($"Seconds is {seconds}");
+                IEnumerator timer(float time) {
                     yield return new WaitForSeconds(time);
                     _StopEffect();
                 }
-                CoroutineManager.Instance.Run(timer(10));
+
+                // coroutine will start when PerformEffect is called
+                highlightRequested += (_) => CoroutineManager.Instance.Run(timer(seconds));
                 break;
-            default:
-                return;
         }
     }
 
@@ -59,8 +64,6 @@ abstract public class Effect : iRequestAttributePackage {
         _SubscribeToStopCondition();
         // Get an attribute package from the owner
         attributePackageRequested?.Invoke();
-        // Set highlight duration based on what was read into until
-        _highlightDur = until == null ? 0.2f : -1f;
     }
 
     virtual public void PerformEffect() {
