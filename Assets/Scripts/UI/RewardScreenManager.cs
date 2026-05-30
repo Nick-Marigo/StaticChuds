@@ -56,7 +56,7 @@ public class RewardScreenManager : MonoBehaviour
     {
         ClearReward();
 
-        if (GameManager.Instance.currentWave % 1 == 0)
+        if (GameManager.Instance.currentWave % 3 == 0)
         {
             GameManager.Instance.state = GameManager.GameState.RELICREWARD;
         } 
