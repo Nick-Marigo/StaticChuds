@@ -11,6 +11,8 @@ public class Unit : MonoBehaviour
 
     public event Action unitMoved;
 
+	public bool canMove = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +34,8 @@ public class Unit : MonoBehaviour
 
     public void Move(Vector2 ds)
     {
+		if(!canMove) { return; }
+
         // Emit and event if the player is not giving input
         if (ds != Vector2.zero) {
             unitMoved?.Invoke();

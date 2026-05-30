@@ -54,7 +54,7 @@ public class ArcaneSpray : BaseSpell {
 
             Vector3 sprayDirection = new Vector3(Mathf.Cos(finalAngle), Mathf.Sin(finalAngle), 0f);
 
-            GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, sprayDirection, statSource.GetSpeed(), OnHit, lifetime);
+            GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, sprayDirection, statSource.GetSpeed(), onHitCallbacks, lifetime);
         }
 
         yield return new WaitForEndOfFrame();
@@ -62,5 +62,6 @@ public class ArcaneSpray : BaseSpell {
 
     public ArcaneSpray(SpellCaster owner) : base(owner) {
         SetAttributes();
+		onHitCallbacks.Add(OnHit);
     }
 }

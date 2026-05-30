@@ -92,6 +92,10 @@ public class SpellLoader
                     Recoil.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Recoil(owner, innerSpell) );
                     break;
+                case "shielding":
+                    Shielding.config = config;
+                    spellModifiers.Add( (owner, innerSpell) => new Shielding(owner, innerSpell) );
+                    break;
             }
         }
     }

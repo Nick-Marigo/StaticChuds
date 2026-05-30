@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ public abstract class Spell
     public virtual Projectile projectile { get; protected set; }
     public virtual int icon { get; protected set; }
     public Spell statSource;
+
+	public List<Action<Hittable, Vector3>> onHitCallbacks;
 
     public Spell(SpellCaster owner) {
         this.owner = owner;

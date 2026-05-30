@@ -19,11 +19,12 @@ public class ArcaneBolt : BaseSpell {
 
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, target - where, statSource.GetSpeed(), OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile.sprite, statSource.GetTrajectory(), where, target - where, statSource.GetSpeed(), onHitCallbacks);
         yield return new WaitForEndOfFrame();
     }
 
     public ArcaneBolt(SpellCaster owner) : base(owner) {
         SetAttributes();
+		onHitCallbacks.Add(OnHit);
     }
 }

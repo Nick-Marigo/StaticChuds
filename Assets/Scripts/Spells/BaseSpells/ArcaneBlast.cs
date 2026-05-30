@@ -39,7 +39,7 @@ public class ArcaneBlast : BaseSpell
                 float angle = i * 360f / count;
                 Vector3 direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0f);
 
-                GameManager.Instance.projectileManager.CreateProjectile(secondary_projectile.sprite, statSource.GetTrajectory(), impact, direction, statSource.GetSpeed(), OnSecondaryHit, float.Parse(secondary_projectile.lifetime));
+                GameManager.Instance.projectileManager.CreateProjectile(secondary_projectile.sprite, statSource.GetTrajectory(), impact, direction, statSource.GetSpeed(), new(){ OnSecondaryHit }, float.Parse(secondary_projectile.lifetime));
             }
         }
     }
@@ -59,11 +59,12 @@ public class ArcaneBlast : BaseSpell
         Projectile p = this.projectile;
         float speed = RPNEvaluator.RPNEvaluator.Evaluatef(p.speed, floatRpnVals);
 
-        GameManager.Instance.projectileManager.CreateProjectile(0, statSource.GetTrajectory(), where, target - where, speed, this.OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(0, statSource.GetTrajectory(), where, target - where, speed, onHitCallbacks);
         yield return new WaitForEndOfFrame();
     }
 
     public ArcaneBlast(SpellCaster owner) : base(owner) {
         SetAttributes();
+		onHitCallbacks.Add(OnHit);
     }
 }

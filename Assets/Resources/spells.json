@@ -101,5 +101,13 @@
 		"knockback_timer": "0.1",
 		"knockback_force": "400",
 		"damage_multiplier": "2.0 wave *"
+   },
+   "shielding": {
+		"name": "Shielding",
+		"description": "Spells cast deal much less damage but encircle the user, knocking enemies out of the way.",
+		"radius": "1.0",
+		"knockback_force": "210",
+		"knockback_timer": "0.05",
+		"damage_multiplier": "0.1"
    }
 }
