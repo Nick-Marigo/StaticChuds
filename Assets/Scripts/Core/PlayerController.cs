@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    // Left here in case we add a system that can transition between players
     void _ProvideAttributePackage(iRequestAttributePackage requester) {
         Debug.Log($"Package given to{requester} is {_attributePackage}");
         requester.attributePackage = _attributePackage;
