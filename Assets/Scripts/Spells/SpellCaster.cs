@@ -4,12 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpellCaster {
-    private int _mana = 0;
+    private int _mana = -1;
     public int Mana {
         set {
             value = Mathf.Clamp(value, 0, max_mana);
-            manaChanged?.Invoke(value);
             _mana = value;
+            manaChanged?.Invoke(value);
         }
         get {
             return _mana;

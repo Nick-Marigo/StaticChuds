@@ -66,14 +66,15 @@ public class PlayerController : MonoBehaviour
         // TODO break up this function
         unit.unitMoved += eventWrapper.InvokePlayerMoved;
         
-        ScaleStats(GameManager.Instance.currentWave);
-        StartCoroutine(spellcaster.ManaRegeneration());
 
         // tell UI elements what to show
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
         spellUIContainer.RefreshSpells(spellcaster.spells);
         spellui.SetSpell(spellcaster.GetSelectedSpell());
+
+        ScaleStats(GameManager.Instance.currentWave);
+        StartCoroutine(spellcaster.ManaRegeneration());
     }
 
     void OnAttack(InputValue value)
