@@ -21,8 +21,7 @@ public class SpellCaster {
     public List<Spell> spells = new List<Spell>();
     public Spell spell
     {
-        get
-        {
+        get {
             return GetSelectedSpell();
         }
     }
