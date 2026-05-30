@@ -62,10 +62,10 @@
             "type": "take-damage"
         },
         "effect": {
-            "description": "your speed increases for some number of seconds",
+            "description": "you gain speed",
             "type": "gain-speed",
             "amount": "2",
-            "until": "5 seconds"
+            "until": "2 seconds"
         }
     },
     {
