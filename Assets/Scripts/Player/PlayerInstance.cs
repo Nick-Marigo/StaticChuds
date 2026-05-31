@@ -48,25 +48,13 @@ public class PlayerInstance : MonoBehaviour
 
        _playerController.unit.unitMoved += eventWrapper.InvokePlayerMoved;
 
-       spellUIContainer.SpellCaster = spellCaster;
-        /*
-        //REMOVE: adds a test relic
-        Relic relic = relicInventory.FetchUnusedRelic();
-        relicInventory.EquipRelic(relic);
-        relicUIManager.RefreshRelicUI();
-        */
-        
-        // TODO break up this function
-        
-
-        // tell UI elements what to show
-        healthui.SetHealth(hp);
-        manaui.SetSpellCaster(spellCaster);
-        spellUIContainer.RefreshSpells(spellCaster.spells);
-        spellui.SetSpell(spellCaster.GetSelectedSpell());
 
         ScaleStats(GameManager.Instance.currentWave);
         StartCoroutine(spellCaster.ManaRegeneration());
+
+        PlayerInitializer playerInit = new PlayerInitializer(this);
+        playerInit
+            .SetUIElements();
     }
 
     void Die() {

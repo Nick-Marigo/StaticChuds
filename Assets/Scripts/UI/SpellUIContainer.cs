@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class SpellUIContainer : MonoBehaviour
 {
@@ -12,8 +11,8 @@ public class SpellUIContainer : MonoBehaviour
         }
     }
 
-    public void RefreshSpells(List<Spell> spells)
-    {
+    public void RefreshSpells() {
+        var spells = _spellCaster.spells;
         for (int i = 0; i < spellUIs.Length; i++)
         {
             bool hasSpell = i < spells.Count;
@@ -34,7 +33,7 @@ public class SpellUIContainer : MonoBehaviour
     public void DropSpell(int index)
     {
         _spellCaster.RemoveSpellAt(index);
-        RefreshSpells(_spellCaster.spells);
+        RefreshSpells();
         ShowDropButtons(false);
     }
 
