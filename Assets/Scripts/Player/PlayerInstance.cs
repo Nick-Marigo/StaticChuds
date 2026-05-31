@@ -47,6 +47,8 @@ public class PlayerInstance : MonoBehaviour
         relicInventory = new RelicInventory(_attributePackage);
 
        _playerController.unit.unitMoved += eventWrapper.InvokePlayerMoved;
+
+       spellUIContainer.SpellCaster = spellCaster;
         /*
         //REMOVE: adds a test relic
         Relic relic = relicInventory.FetchUnusedRelic();
@@ -67,23 +69,18 @@ public class PlayerInstance : MonoBehaviour
         StartCoroutine(spellCaster.ManaRegeneration());
     }
 
-    void Die()
-    {
+    void Die() {
         Debug.Log("You Lost");
         isDead = true;
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
     }
 
-    void OnEnable()
-    {
+    void OnEnable() {
         EventBus.Instance.OnWaveStart += ScaleStats;
-        //EventBus.Instance.OnClassSelected += InitPlayer;
     }
 
-    void OnDisable()
-    {
+    void OnDisable() {
         EventBus.Instance.OnWaveStart -= ScaleStats;
-        //EventBus.Instance.OnClassSelected -= InitPlayer;
     }
 
     void ScaleStats(int wave) {
@@ -106,20 +103,9 @@ public class PlayerInstance : MonoBehaviour
         Debug.Log("Speed: " + this.speed);*/
     }
 
-    void SelectSpell(int spellSelected)
-    {
-        spellCaster.SelectSpell(spellSelected);
-        spellUIContainer.UpdateSelectedHighlight(spellCaster.selectedSpellIndex);
-        Spell selected = spellCaster.GetSelectedSpell();
-        
-        //Debug.Log("Selected slot: " + spellSelected + " Spell modifier: " + selected.GetType().Name);
-        
-    }
-
     // Left here in case we add a system that can transition between players
     void _ProvideAttributePackage(iRequestAttributePackage requester) {
         Debug.Log($"Package given to{requester} is {_attributePackage}");
         requester.attributePackage = _attributePackage;
     }
-
 }

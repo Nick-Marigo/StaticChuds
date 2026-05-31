@@ -4,7 +4,13 @@ using System.Collections.Generic;
 public class SpellUIContainer : MonoBehaviour
 {
     public GameObject[] spellUIs;
-    public PlayerInstance player;
+    private SpellCaster _spellCaster;
+    public SpellCaster SpellCaster {
+        set { 
+            _spellCaster = value;
+            _spellCaster.spellSelected += UpdateSelectedHighlight;
+        }
+    }
 
     public void RefreshSpells(List<Spell> spells)
     {
@@ -22,13 +28,13 @@ public class SpellUIContainer : MonoBehaviour
             }
         }
 
-        UpdateSelectedHighlight(player.spellCaster.selectedSpellIndex);
+        UpdateSelectedHighlight(_spellCaster.selectedSpellIndex);
     }
 
     public void DropSpell(int index)
     {
-        player.spellCaster.RemoveSpellAt(index);
-        RefreshSpells(player.spellCaster.spells);
+        _spellCaster.RemoveSpellAt(index);
+        RefreshSpells(_spellCaster.spells);
         ShowDropButtons(false);
     }
 
@@ -53,17 +59,4 @@ public class SpellUIContainer : MonoBehaviour
             spellUI.ShowHighlight(i == selectedIndex);
         }
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 }

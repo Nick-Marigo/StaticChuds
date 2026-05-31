@@ -35,6 +35,7 @@ public class SpellCaster {
     private PlayerEventWrapper _eventWrapper;
 
     public event Action<int> manaChanged;
+    public event Action<int> spellSelected;
     
     public IEnumerator ManaRegeneration() {
         while (true) {
@@ -70,19 +71,14 @@ public class SpellCaster {
         yield break;
     }
 
-    void OnSpell1() => SelectSpell(0);
-    void OnSpell2() => SelectSpell(1);
-    void OnSpell3() => SelectSpell(2);
-    void OnSpell4() => SelectSpell(3);
-
     public Spell GetSelectedSpell() {
         if (spells.Count == 0) return null;
         return spells[selectedSpellIndex];
     }
 
     public void SelectSpell(int index) {
-        Debug.Log($"Getting called on {index}");
         if (index < 0 || index >= spells.Count) return;
+        spellSelected?.Invoke(index);
         selectedSpellIndex = index;
     }
 
