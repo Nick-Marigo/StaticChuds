@@ -36,7 +36,7 @@ public class SpellCaster {
 
     public event Action<int> manaChanged;
     public event Action<int> spellSelected;
-    
+
     public IEnumerator ManaRegeneration() {
         while (true) {
             Mana += mana_reg;
@@ -107,6 +107,8 @@ public class SpellCaster {
 
     /* Select actions are defined in the InputSystem. Their name must be in the
      * form "Spell[num]" */
+
+    private List<(InputAction action, Action<InputAction.CallbackContext> handler)> _spellHandlers = new();
     private void MapKeysToSpells() {
         var actionMap = InputSystem.actions;
         for (int i = 1; i <= MAXSPELLS; i++) {
@@ -115,8 +117,16 @@ public class SpellCaster {
             var selectSpellAction = actionMap.FindAction(actionName);
 
             int ind = i;
-            selectSpellAction.started += (_) => SelectSpell(ind - 1);
+            
+            Action<InputAction.CallbackContext> handler = (_) => SelectSpell(ind - 1);
+            selectSpellAction.started += handler;
+            _spellHandlers.Add((selectSpellAction, handler));
         }
     }
 
+    public void Dispose() {
+        foreach (var (action, handler) in _spellHandlers) {
+            action.started -= handler;
+        }
+    }
 }
