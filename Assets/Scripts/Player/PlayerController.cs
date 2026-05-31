@@ -17,8 +17,7 @@ public class PlayerController : MonoBehaviour {
 
     void OnAttack(InputValue value) {
         GameManager.GameState gameState = GameManager.Instance.state;
-        // FIX SHOOTING BUG
-        if (gameState == GameManager.GameState.PREGAME || gameState == GameManager.GameState.GAMEOVER || gameState == GameManager.GameState.WAVEEND) return;
+        if (!(gameState == GameManager.GameState.INWAVE || gameState == GameManager.GameState.COUNTDOWN)) return;
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
