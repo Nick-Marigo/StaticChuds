@@ -11,7 +11,7 @@ public class Recoil : SpellModifier {
 	protected string knockback_timer;
 	protected string damage_multiplier;
 	[JsonIgnore]
-	private PlayerInstance playerController;
+	private PlayerController playerController;
 
 	private void SetAttributes() {
 		if(config == null) {
@@ -55,6 +55,6 @@ public class Recoil : SpellModifier {
 
 	public Recoil(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
 		SetAttributes();
-		playerController = GameObject.FindWithTag("Player").GetComponent<PlayerInstance>();
+		playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 	}
 }

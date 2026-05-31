@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 public class PlayerInstance : MonoBehaviour
 {
@@ -9,39 +7,30 @@ public class PlayerInstance : MonoBehaviour
     public ManaBar manaui;
 
     public PlayerEventWrapper eventWrapper { get; private set; }
-    public SpellCaster spellcaster;
+    public SpellCaster spellCaster;
     public RelicInventory relicInventory;
     public SpellUI spellui;
     public SpellUIContainer spellUIContainer;
     public RelicUIManager relicUIManager;
-    public int speed;
-    private Vector2 movement;
-
-    public Unit unit;
 
     public bool isDead = false;
 
-    public Vector3 position{get { return transform.position; }}
-
+    private PlayerController _playerController;
     EntityAttributePackage _attributePackage;
 
-    Classes currentClass;
+    private Classes _playerClass;
     [SerializeField] GameObject playerVisual;
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        _attributePackage = gameObject.GetComponent<EntityAttributePackage>();
-        unit = GetComponent<Unit>();
+        _attributePackage = GetComponent<EntityAttributePackage>();
+        _playerController = GetComponent<PlayerController>();
         GameManager.Instance.player = gameObject;
     }
 
-    public void InitPlayer(Classes className)
-    {
+    public void InitPlayer(Classes className) {
 
-        currentClass = className;
-        playerVisual.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.playerSpriteManager.Get(currentClass.sprite);
+        _playerClass = className;
+        playerVisual.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.playerSpriteManager.Get(_playerClass.sprite);
         /*Debug.Log("Player received class: " + className);
         Debug.Log("HP expression: " + currentClass.health);
         Debug.Log("Mana expression: " + currentClass.mana);
@@ -49,13 +38,15 @@ public class PlayerInstance : MonoBehaviour
         Debug.Log("Spell Power expression: " + currentClass.spellpower);
         Debug.Log("Speed expression: " + currentClass.speed);*/
 
-        hp = new Hittable(currentClass.CalculateHP(GameManager.Instance.currentWave), Hittable.Team.PLAYER, gameObject);
+        hp = new Hittable(_playerClass.CalculateHP(GameManager.Instance.currentWave), Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
 
         eventWrapper = new PlayerEventWrapper();
-        spellcaster = new SpellCaster(_attributePackage, Hittable.Team.PLAYER);
+        spellCaster = new SpellCaster(_attributePackage, Hittable.Team.PLAYER);
         relicInventory = new RelicInventory(_attributePackage);
+
+       _playerController.unit.unitMoved += eventWrapper.InvokePlayerMoved;
         /*
         //REMOVE: adds a test relic
         Relic relic = relicInventory.FetchUnusedRelic();
@@ -64,42 +55,16 @@ public class PlayerInstance : MonoBehaviour
         */
         
         // TODO break up this function
-        unit.unitMoved += eventWrapper.InvokePlayerMoved;
         
 
         // tell UI elements what to show
         healthui.SetHealth(hp);
-        manaui.SetSpellCaster(spellcaster);
-        spellUIContainer.RefreshSpells(spellcaster.spells);
-        spellui.SetSpell(spellcaster.GetSelectedSpell());
+        manaui.SetSpellCaster(spellCaster);
+        spellUIContainer.RefreshSpells(spellCaster.spells);
+        spellui.SetSpell(spellCaster.GetSelectedSpell());
 
         ScaleStats(GameManager.Instance.currentWave);
-        StartCoroutine(spellcaster.ManaRegeneration());
-    }
-
-    void OnAttack(InputValue value)
-    {
-        GameManager.GameState gameState = GameManager.Instance.state;
-        if (gameState == GameManager.GameState.PREGAME || gameState == GameManager.GameState.GAMEOVER || gameState == GameManager.GameState.WAVEEND) return;
-        Vector2 mouseScreen = Mouse.current.position.value;
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
-        mouseWorld.z = 0;
-        StartCoroutine(spellcaster.Cast(position, mouseWorld));
-    }
-
-    void OnMove(InputValue value)
-    {
-        if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
-        movement = value.Get<Vector2>();
-    }
-
-    void Update() {
-        if (GameManager.Instance.state != GameManager.GameState.INWAVE && GameManager.Instance.state != GameManager.GameState.COUNTDOWN) {
-            unit.movement = Vector2.zero;
-        }
-        else {
-            unit.movement = movement * speed;
-        }
+        StartCoroutine(spellCaster.ManaRegeneration());
     }
 
     void Die()
@@ -124,14 +89,14 @@ public class PlayerInstance : MonoBehaviour
     void ScaleStats(int wave)
     {
 
-        int newHp = currentClass.CalculateHP(wave);
-        int newMana = currentClass.CalculateMana(wave);
-        int newManaRegen = currentClass.CalculateManaRegeneration(wave);
-        int newSpellPower = currentClass.CalculateSpellPower(wave);
-        this.speed = currentClass.CalculateSpeed(wave);
+        int newHp = _playerClass.CalculateHP(wave);
+        int newMana = _playerClass.CalculateMana(wave);
+        int newManaRegen = _playerClass.CalculateManaRegeneration(wave);
+        int newSpellPower = _playerClass.CalculateSpellPower(wave);
+        _playerController.speed = _playerClass.CalculateSpeed(wave);
 
         hp.SetMaxHP(newHp);
-        spellcaster.SetStats(newMana, newManaRegen, newSpellPower);
+        spellCaster.SetStats(newMana, newManaRegen, newSpellPower);
 
         /*Debug.Log("Play scaling stats");
         Debug.Log("Wave: " + wave);
@@ -148,9 +113,9 @@ public class PlayerInstance : MonoBehaviour
     void OnSpell4() => SelectSpell(3);
     void SelectSpell(int spellSelected)
     {
-        spellcaster.SelectSpell(spellSelected);
-        spellUIContainer.UpdateSelectedHighlight(spellcaster.selectedSpellIndex);
-        Spell selected = spellcaster.GetSelectedSpell();
+        spellCaster.SelectSpell(spellSelected);
+        spellUIContainer.UpdateSelectedHighlight(spellCaster.selectedSpellIndex);
+        Spell selected = spellCaster.GetSelectedSpell();
         
         //Debug.Log("Selected slot: " + spellSelected + " Spell modifier: " + selected.GetType().Name);
         

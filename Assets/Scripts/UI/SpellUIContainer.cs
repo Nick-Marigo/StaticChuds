@@ -22,13 +22,13 @@ public class SpellUIContainer : MonoBehaviour
             }
         }
 
-        UpdateSelectedHighlight(player.spellcaster.selectedSpellIndex);
+        UpdateSelectedHighlight(player.spellCaster.selectedSpellIndex);
     }
 
     public void DropSpell(int index)
     {
-        player.spellcaster.RemoveSpellAt(index);
-        RefreshSpells(player.spellcaster.spells);
+        player.spellCaster.RemoveSpellAt(index);
+        RefreshSpells(player.spellCaster.spells);
         ShowDropButtons(false);
     }
 

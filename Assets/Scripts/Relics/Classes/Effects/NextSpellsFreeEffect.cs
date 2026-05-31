@@ -26,7 +26,7 @@ public class NextSpellsFreeEffect : Effect {
             return;
         }
 
-        var playerSpellcaster = Object.FindAnyObjectByType<PlayerInstance>().spellcaster;
+        var playerSpellcaster = Object.FindAnyObjectByType<PlayerInstance>().spellCaster;
         playerSpellcaster.Mana += playerSpellcaster.spells[playerSpellcaster.selectedSpellIndex].GetManaCost();
 
         _freeSpells--;

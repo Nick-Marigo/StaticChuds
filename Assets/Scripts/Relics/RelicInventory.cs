@@ -15,8 +15,11 @@ public class RelicInventory {
 
         // Quick equip for testing
         /*
-        Relic rel = RelicLoader.Relics["Speed Necklace"]();
-        EquipRelic(rel);
+        foreach (var rel in RelicLoader.Relics) {
+            var r = rel.Value();
+            //Relic rel = RelicLoader.Relics["Speed Necklace"]();
+            EquipRelic(r);
+        }
         */
     }
 
