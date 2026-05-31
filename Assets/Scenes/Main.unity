@@ -8276,6 +8276,7 @@ GameObject:
   - component: {fileID: 1718273955}
   - component: {fileID: 1718273954}
   - component: {fileID: 1718273957}
+  - component: {fileID: 1718273958}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -8330,8 +8331,6 @@ MonoBehaviour:
   spellui: {fileID: 2085212185}
   spellUIContainer: {fileID: 1982188287}
   relicUIManager: {fileID: 1202924362}
-  speed: 5
-  unit: {fileID: 0}
   isDead: 0
   playerVisual: {fileID: 232596020}
 --- !u!4 &1718273953
@@ -8452,6 +8451,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8508c0bafa39449adaa6d15c7b222a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &1718273958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718273950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132e8d7a6c6bf46faaeea6d4720acf31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  speed: 0
 --- !u!1 &1727109217
 GameObject:
   m_ObjectHideFlags: 0
@@ -59398,7 +59410,6 @@ MonoBehaviour:
   - {fileID: 96316927}
   - {fileID: 457295002}
   - {fileID: 797691353}
-  player: {fileID: 1718273952}
 --- !u!1 &2002247713
 GameObject:
   m_ObjectHideFlags: 0
