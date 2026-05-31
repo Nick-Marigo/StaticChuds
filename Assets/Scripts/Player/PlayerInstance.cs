@@ -86,8 +86,7 @@ public class PlayerInstance : MonoBehaviour
         //EventBus.Instance.OnClassSelected -= InitPlayer;
     }
 
-    void ScaleStats(int wave)
-    {
+    void ScaleStats(int wave) {
 
         int newHp = _playerClass.CalculateHP(wave);
         int newMana = _playerClass.CalculateMana(wave);
@@ -107,10 +106,6 @@ public class PlayerInstance : MonoBehaviour
         Debug.Log("Speed: " + this.speed);*/
     }
 
-    void OnSpell1() => SelectSpell(0);
-    void OnSpell2() => SelectSpell(1);
-    void OnSpell3() => SelectSpell(2);
-    void OnSpell4() => SelectSpell(3);
     void SelectSpell(int spellSelected)
     {
         spellCaster.SelectSpell(spellSelected);
