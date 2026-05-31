@@ -6,7 +6,7 @@ public class PlayerInstance : MonoBehaviour
     public HealthBar healthui;
     public ManaBar manaui;
 
-    public PlayerEventWrapper eventWrapper { get; private set; }
+    public PlayerEventWrapper eventWrapper;
     public SpellCaster spellCaster;
     public RelicInventory relicInventory;
     public SpellUI spellui;
@@ -15,52 +15,31 @@ public class PlayerInstance : MonoBehaviour
 
     public bool isDead = false;
 
-    private PlayerController _playerController;
-    EntityAttributePackage _attributePackage;
+    public PlayerController PlayerController { get; private set; }
+    public EntityAttributePackage AttributePackage { get; private set; }
 
-    private Classes _playerClass;
+    public Classes PlayerClass { get; private set; }
     [SerializeField] GameObject playerVisual;
 
     void Start() {
-        _attributePackage = GetComponent<EntityAttributePackage>();
-        _playerController = GetComponent<PlayerController>();
+        AttributePackage = GetComponent<EntityAttributePackage>();
+        PlayerController = GetComponent<PlayerController>();
         GameManager.Instance.player = gameObject;
     }
 
-    public void InitPlayer(Classes className) {
+    public void InitPlayer(Classes playerClass) {
 
-        _playerClass = className;
-        playerVisual.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.playerSpriteManager.Get(_playerClass.sprite);
-        /*Debug.Log("Player received class: " + className);
-        Debug.Log("HP expression: " + currentClass.health);
-        Debug.Log("Mana expression: " + currentClass.mana);
-        Debug.Log("Mana Regen expression: " + currentClass.mana_regeneration);
-        Debug.Log("Spell Power expression: " + currentClass.spellpower);
-        Debug.Log("Speed expression: " + currentClass.speed);*/
-
-        hp = new Hittable(_playerClass.CalculateHP(GameManager.Instance.currentWave), Hittable.Team.PLAYER, gameObject);
-        hp.OnDeath += Die;
-        hp.team = Hittable.Team.PLAYER;
-
-        eventWrapper = new PlayerEventWrapper();
-        spellCaster = new SpellCaster(_attributePackage, Hittable.Team.PLAYER);
-        relicInventory = new RelicInventory(_attributePackage);
-
-       _playerController.unit.unitMoved += eventWrapper.InvokePlayerMoved;
-
-
-        ScaleStats(GameManager.Instance.currentWave);
-        StartCoroutine(spellCaster.ManaRegeneration());
+        PlayerClass = playerClass;
+        playerVisual.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.playerSpriteManager.Get(PlayerClass.sprite);
 
         PlayerInitializer playerInit = new PlayerInitializer(this);
         playerInit
+            .SetEventWrapper()
+            .SetHP()
+            .SetSpellCaster()
             .SetUIElements();
-    }
 
-    void Die() {
-        Debug.Log("You Lost");
-        isDead = true;
-        GameManager.Instance.state = GameManager.GameState.GAMEOVER;
+        ScaleStats(GameManager.Instance.currentWave);
     }
 
     void OnEnable() {
@@ -73,11 +52,11 @@ public class PlayerInstance : MonoBehaviour
 
     void ScaleStats(int wave) {
 
-        int newHp = _playerClass.CalculateHP(wave);
-        int newMana = _playerClass.CalculateMana(wave);
-        int newManaRegen = _playerClass.CalculateManaRegeneration(wave);
-        int newSpellPower = _playerClass.CalculateSpellPower(wave);
-        _playerController.speed = _playerClass.CalculateSpeed(wave);
+        int newHp = PlayerClass.CalculateHP(wave);
+        int newMana = PlayerClass.CalculateMana(wave);
+        int newManaRegen = PlayerClass.CalculateManaRegeneration(wave);
+        int newSpellPower = PlayerClass.CalculateSpellPower(wave);
+        PlayerController.speed = PlayerClass.CalculateSpeed(wave);
 
         hp.SetMaxHP(newHp);
         spellCaster.SetStats(newMana, newManaRegen, newSpellPower);
@@ -93,7 +72,7 @@ public class PlayerInstance : MonoBehaviour
 
     // Left here in case we add a system that can transition between players
     void _ProvideAttributePackage(iRequestAttributePackage requester) {
-        Debug.Log($"Package given to{requester} is {_attributePackage}");
-        requester.attributePackage = _attributePackage;
+        Debug.Log($"Package given to{requester} is {AttributePackage}");
+        requester.attributePackage = AttributePackage;
     }
 }
