@@ -8,14 +8,12 @@ using System.Collections.Generic;
 public class SpellBuilder 
 {
     // Builds an Arcane Bolt with no modifiers for starting spell
-    public static Spell BuildArcaneBolt(SpellCaster owner)
-    {
+    public static Spell BuildArcaneBolt(SpellCaster owner) {
         return SpellLoader.BaseSpells[0](owner);
     }
 
     // Builds a base spell with mods
-    public static Spell Build(SpellCaster owner)
-    {
+    public static Spell Build(SpellCaster owner) {
         int spellIndex = UnityEngine.Random.Range(0, SpellLoader.BaseSpells.Count);
         Spell spell = SpellLoader.BaseSpells[spellIndex](owner);
 
