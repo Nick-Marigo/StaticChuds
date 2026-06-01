@@ -94,11 +94,11 @@ public class SpellLoader
                     break;
                 case "cursed":
                      Cursed.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new Recoil(owner, innerSpell) );
+                    spellModifiers.Add( (owner, innerSpell) => new Cursed(owner, innerSpell) );
                     break;
                 case "blessed":
                     Blessed.config = config;
-                    spellModifiers.Add( (owner, innerSpell) => new Recoil(owner, innerSpell) );
+                    spellModifiers.Add( (owner, innerSpell) => new Blessed(owner, innerSpell) );
                     break;
             }
         }
