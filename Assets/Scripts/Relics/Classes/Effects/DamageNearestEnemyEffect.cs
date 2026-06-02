@@ -11,7 +11,7 @@ public class DamageNearestEnemyEffect : Effect {
     public override void PerformEffect() {
         base.PerformEffect();
 
-        var playerSpellcaster = Object.FindAnyObjectByType<PlayerController>();
+        var playerSpellcaster = Object.FindAnyObjectByType<PlayerInstance>();
         
         GameObject closest = GameManager.Instance.GetClosestEnemy(playerSpellcaster.gameObject.transform.position);
 

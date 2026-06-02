@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 
 public class SpellCaster {
+    public Hittable.Team team;
+
     private int _mana = -1;
     public int Mana {
         set {
@@ -17,10 +20,9 @@ public class SpellCaster {
     }
     public int max_mana;
     public int mana_reg;
-    public Hittable.Team team;
+
     public List<Spell> spells = new List<Spell>();
-    public Spell spell
-    {
+    public Spell spell {
         get {
             return GetSelectedSpell();
         }
@@ -28,31 +30,28 @@ public class SpellCaster {
     public int selectedSpellIndex = 0;
     public const int MAXSPELLS = 4;
     public int spellPower = 5;
-    //public int spellPower { get { return _spellpower; } set { Debug.Log($"power changed to: {value}"); _spellpower = value; }}
 
     public EntityAttributePackage _attributePackage;
     private PlayerEventWrapper _eventWrapper;
 
     public event Action<int> manaChanged;
-    
-    public IEnumerator ManaRegeneration()
-    {
-        while (true)
-        {
+    public event Action<int> spellSelected;
+
+    public IEnumerator ManaRegeneration() {
+        while (true) {
             Mana += mana_reg;
             yield return new WaitForSeconds(1);
         }
     }
 
-    public SpellCaster(EntityAttributePackage attributePackage, Hittable.Team team)
-    {
+    public SpellCaster(EntityAttributePackage attributePackage, Hittable.Team team) {
         this.team = team;
         _attributePackage = attributePackage;
+        MapKeysToSpells();
         spells.Add(SpellBuilder.BuildArcaneBolt(this));
     }
 
-    public IEnumerator Cast(Vector3 where, Vector3 target)
-    {        
+    public IEnumerator Cast(Vector3 where, Vector3 target) {        
         if (spells.Count == 0) yield break;
 
         if (_eventWrapper == null) {
@@ -61,8 +60,7 @@ public class SpellCaster {
 
         Spell selectedSpell = spells[selectedSpellIndex];
 
-        if (Mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady())
-        {
+        if (Mana >= selectedSpell.GetManaCost() && selectedSpell.IsReady()) {
 
             selectedSpell.UpdateDicts(GameManager.Instance.currentWave);
             Mana -= selectedSpell.GetManaCost();
@@ -73,27 +71,24 @@ public class SpellCaster {
         yield break;
     }
 
-    public Spell GetSelectedSpell()
-    {
+    public Spell GetSelectedSpell() {
         if (spells.Count == 0) return null;
         return spells[selectedSpellIndex];
     }
 
-    public void SelectSpell(int index)
-    {
+    public void SelectSpell(int index) {
         if (index < 0 || index >= spells.Count) return;
+        spellSelected?.Invoke(index);
         selectedSpellIndex = index;
     }
 
-    public bool AddSpell(Spell newSpell)
-    {
+    public bool AddSpell(Spell newSpell) {
         if (spells.Count >= MAXSPELLS) return false;
         spells.Add(newSpell);
         return true;
     }
 
-    public void RemoveSpellAt(int index)
-    {
+    public void RemoveSpellAt(int index) {
         if (index < 0 || index >= spells.Count) return;
         spells.RemoveAt(index);
 
@@ -103,21 +98,35 @@ public class SpellCaster {
         }
     }
 
-    public void SetStats(int newMana, int newManaRegen, int newSpellPower)
-    {
-        // For Debug
-        //int oldMana = this.mana;
-        //int oldMax = this.max_mana;
-
+    public void SetStats(int newMana, int newManaRegen, int newSpellPower) {
         this.Mana = newMana;
-        this.max_mana = newMana;
-        //float perc = this.mana * 1.0f / this.max_mana;
-        //this.mana = Mathf.RoundToInt(perc * newMana);
-
+        this.max_mana = newMana; 
         this.mana_reg = newManaRegen;
         this.spellPower = newSpellPower;
-
-        //Debug.Log("OldMana: " + oldMana + " NewMana: " + this.mana + " OldMax: " + oldMax + " NewMax: " + this.max_mana);
     }
 
+    /* Select actions are defined in the InputSystem. Their name must be in the
+     * form "Spell[num]" */
+
+    private List<(InputAction action, Action<InputAction.CallbackContext> handler)> _spellHandlers = new();
+    private void MapKeysToSpells() {
+        var actionMap = InputSystem.actions;
+        for (int i = 1; i <= MAXSPELLS; i++) {
+            string num = Convert.ToString(i, 10);
+            string actionName = String.Concat("Spell", num);
+            var selectSpellAction = actionMap.FindAction(actionName);
+
+            int ind = i;
+            
+            Action<InputAction.CallbackContext> handler = (_) => SelectSpell(ind - 1);
+            selectSpellAction.started += handler;
+            _spellHandlers.Add((selectSpellAction, handler));
+        }
+    }
+
+    public void Dispose() {
+        foreach (var (action, handler) in _spellHandlers) {
+            action.started -= handler;
+        }
+    }
 }

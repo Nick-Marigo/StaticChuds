@@ -14,9 +14,14 @@ public class RelicInventory {
         _attributePackage = attributePackage;
 
         // Quick equip for testing
+        //Relic rel = RelicLoader.Relics["Cursed Scroll"]();
+
+        // Equip all relics
         /*
-        Relic rel = RelicLoader.Relics["Speed Necklace"]();
-        EquipRelic(rel);
+        foreach (var rel in RelicLoader.Relics) {
+            var r = rel.Value();
+            EquipRelic(r);
+        }
         */
     }
 

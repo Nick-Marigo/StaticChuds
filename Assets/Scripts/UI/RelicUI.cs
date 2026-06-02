@@ -6,7 +6,7 @@ using System.Collections;
 
 public class RelicUI : MonoBehaviour
 {
-    public PlayerController player;
+    public PlayerInstance player;
     public int index;
 
     [SerializeField] Image icon;

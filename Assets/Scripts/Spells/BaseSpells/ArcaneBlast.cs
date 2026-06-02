@@ -56,10 +56,7 @@ public class ArcaneBlast : BaseSpell
     override public IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
 
-        Projectile p = this.projectile;
-        float speed = RPNEvaluator.RPNEvaluator.Evaluatef(p.speed, floatRpnVals);
-
-        GameManager.Instance.projectileManager.CreateProjectile(0, statSource.GetTrajectory(), where, target - where, speed, this.OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(0, statSource.GetTrajectory(), where, target - where, statSource.GetSpeed(), this.OnHit);
         yield return new WaitForEndOfFrame();
     }
 

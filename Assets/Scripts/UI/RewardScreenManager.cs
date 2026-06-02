@@ -8,7 +8,7 @@ public class RewardScreenManager : MonoBehaviour
     const int _numRewardRelics = 3;
 
     public GameObject rewardUI;
-    [SerializeField] PlayerController player;
+    [SerializeField] PlayerInstance player;
     [SerializeField] SpellUI rewardSpellUI;
     [SerializeField] TextMeshProUGUI rewardDescription;
 
@@ -21,7 +21,7 @@ public class RewardScreenManager : MonoBehaviour
     Spell rewardSpell;
 
     public void ShowReward() {
-        rewardSpell = SpellBuilder.Build(player.spellcaster);
+        rewardSpell = SpellBuilder.Build(player.spellCaster);
         rewardSpellUI.SetSpell(rewardSpell);
         rewardSpellUI.ShowDropButton(false);
 
@@ -29,7 +29,7 @@ public class RewardScreenManager : MonoBehaviour
     }
 
     public void AcceptReward() {
-        bool added = player.spellcaster.AddSpell(rewardSpell);
+        bool added = player.spellCaster.AddSpell(rewardSpell);
 
         if (!added)
         {
@@ -38,7 +38,7 @@ public class RewardScreenManager : MonoBehaviour
             return;
         }
 
-        player.spellUIContainer.RefreshSpells(player.spellcaster.spells);
+        player.spellUIContainer.RefreshSpells();
         player.spellUIContainer.ShowDropButtons(false);
         rewardSpell = null;
 

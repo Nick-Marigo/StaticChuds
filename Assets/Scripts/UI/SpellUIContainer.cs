@@ -1,13 +1,18 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class SpellUIContainer : MonoBehaviour
 {
     public GameObject[] spellUIs;
-    public PlayerController player;
+    private SpellCaster _spellCaster;
+    public SpellCaster SpellCaster {
+        set { 
+            _spellCaster = value;
+            _spellCaster.spellSelected += UpdateSelectedHighlight;
+        }
+    }
 
-    public void RefreshSpells(List<Spell> spells)
-    {
+    public void RefreshSpells() {
+        var spells = _spellCaster.spells;
         for (int i = 0; i < spellUIs.Length; i++)
         {
             bool hasSpell = i < spells.Count;
@@ -22,13 +27,13 @@ public class SpellUIContainer : MonoBehaviour
             }
         }
 
-        UpdateSelectedHighlight(player.spellcaster.selectedSpellIndex);
+        UpdateSelectedHighlight(_spellCaster.selectedSpellIndex);
     }
 
     public void DropSpell(int index)
     {
-        player.spellcaster.RemoveSpellAt(index);
-        RefreshSpells(player.spellcaster.spells);
+        _spellCaster.RemoveSpellAt(index);
+        RefreshSpells();
         ShowDropButtons(false);
     }
 
@@ -53,17 +58,4 @@ public class SpellUIContainer : MonoBehaviour
             spellUI.ShowHighlight(i == selectedIndex);
         }
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 }

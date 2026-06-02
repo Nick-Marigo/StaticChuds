@@ -12,7 +12,7 @@ public class Doubler : SpellModifier {
     protected string mana_multiplier;
     protected string cooldown_multiplier;
     [JsonIgnore]
-    private PlayerController playerController;
+    private PlayerController _playerController;
 
     void SetAttributes()
     {
@@ -48,11 +48,11 @@ public class Doubler : SpellModifier {
 
         // Let the inner spell handle its own casting behavior and
         // get current pos from playerController
-        yield return innerSpell.Cast(playerController.position, target, team);
+        yield return innerSpell.Cast(_playerController.position, target, team);
     }
 
     public Doubler(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();
-        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 }
