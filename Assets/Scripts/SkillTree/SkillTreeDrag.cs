@@ -1,16 +1,12 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class SkillTreeDrag : MonoBehaviour
+public class SkillTreeDrag : MonoBehaviour, IDragHandler
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private RectTransform skillTreeContent;
 
-    // Update is called once per frame
-    void Update()
+    public void OnDrag(PointerEventData eventData)
     {
-        
+        skillTreeContent.anchoredPosition += eventData.delta;
     }
 }
