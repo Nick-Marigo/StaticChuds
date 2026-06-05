@@ -9,6 +9,8 @@ public class Relic : iRequestAttributePackage {
     public string name { get; protected set; }
     [JsonProperty]
     public int sprite { get; protected set; }
+    [JsonProperty]
+    public string type { get; protected set; }
     [JsonProperty("trigger")]
     TriggerGenerator triggerGen;
     [JsonProperty("effect")]
