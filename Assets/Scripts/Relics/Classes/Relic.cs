@@ -32,7 +32,7 @@ public class Relic : iRequestAttributePackage {
     }
 
     public void Activate() {
-        Debug.Log("activating " + name);
+        //Debug.Log("activating " + name);
         trigger.Activate();
         effect.Activate();
     }
@@ -46,7 +46,7 @@ public class Relic : iRequestAttributePackage {
      * using the generator classes */
     [OnDeserialized]
     void OnDeserialization(StreamingContext context) {
-        Debug.Log($"creating relic: {name}");
+        //Debug.Log($"creating relic: {name}");
 
         trigger = triggerGen.GenerateTrigger();
         if (trigger == null) {
