@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System;
 
+// MAX: TODO remove old relic loading
 public class RelicLoader {
     /* RelicLoader exposes a Dictionary of lambdas that
      * can be used to instantiate new relics from. The keys are
@@ -15,6 +16,7 @@ public class RelicLoader {
         } 
     }
 
+    private static Dictionary<string, List<Func<Relic>>> _relicsByType;
     public static List<string> _relicNames = new();
     public static List<string> RelicNames {
         get {
@@ -40,14 +42,25 @@ public class RelicLoader {
 
     private static int JsonToDictionary(string json, out Dictionary<string, Func<Relic>> relics) {
         relics = new();
+        _relicsByType = new();
+        foreach (string type in GameManager.Instance.types) {
+            _relicsByType.Add(type, new());
+        }
 
         JArray relicData = JArray.Parse(json);
         foreach(JObject relic in relicData) {
             string name = (string)relic["name"]; 
+            string type = (string)relic["type"];
             relics.Add(name, () => relic.ToObject<Relic>());
+            _relicsByType[type].Add(() => relic.ToObject<Relic>());
             _relicNames.Add(name);
         }
 
+        foreach (var relicList in _relicsByType) {
+            foreach (var relicLambda in relicList.Value) {
+            Debug.Log($"{relicList.Key}: {relicLambda().name}");
+            }
+        }
         if (relics == null) {
             return -1;
         }

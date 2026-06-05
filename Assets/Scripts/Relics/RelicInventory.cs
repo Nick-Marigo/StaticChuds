@@ -17,12 +17,10 @@ public class RelicInventory {
         //Relic rel = RelicLoader.Relics["Cursed Scroll"]();
 
         // Equip all relics
-        /*
         foreach (var rel in RelicLoader.Relics) {
             var r = rel.Value();
             EquipRelic(r);
         }
-        */
     }
 
     public List<Relic> FetchUnusedRelics(int n) {
