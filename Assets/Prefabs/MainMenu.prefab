@@ -257,7 +257,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2814438457722874653}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4566054180754406550}
+        m_TargetAssemblyTypeName: UI.MenuCallbacks, Assembly-CSharp
+        m_MethodName: StartPlayScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4462930771860541907
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +556,7 @@ GameObject:
   - component: {fileID: 241017595397115359}
   - component: {fileID: 6053565022022167967}
   - component: {fileID: 4279711992963123367}
+  - component: {fileID: 4566054180754406550}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -637,6 +650,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4566054180754406550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6838858531198603026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b74293f5ee42a1abfecf2f7d003a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.StartMenuCallbacks
+  startSceneName: StartMenu
+  playSceneName: Main
+  creditsSceneName: Credits
 --- !u!1 &6898690484310067032
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +922,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4546451464209408723}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4566054180754406550}
+        m_TargetAssemblyTypeName: UI.MenuCallbacks, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7455974527517296540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,4 +1055,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3611641941046427220}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4566054180754406550}
+        m_TargetAssemblyTypeName: UI.MenuCallbacks, Assembly-CSharp
+        m_MethodName: StartCreditsScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
