@@ -508,6 +508,7 @@ GameObject:
   - component: {fileID: 679475648}
   - component: {fileID: 679475647}
   - component: {fileID: 679475650}
+  - component: {fileID: 679475651}
   m_Layer: 5
   m_Name: SkillTreePanel
   m_TagString: Untagged
@@ -600,6 +601,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &679475651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679475645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6742c7261a18542b3a916581064cab3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillTreeUI
+  skillTreeContent: {fileID: 227591080}
+  nodePrefab: {fileID: 5413737090699814225, guid: 2b60e10252aca4ef0976b0a0d390513f, type: 3}
 --- !u!1 &1157492547
 GameObject:
   m_ObjectHideFlags: 0
