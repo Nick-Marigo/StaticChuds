@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Node
 {
-    string name;
-    string description;
-    string branch;
-    bool isUnlocked = false;
-    Sprite icon;
+    public string name;
+    public string description;
+    public string branch;
+    public bool isUnlocked = false;
+    public int icon;
 
-    public Node(string name, string description, Sprite icon, string branch)
+    public Node(string name, string description, int icon, string branch)
     {
         this.name = name;
         this.description = description;
@@ -16,5 +16,5 @@ public class Node
         this.branch = branch;
     }
 
-    
+
 }

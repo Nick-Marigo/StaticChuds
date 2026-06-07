@@ -1,16 +1,19 @@
 using UnityEngine;
+using TMPro;
+using System.Collections.Generic;
 
 public class NodeUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    [SerializeField] TextMeshProUGUI nameText;
+
+    private Node node;
+
+    public void SetNode(Node node)
     {
-        
+        this.node = node;
+
+        nameText.text = node.name;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
