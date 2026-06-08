@@ -1,0 +1,20 @@
+using UnityEngine;
+
+public class Node
+{
+    public string name;
+    public string description;
+    public string branch;
+    public bool isUnlocked = false;
+    public int icon;
+
+    public Node(string name, string description, int icon, string branch)
+    {
+        this.name = name;
+        this.description = description;
+        this.icon = icon;
+        this.branch = branch;
+    }
+
+
+}
