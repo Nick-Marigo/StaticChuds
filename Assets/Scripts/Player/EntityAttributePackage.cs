@@ -57,14 +57,23 @@ public class EntityAttributePackage : MonoBehaviour {
         AddAttribute("max_health", "health",
                 () => _playerInstance.hp.max_hp,
                 (value) => _playerInstance.hp.max_hp = (int)value);   
+
+        foreach (var att in _attributesByType) {
+            foreach (var a in att.Value) {
+                Debug.Log(a.type);
+            }}
     }
 
     private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter) {
-        _attributeDict.Add(name, new AttributeGate(type) {
-                Get = getter,
-                Set = setter
-                });
-        Debug.Log(_attributeDict.ToString());
+        var attributeGate = new AttributeGate(type) {
+            Get = getter,
+            Set = setter 
+        };
+
+        _attributeDict.Add(name, attributeGate);
+        if (type == "none") return;
+
+        _attributesByType[type].Add(attributeGate);
     }
 
     void _SetPlayerSystems() {
