@@ -16,7 +16,14 @@ public class RelicLoader {
         } 
     }
 
-    private static Dictionary<string, List<Func<Relic>>> _relicsByType;
+    private static Dictionary<string, Dictionary<string, Func<Relic>>> _relicsByType;
+    public static Dictionary<string, Dictionary<string, Func<Relic>>> RelicsByType {
+        get {
+            if (_relicsByType == null) LoadRelics();
+            return _relicsByType;
+        }
+    }
+
     public static List<string> _relicNames = new();
     public static List<string> RelicNames {
         get {
@@ -52,13 +59,13 @@ public class RelicLoader {
             string name = (string)relic["name"]; 
             string type = (string)relic["type"];
             relics.Add(name, () => relic.ToObject<Relic>());
-            _relicsByType[type].Add(() => relic.ToObject<Relic>());
+            _relicsByType[type].Add(name, () => relic.ToObject<Relic>());
             _relicNames.Add(name);
         }
 
-        foreach (var relicList in _relicsByType) {
-            foreach (var relicLambda in relicList.Value) {
-            Debug.Log($"{relicList.Key}: {relicLambda().name}");
+        foreach (var relicDict in _relicsByType) {
+            foreach (var relicKVPair in relicDict.Value) {
+            // Debug.Log($"{relicKVPair.Key} || {relicKVPair.Value().name}");
             }
         }
         if (relics == null) {
