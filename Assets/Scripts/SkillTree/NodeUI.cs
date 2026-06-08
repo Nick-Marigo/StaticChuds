@@ -23,7 +23,8 @@ public class NodeUI : MonoBehaviour
         if (!node.isPurchased)
         {
             node.isPurchased = true;
-            skillTreeUI.NodeClicked(this.node);
+            RectTransform rect = GetComponent<RectTransform>();
+            skillTreeUI.NodeClicked(node, rect.anchoredPosition);
         }
     }
 

@@ -32,20 +32,41 @@ public class SkillTreeUI : MonoBehaviour
     {
         // Spell/Mod branch
         Node spell1 = skillTree.CreateNodeSpell();
-        SpawnNode(spell1, new Vector2(150, -100));
+        SpawnNode(spell1, new Vector2(0, -150));
 
         // relic branch
         Node relic1 = skillTree.CreateNodeRelic();
-        SpawnNode(relic1, new Vector2(-150, -100));
+        SpawnNode(relic1, new Vector2(-150, 100));
 
         // Stats branch
         Node stats1 = skillTree.CreateNodeStat();
-        SpawnNode(stats1, new Vector2(0, 150));
+        SpawnNode(stats1, new Vector2(150, 100));
     }
 
-    public void NodeClicked(Node node)
+    public void NodeClicked(Node node, Vector2 position)
     {
-        Debug.Log("YA BOI WAS CLICKED");
+        SpawnTwoChildern(node, position);
+    }
+
+    void SpawnTwoChildern(Node node, Vector2 position)
+    {
+        
+    }
+
+    Node CreateNodeFromBranch(string branch)
+    {
+        switch (branch)
+        {
+            case "Spells":
+                return skillTree.CreateNodeSpell();
+            case "Relics":
+                return skillTree.CreateNodeRelic();
+            case "Stats":
+                return skillTree.CreateNodeStat();
+            default:
+                Debug.Log("YA BOI FAILED");
+                return null;
+        }
     }
 
 }
