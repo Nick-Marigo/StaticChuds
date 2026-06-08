@@ -8,12 +8,23 @@ public class NodeUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI nameText;
 
     private Node node;
+    private SkillTreeUI skillTreeUI;
 
-    public void SetNode(Node node)
+    public void SetNode(Node node, SkillTreeUI skillTreeUI)
     {
         this.node = node;
+        this.skillTreeUI = skillTreeUI;
 
         nameText.text = node.name;
+    }
+
+    public void NodeClicked()
+    {
+        if (!node.isPurchased)
+        {
+            node.isPurchased = true;
+            skillTreeUI.NodeClicked(this.node);
+        }
     }
 
 }

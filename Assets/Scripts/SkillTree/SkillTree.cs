@@ -5,7 +5,7 @@ public class SkillTree
 {
     public int skillPoints = 5;
 
-    // TOREMOVE: for building nodes testing
+    // TOREMOVE: For testing nodes when building out the branch
     int spellbranchCount = 0;
     int relicbranchCount = 0;
     int statsbranchCount = 0;

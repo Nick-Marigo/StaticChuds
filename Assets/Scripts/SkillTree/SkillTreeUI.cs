@@ -25,7 +25,7 @@ public class SkillTreeUI : MonoBehaviour
         RectTransform nodeObjectRect = nodeObject.GetComponent<RectTransform>();
         nodeObjectRect.anchoredPosition = position;
         NodeUI nodeUI = nodeObject.GetComponent<NodeUI>();
-        nodeUI.SetNode(node);
+        nodeUI.SetNode(node, this);
     }
 
     void BuildBranches()
@@ -41,6 +41,11 @@ public class SkillTreeUI : MonoBehaviour
         // Stats branch
         Node stats1 = skillTree.CreateNodeStat();
         SpawnNode(stats1, new Vector2(0, 150));
+    }
+
+    public void NodeClicked(Node node)
+    {
+        Debug.Log("YA BOI WAS CLICKED");
     }
 
 }
