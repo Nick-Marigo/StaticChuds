@@ -5,7 +5,7 @@ public class Node
     public string name;
     public string description;
     public string branch;
-    public bool isUnlocked = false;
+    public bool isPurchased = false;
     public int icon;
 
     public Node(string name, string description, int icon, string branch)

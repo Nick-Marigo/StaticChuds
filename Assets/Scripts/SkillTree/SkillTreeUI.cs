@@ -7,17 +7,40 @@ public class SkillTreeUI : MonoBehaviour
     [SerializeField] RectTransform skillTreeContent;
     [SerializeField] GameObject nodePrefab;
 
-
-
     void Start()
     {
         skillTree = new SkillTree();
-        Node root = new Node("root", "root", 0, "root");
 
-        GameObject rootObject = Instantiate(nodePrefab, skillTreeContent);
+        // Create root node
+        Node root = skillTree.CreateRoot();
+        SpawnNode(root, new Vector2(0, 0));
 
-        NodeUI rootUI = rootObject.GetComponent<NodeUI>();
-        rootUI.SetNode(root);
+        // Create first branch nodes
+        BuildBranches();
+    }
+
+    void SpawnNode(Node node, Vector2 position)
+    {
+        GameObject nodeObject = Instantiate(nodePrefab, skillTreeContent);
+        RectTransform nodeObjectRect = nodeObject.GetComponent<RectTransform>();
+        nodeObjectRect.anchoredPosition = position;
+        NodeUI nodeUI = nodeObject.GetComponent<NodeUI>();
+        nodeUI.SetNode(node);
+    }
+
+    void BuildBranches()
+    {
+        // Spell/Mod branch
+        Node spell1 = skillTree.CreateNodeSpell();
+        SpawnNode(spell1, new Vector2(150, -100));
+
+        // relic branch
+        Node relic1 = skillTree.CreateNodeRelic();
+        SpawnNode(relic1, new Vector2(-150, -100));
+
+        // Stats branch
+        Node stats1 = skillTree.CreateNodeStat();
+        SpawnNode(stats1, new Vector2(0, 150));
     }
 
 }
