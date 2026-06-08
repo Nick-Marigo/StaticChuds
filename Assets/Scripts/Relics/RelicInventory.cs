@@ -23,7 +23,8 @@ public class RelicInventory {
 
         // Equip all relics
         foreach (var rel in RelicLoader.RelicNames) {
-            Relic r = FetchUnusedRelicByType("mana", "speed");
+            //Relic r = FetchUnusedRelicByType("mana", "speed");
+            Relic r = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, "damage", "speed")();
             Debug.Log($"fetched {r.name} || {r.type}");
             //var r = rel.Value();
             EquipRelic(r);
