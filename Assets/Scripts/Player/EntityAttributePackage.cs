@@ -4,14 +4,18 @@ using System.Collections.Generic;
 
 public class EntityAttributePackage : MonoBehaviour {
 
-    private Dictionary <string, List<AttributeGate>> _attributesByType;
+    private Dictionary <string, Dictionary<string, AttributeGate>> _attributesByType;
     public class AttributeGate {
 
         public string type { get; private set; }
+        public string name { get; private set; }
         public Func<object> Get;
         public Action<object> Set;
 
-        public AttributeGate(string type) { this.type = type; }
+        public AttributeGate(string name, string type) { 
+            this.type = type; 
+            this.name = name;
+        }
     }
 
     private Dictionary<string, AttributeGate> _attributeDict;
@@ -58,14 +62,21 @@ public class EntityAttributePackage : MonoBehaviour {
                 () => _playerInstance.hp.max_hp,
                 (value) => _playerInstance.hp.max_hp = (int)value);   
 
-        foreach (var att in _attributesByType) {
-            foreach (var a in att.Value) {
-                Debug.Log(a.type);
-            }}
+            for (int i = 0; i < 5; i++) {
+                var attr = GetAttributeByType("mana", "damage"); 
+                Debug.Log(attr.type);
+            }
+    }
+
+    public AttributeGate GetAttributeByType(string affinity, string weakness) {
+        var attribute = ObjectByTypeFetcher.FetchUnusedObject<AttributeGate>(_attributesByType, affinity, weakness);
+        if (attribute == null) return null;
+        _attributesByType[attribute.type].Remove(attribute.name);
+        return attribute;
     }
 
     private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter) {
-        var attributeGate = new AttributeGate(type) {
+        var attributeGate = new AttributeGate(name, type) {
             Get = getter,
             Set = setter 
         };
@@ -73,7 +84,7 @@ public class EntityAttributePackage : MonoBehaviour {
         _attributeDict.Add(name, attributeGate);
         if (type == "none") return;
 
-        _attributesByType[type].Add(attributeGate);
+        _attributesByType[type].Add(name, attributeGate);
     }
 
     void _SetPlayerSystems() {

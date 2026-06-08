@@ -24,42 +24,22 @@ public class RelicInventory {
         // Equip all relics
         foreach (var rel in RelicLoader.RelicNames) {
             //Relic r = FetchUnusedRelicByType("mana", "speed");
-            Relic r = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, "damage", "speed")();
+            Relic r = GetRelicByType("health", "damage");
             Debug.Log($"fetched {r.name} || {r.type}");
             //var r = rel.Value();
             EquipRelic(r);
         }
     }
 
+    public Relic GetRelicByType(string affinity, string weakness) {
+            Relic r = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, affinity, weakness)();
+            if (r == null) return null;
+            _potentialRelicsByType[r.type].Remove(r.name);
+            return r;
+    }
+
     /* Returns an undiscovered relic by type: relic with the given affinity will
      * have priority while weakness-related relics are saved for last */
-    public Relic FetchUnusedRelicByType(string affinity, string weakness) {
-        var types = GameManager.Instance.types;
-        Debug.Log(types);
-        if ( !types.Contains(affinity) || !types.Contains(weakness) ) {
-            throw new ArgumentException($"affinity:{affinity} or weakness:{weakness}  are not of a valid type");
-        }
-
-        Relic relic;
-        if (GetRelicOfType(affinity, out relic)) return relic;
-        foreach (string type in types) {
-            if (type == weakness) continue;
-            if (GetRelicOfType(type, out relic)) return relic;
-        }
-        if (GetRelicOfType(weakness, out relic)) return relic;
-        return null;
-    }
-
-    // Returns true if there is a relic of specified type, and stores in in
-    // relic variable
-    private bool GetRelicOfType(string type, out Relic relic) {
-        var relicDict = _potentialRelicsByType[type];
-        relic = null;
-        if (relicDict.Count == 0) return false;
-        int relicIndex = UnityEngine.Random.Range(0, relicDict.Count);
-        relic = relicDict.ElementAt(relicIndex).Value();
-        return true;
-    }
     public List<Relic> FetchUnusedRelics(int n) {
         List<Relic> potentialRelics = new();
 
@@ -83,7 +63,6 @@ public class RelicInventory {
     public void EquipRelic(Relic relic) {
         _equippedRelics.Add(relic.name, relic);
         _potentialRelics.Remove(relic.name);
-        _potentialRelicsByType[relic.type].Remove(relic.name);
         // Give the relic an attribute package
         relic.attributePackageRequested += () => relic.attributePackage = _attributePackage;
         // Relics can only be activated after their attribute package request event has
