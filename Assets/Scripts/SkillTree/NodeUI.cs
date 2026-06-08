@@ -20,7 +20,7 @@ public class NodeUI : MonoBehaviour
 
     public void NodeClicked()
     {
-        if (!node.isPurchased)
+        if (!node.isPurchased && node.name != "Root")
         {
             node.isPurchased = true;
             RectTransform rect = GetComponent<RectTransform>();

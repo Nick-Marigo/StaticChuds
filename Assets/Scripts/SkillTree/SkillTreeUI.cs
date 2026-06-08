@@ -50,7 +50,21 @@ public class SkillTreeUI : MonoBehaviour
 
     void SpawnTwoChildern(Node node, Vector2 position)
     {
-        
+        Vector2 direction = position.normalized;
+
+        Vector2 sideways = new Vector2(-direction.y, direction.x);
+
+        float forwardDistance = 200f;
+        float sideDistance = 120f;
+
+        Vector2 leftChildPosition = position + direction * forwardDistance - sideways * sideDistance;
+        Vector2 rightChildPosition = position + direction * forwardDistance + sideways * sideDistance;
+
+        Node child1 = CreateNodeFromBranch(node.branch);
+        Node child2 = CreateNodeFromBranch(node.branch);
+
+        SpawnNode(child1, leftChildPosition);
+        SpawnNode(child2, rightChildPosition);
     }
 
     Node CreateNodeFromBranch(string branch)
