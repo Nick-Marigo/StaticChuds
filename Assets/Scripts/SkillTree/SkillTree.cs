@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class SkillTree
 {
-    public int skillPoints = 5;
+    public int skillPoints = 100;
 
     // TOREMOVE: For testing nodes when building out the branch
     int spellbranchCount = 0;
@@ -41,12 +41,15 @@ public class SkillTree
         return newNode;
     }
     
-    public void NodePurchased(Node node)
+    public bool canPurchased()
     {
         if (skillPoints > 0)
         {
             skillPoints--;
-
+            return true;
         }
+
+        return false;
+
     }
 }

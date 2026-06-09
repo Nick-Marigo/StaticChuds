@@ -5,7 +5,10 @@ public class SkillTreeUI : MonoBehaviour
     private SkillTree skillTree;
 
     [SerializeField] RectTransform skillTreeContent;
+    [SerializeField] RectTransform linesContainer;
+    [SerializeField] RectTransform nodesContainer;
     [SerializeField] GameObject nodePrefab;
+    [SerializeField] GameObject linePrefab;
 
     void Start()
     {
@@ -21,7 +24,7 @@ public class SkillTreeUI : MonoBehaviour
 
     void SpawnNode(Node node, Vector2 position)
     {
-        GameObject nodeObject = Instantiate(nodePrefab, skillTreeContent);
+        GameObject nodeObject = Instantiate(nodePrefab, nodesContainer);
         RectTransform nodeObjectRect = nodeObject.GetComponent<RectTransform>();
         nodeObjectRect.anchoredPosition = position;
         NodeUI nodeUI = nodeObject.GetComponent<NodeUI>();
@@ -33,22 +36,25 @@ public class SkillTreeUI : MonoBehaviour
         // Spell/Mod branch
         Node spell1 = skillTree.CreateNodeSpell();
         SpawnNode(spell1, new Vector2(0, -150));
+        SpawnLine(Vector2.zero, new Vector2(0, -150));
 
         // relic branch
         Node relic1 = skillTree.CreateNodeRelic();
         SpawnNode(relic1, new Vector2(-150, 100));
+        SpawnLine(Vector2.zero, new Vector2(-150, 100));
 
         // Stats branch
         Node stats1 = skillTree.CreateNodeStat();
         SpawnNode(stats1, new Vector2(150, 100));
+        SpawnLine(Vector2.zero, new Vector2(150, 100));
     }
 
     public void NodeClicked(Node node, Vector2 position)
     {
-        SpawnTwoChildern(node, position);
+        if (skillTree.canPurchased()) SpawnTwoChildren(node, position);
     }
 
-    void SpawnTwoChildern(Node node, Vector2 position)
+    void SpawnTwoChildren(Node node, Vector2 position)
     {
         Vector2 direction = position.normalized;
 
@@ -64,7 +70,10 @@ public class SkillTreeUI : MonoBehaviour
         Node child2 = CreateNodeFromBranch(node.branch);
 
         SpawnNode(child1, leftChildPosition);
+        SpawnLine(position, leftChildPosition);
+
         SpawnNode(child2, rightChildPosition);
+        SpawnLine(position, rightChildPosition);
     }
 
     Node CreateNodeFromBranch(string branch)
@@ -81,6 +90,23 @@ public class SkillTreeUI : MonoBehaviour
                 Debug.Log("YA BOI FAILED");
                 return null;
         }
+    }
+
+    void SpawnLine(Vector2 startPosition, Vector2 endPosition)
+    {
+        GameObject lineObject = Instantiate(linePrefab, linesContainer);
+
+        RectTransform lineRect = lineObject.GetComponent<RectTransform>();
+
+        Vector2 direction = endPosition - startPosition;
+        float distance = direction.magnitude;
+
+        lineRect.anchoredPosition = startPosition + direction / 2f;
+
+        lineRect.sizeDelta = new Vector2(distance, lineRect.sizeDelta.y);
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        lineRect.rotation = Quaternion.Euler(0, 0, angle);
     }
 
 }
