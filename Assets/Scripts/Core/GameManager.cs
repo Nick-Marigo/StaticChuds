@@ -16,6 +16,8 @@ public class GameManager
         RELICREWARD
     }
 
+    public string[] types { get; private set; } 
+
     public event Action<GameState> OnChangedState;
 
     private GameState _state;
@@ -75,6 +77,12 @@ public class GameManager
     private GameManager()
     {
         enemies = new List<GameObject>();
+        types = new string[4] { 
+            "damage",
+            "health",
+            "speed",
+            "mana"
+        };
     }
 
     public void ClearEnemies()

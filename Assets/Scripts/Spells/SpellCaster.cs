@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpellCaster {
+    private Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> _potentialSpellModsByType;
     public Hittable.Team team;
 
     private int _mana = -1;
@@ -49,6 +50,7 @@ public class SpellCaster {
         _attributePackage = attributePackage;
         MapKeysToSpells();
         spells.Add(SpellBuilder.BuildArcaneBolt(this));
+        _potentialSpellModsByType = new(SpellLoader.SpellModsByType);
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target) {        
@@ -69,6 +71,13 @@ public class SpellCaster {
             _eventWrapper.InvokeSpellCast();
         }
         yield break;
+    }
+
+    public Spell GetSpellModByType(string affinity, string weakness) {
+            Spell s = ObjectByTypeFetcher.FetchUnusedObject<Func<SpellCaster, Spell, Spell>>(_potentialSpellModsByType, affinity, weakness)(this, null);
+            if (s == null) return null;
+            _potentialSpellModsByType [s.type].Remove(s.name);
+            return s;
     }
 
     public Spell GetSelectedSpell() {

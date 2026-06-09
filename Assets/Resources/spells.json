@@ -42,36 +42,42 @@
    },
    "damage_amp": {
        "name": "damage-amplified",
+       "type": "damage",
        "description": "Increased damage and increased mana cost.",
        "damage_multiplier": "2",
        "mana_multiplier": "1.5"
    },
    "speed_amp": {
        "name": "speed-amplified",
+       "type": "speed",
        "description": "Faster projectile speed",
        "speed_multiplier": "1.75"
    },
    "doubler": {
        "name": "doubled",
+       "type": "mana",
        "description": "Spell is cast a second time after a small delay; increased mana cost and cooldown.",
        "delay": "0.5",
        "mana_multiplier": "1.5",
        "cooldown_multiplier": "1.5"
    },
    "splitter": {
-       "name": "split",
+       "name": "mana",
+       "type": "mana",
        "description": "Spell is cast twice in slightly different directions; increased mana cost.",
        "angle": "10",
        "mana_multiplier": "1.5"
    },
    "chaos": {
        "name": "chaotic",
+       "type": "damage",
        "description": "Significantly increased damage, but projectile is spiraling.",
        "damage_multiplier": "1.5 wave 5 / +",
        "projectile_trajectory": "spiraling"
    },
    "homing": {
        "name": "homing",
+       "type": "mana",
        "description": "Homing projectile, with decreased damage and increased mana cost.",
        "damage_multiplier": "0.75",
        "mana_adder": "10",
@@ -79,17 +85,20 @@
    },
    "gotYourBack": {
         "name": "Got Your Back",
+        "type": "mana",
         "description": "Shoot another projectile in the opposite direction; increase mana cost",
         "mana_multiplier": "1.5"
    },
    "riskyDamage": {
         "name": "Risky Damage",
+        "type": "damage",
         "description": "Damage varies each time a spell is casted",
         "damageMin_multiplier": "0.1",
         "damageMax_multiplier": "2.0"
    },
    "rapidfire": {
         "name": "Rapid Fire",
+        "type": "mana",
         "description": "Spells have low cooldown with increse mana cost",
         "cooldown_multiplier": "0.1",
         "mana_multiplier": "1.2"
@@ -97,6 +106,7 @@
    "recoil": {
 		"name": "Recoil",
 		"description": "Spells deal more damage but have knockback and a longer cooldown",
+        "type": "speed",
 		"cooldown_multiplier": "2.0",
 		"knockback_timer": "0.1",
 		"knockback_force": "400",
@@ -104,11 +114,13 @@
    },
    "cursed": {
 		"name": "Cursed",
+        "type": "damage",
 		"description": "Spells have a longer cooldown",
 		"cooldown_multiplier": "wave 1.05 *"
    },
    "blessed": {
 		"name": "Blessed",
+        "type": "damage",
 		"description": "Spells have a shorter cooldown and deal much more damage",
 		"cooldown_multiplier": "0.25",
 		"damage_multiplier": "5.0 wave *"
