@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -13,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject relicRewardScreen;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject waveStatsDisplay;
+    [SerializeField] GameObject skillTree;
 
     [Header("Universal Button")]
     [SerializeField] GameObject universalButton;
