@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
         GameManager.GameState gameState = GameManager.Instance.state;
         if (!(gameState == GameManager.GameState.INWAVE || gameState == GameManager.GameState.COUNTDOWN)) return;
         Vector2 mouseScreen = Mouse.current.position.value;
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
+        Vector3 mouseWorld = UnityEngine.Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
         StartCoroutine(_player.spellCaster.Cast(position, mouseWorld));
     }

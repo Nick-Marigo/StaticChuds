@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Camera;
 
 /* This class is responsible for generating the difficulty buttons and invoking the enemySpawner when a button is pressed.*/
 public class ClassesSelector : MonoBehaviour {
@@ -20,6 +21,7 @@ public class ClassesSelector : MonoBehaviour {
         playerController = FindFirstObjectByType<PlayerInstance>();
         classSelector = this.gameObject;
         GenerateButtons();
+        CameraController.Instance.UpdateCamera();
     }
 
     public void SelectClass(string selectedClass) 

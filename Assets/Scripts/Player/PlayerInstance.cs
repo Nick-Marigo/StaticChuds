@@ -48,7 +48,7 @@ public class PlayerInstance : MonoBehaviour
 
     void OnDisable() {
         EventBus.Instance.OnWaveStart -= ScaleStats;
-        spellCaster.Dispose();
+        spellCaster?.Dispose();
     }
 
     void ScaleStats(int wave) {
