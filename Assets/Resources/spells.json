@@ -63,7 +63,7 @@
    },
    "splitter": {
        "name": "mana",
-       "type": "multiplier",
+       "type": "mana",
        "description": "Spell is cast twice in slightly different directions; increased mana cost.",
        "angle": "10",
        "mana_multiplier": "1.5"
@@ -77,7 +77,7 @@
    },
    "homing": {
        "name": "homing",
-       "type": "none",
+       "type": "mana",
        "description": "Homing projectile, with decreased damage and increased mana cost.",
        "damage_multiplier": "0.75",
        "mana_adder": "10",
@@ -114,7 +114,7 @@
    },
    "cursed": {
 		"name": "Cursed",
-        "type": "none",
+        "type": "damage",
 		"description": "Spells have a longer cooldown",
 		"cooldown_multiplier": "wave 1.05 *"
    },

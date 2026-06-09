@@ -61,11 +61,6 @@ public class EntityAttributePackage : MonoBehaviour {
         AddAttribute("max_health", "health",
                 () => _playerInstance.hp.max_hp,
                 (value) => _playerInstance.hp.max_hp = (int)value);   
-
-            for (int i = 0; i < 5; i++) {
-                var attr = GetAttributeByType("mana", "damage"); 
-                Debug.Log(attr.type);
-            }
     }
 
     public AttributeGate GetAttributeByType(string affinity, string weakness) {

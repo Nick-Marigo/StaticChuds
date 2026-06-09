@@ -7,9 +7,11 @@ using Newtonsoft.Json;
 public abstract class Spell 
 {
     [JsonProperty]
-    protected string name;
+    public string name { get; private set; }
     [JsonProperty]
     protected string description;
+    [JsonProperty]
+    public string type { get; private set; }
 
     public float last_cast;
     public SpellCaster owner;

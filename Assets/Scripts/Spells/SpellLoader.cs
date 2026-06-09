@@ -1,5 +1,4 @@
 using UnityEngine;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System;
@@ -13,9 +12,16 @@ public class SpellLoader
     private static List<JProperty> spells;
     private static List<Func<SpellCaster, BaseSpell>> baseSpells;
     private static List<Func<SpellCaster, Spell, SpellModifier>> spellModifiers;
+    private static Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> _spellModsByType;
 
     /* These lists of lambdas are used to randomly
      * instantiate new spells and decorators from */
+    public static Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> SpellModsByType {
+        get {
+            if (spells == null) LoadSpells();
+            return _spellModsByType;
+        }
+    }
     public static List<Func<SpellCaster, BaseSpell>> BaseSpells { get
         {
             if (spells == null) LoadSpells();
@@ -35,6 +41,8 @@ public class SpellLoader
     private static void MapSpellsToClass() {
         foreach (JProperty spell in spells) {
             JObject config = (JObject) spell.Value;
+            string type = config["type"]?.ToString();
+            string name = config["name"]?.ToString();
             switch(spell.Name) {
                 case "arcane_bolt":
                     ArcaneBolt.config = config;
@@ -55,50 +63,62 @@ public class SpellLoader
                 case "damage_amp":
                     DamageAmplifier.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new DamageAmplifier(owner, innerSpell) );
                     break;
                 case "speed_amp":
                     SpeedAmplifier.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new SpeedAmplifier(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new SpeedAmplifier(owner, innerSpell) );
                     break;
                 case "doubler":
                     Doubler.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Doubler(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new Doubler(owner, innerSpell) );
                     break;
                 case "splitter":
                     Splitter.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Splitter(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new Splitter(owner, innerSpell) );
                     break;
                 case "chaos":
                     Chaos.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Chaos(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new Chaos(owner, innerSpell) );
                     break;
                 case "homing":
                     Homing.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Homing(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new Homing(owner, innerSpell) );
                     break;
                 case "gotYourBack":
                     GotYourBack.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new GotYourBack(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new GotYourBack(owner, innerSpell) );
                     break;
                 case "riskyDamage":
                     RiskyDamage.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new RiskyDamage(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new RiskyDamage(owner, innerSpell) );
                     break;
                 case "rapidfire":
                     RapidFire.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new RapidFire(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new RapidFire(owner, innerSpell) );
                     break;
                 case "recoil":
                     Recoil.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Recoil(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new Recoil(owner, innerSpell) );
                     break;
                 case "cursed":
-                     Cursed.config = config;
+                    Cursed.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Cursed(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new Cursed(owner, innerSpell) );
                     break;
                 case "blessed":
                     Blessed.config = config;
                     spellModifiers.Add( (owner, innerSpell) => new Blessed(owner, innerSpell) );
+                    _spellModsByType[type].Add(name, (owner, innerSpell) => new Blessed(owner, innerSpell) );
                     break;
             }
         }
@@ -107,6 +127,10 @@ public class SpellLoader
     private static void LoadSpells() {
         baseSpells = new();
         spellModifiers = new();
+        _spellModsByType = new();
+        foreach (string type in GameManager.Instance.types) {
+            _spellModsByType.Add(type, new());
+        }
         TextAsset spellJson = Resources.Load<TextAsset>("spells");
         if (spellJson == null)
         {
