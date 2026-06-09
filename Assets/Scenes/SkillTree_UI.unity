@@ -623,7 +623,7 @@ MonoBehaviour:
   linesContainer: {fileID: 1887185347}
   nodesContainer: {fileID: 52223227}
   nodePrefab: {fileID: 5413737090699814225, guid: 2b60e10252aca4ef0976b0a0d390513f, type: 3}
-  linePrefab: {fileID: 6772153650357514717, guid: f181bfded81e3f641b3126bfca051e85, type: 3}
+  linePrefab: {fileID: 2591268130144206379, guid: f181bfded81e3f641b3126bfca051e85, type: 3}
 --- !u!1 &1157492547
 GameObject:
   m_ObjectHideFlags: 0
