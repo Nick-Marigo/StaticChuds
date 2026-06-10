@@ -11,6 +11,8 @@ public class RelicInventory : iNodeSystem {
     private List<string> _potentialRelics;
     private Dictionary<string, Relic> _equippedRelics;
 
+    public event Action relicEquipped;
+
     public RelicInventory (EntityAttributePackage attributePackage) {
         _potentialRelics = new(RelicLoader.RelicNames);
         _potentialRelicsByType = new(RelicLoader.RelicsByType);
@@ -32,12 +34,15 @@ public class RelicInventory : iNodeSystem {
     }
 
     public void Equip(iNodeObject obj) {
-        Debug.Log(obj);
+       // Debug.Log(obj);
+        EquipRelic((Relic)obj);
+        relicEquipped?.Invoke();
     }
 
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
-            Relic r = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, affinity, weakness)();
-            if (r == null) return null;
+            var rLambda = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, affinity, weakness);
+            if (rLambda == null) return null;
+            var r = rLambda();
             _potentialRelicsByType[r.type].Remove(r.name);
             return r;
     }

@@ -86,9 +86,11 @@ public class SkillTreeUI : MonoBehaviour
         Vector2 rightChildPosition = position + direction * forwardDistance + sideways * sideDistance;
 
         Node child1 = CreateNodeFromBranch(node.branch);
+        if (child1 == null) return;
         SpawnConntectNode(child1, position, leftChildPosition);
 
         Node child2 = CreateNodeFromBranch(node.branch);
+        if (child2 == null) return;
         SpawnConntectNode(child2, position, rightChildPosition);
     }
 

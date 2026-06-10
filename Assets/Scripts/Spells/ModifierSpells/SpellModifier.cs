@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class SpellModifier : Spell {
+public abstract class SpellModifier : Spell, iNodeObject {
     protected Spell innerSpell;
     override public DamageInfo damage { get { return innerSpell.damage; } }
     override public Hittable.Team team { get { return innerSpell.team; } }
     override public Projectile projectile { get { return innerSpell.projectile; } }
-    override public int icon { get { return innerSpell.icon; }}
+    override public int icon { get { return 1; }} // TODO add icons to spell mods
 
     public override string GetDisplayName()
     {
@@ -56,9 +56,10 @@ public abstract class SpellModifier : Spell {
         innerSpell.SetStatsSource(source);
     }
 
-    public void SetOwner(Spell innerSpell) {
+    public Spell WrapOver(Spell innerSpell) {
         this.innerSpell = innerSpell;
         SetStatsSource(this);
+        return this;
     }
 
     public SpellModifier(SpellCaster owner, Spell innerSpell) : base(owner) {

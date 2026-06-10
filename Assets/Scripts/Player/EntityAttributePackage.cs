@@ -8,7 +8,9 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
     public class AttributeGate : iNodeObject {
 
         public string type { get; private set; }
-        public string name { get; set; }
+        public string name { get; private set; }
+        public string description { get; private set; }
+        public int icon { get; private set; }
         public Func<object> Get;
         public Action<object> Set;
 

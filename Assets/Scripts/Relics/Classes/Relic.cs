@@ -7,8 +7,8 @@ using System;
 public class Relic : iRequestAttributePackage, iNodeObject {
     [JsonProperty]
     public string name { get; protected set; }
-    [JsonProperty]
-    public int sprite { get; protected set; }
+    [JsonProperty("sprite")]
+    public int icon { get; protected set; }
     [JsonProperty]
     public string type { get; protected set; }
     [JsonProperty("trigger")]
@@ -18,6 +18,10 @@ public class Relic : iRequestAttributePackage, iNodeObject {
 
     public Trigger trigger;
     public Effect effect;
+
+    public string description {
+        get => String.Concat(effect.description, trigger.description);
+    }
 
     // This event is invoked to get a Dictionary of
     // attributes from the relic holder
