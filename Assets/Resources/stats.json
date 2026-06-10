@@ -1,0 +1,32 @@
+{
+    "health": {
+        "sprite": 0,
+        "type": "health",
+        "display_name": "Health",
+        "description": "Increase max health by {amount} per wave."
+    },
+    "mana": {
+        "sprite": 0,
+        "type": "mana",
+        "display_name": "Mana",
+        "description": "Increase max mana by {amount} per wave."
+    },
+    "mana_regeneration": {
+        "sprite": 0,
+        "type": "mana",
+        "display_name": "Mana Regeneration",
+        "description": "Increase mana regeneration by {amount} per wave."
+    },
+    "spellpower": {
+        "sprite": 0,
+        "type": "damage",
+        "display_name": "Spell Power",
+        "description": "Increase spell power by {amount} per wave."
+    },
+    "speed": {
+        "sprite": 0,
+        "type": "speed",
+        "display_name": "Speed",
+        "description": "Increase movement speed by {amount} per wave."
+    }
+}
