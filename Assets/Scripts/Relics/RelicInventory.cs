@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class RelicInventory : iNodeObject {
+public class RelicInventory : iNodeSystem {
 
     private EntityAttributePackage _attributePackage;
 
@@ -22,6 +22,7 @@ public class RelicInventory : iNodeObject {
         //Relic rel = RelicLoader.Relics["Cursed Scroll"]();
 
         // Equip all relics
+        /*
         foreach (var rel in RelicLoader.RelicNames) {
             //Relic r = FetchUnusedRelicByType("mana", "speed");
             Relic r = GetRelicByType("health", "damage");
@@ -29,13 +30,14 @@ public class RelicInventory : iNodeObject {
             //var r = rel.Value();
             EquipRelic(r);
         }
+        */
     }
 
-    public void Equip() {
-        Debug.Log("equipped new relic");
+    public void Equip(iNodeObject obj) {
+        Debug.Log(obj);
     }
 
-    public Relic GetRelicByType(string affinity, string weakness) {
+    public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
             Relic r = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, affinity, weakness)();
             if (r == null) return null;
             _potentialRelicsByType[r.type].Remove(r.name);

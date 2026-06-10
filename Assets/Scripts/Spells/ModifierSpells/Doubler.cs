@@ -20,6 +20,7 @@ public class Doubler : SpellModifier {
                 Debug.Log("This spell's config has not been set");
                 return;
             }
+        Debug.Log(config);
             JsonSerializer serializer = new JsonSerializer();
             serializer.Populate(config.CreateReader(), this);
     }
@@ -53,6 +54,7 @@ public class Doubler : SpellModifier {
 
     public Doubler(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();
+        Debug.Log($"name: {name}, type: {type}");
         _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 }

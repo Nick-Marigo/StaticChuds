@@ -2,10 +2,10 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class EntityAttributePackage : MonoBehaviour, iNodeObject {
+public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
 
     private Dictionary <string, Dictionary<string, AttributeGate>> _attributesByType;
-    public class AttributeGate {
+    public class AttributeGate : iNodeObject {
 
         public string type { get; private set; }
         public string name { get; private set; }
@@ -31,8 +31,8 @@ public class EntityAttributePackage : MonoBehaviour, iNodeObject {
     SpellCaster _spellCaster;
     PlayerEventWrapper _eventWrapper;
 
-    public void Equip() {
-        Debug.Log("equipped new stat buff");
+    public void Equip(iNodeObject obj) {
+        Debug.Log(obj);
     }
 
     void _LoadAttributes() {
@@ -67,7 +67,7 @@ public class EntityAttributePackage : MonoBehaviour, iNodeObject {
                 (value) => _playerInstance.hp.max_hp = (int)value);   
     }
 
-    public AttributeGate GetAttributeByType(string affinity, string weakness) {
+    public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
         var attribute = ObjectByTypeFetcher.FetchUnusedObject<AttributeGate>(_attributesByType, affinity, weakness);
         if (attribute == null) return null;
         _attributesByType[attribute.type].Remove(attribute.name);

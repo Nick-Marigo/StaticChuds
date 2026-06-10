@@ -8,10 +8,15 @@ public class Node
     public bool isPurchased = false;
     public int icon;
 
-    private iNodeObject _system;
+    private iNodeSystem _system;
+    private iNodeObject _obj;
 
-    public Node(string name, string description, int icon, string branch, iNodeObject system) {
+    public Node(string name, string description, int icon, string branch, iNodeSystem system) {
         _system = system;
+        if (system != null) { 
+            _obj = system.GetNodeObjectByType("mana", "damage");
+            Debug.Log($"got {_obj}");
+        }
         this.name = name;
         this.description = description;
         this.icon = icon;
@@ -20,6 +25,6 @@ public class Node
 
     public void Purchase() {
         isPurchased = true;
-        _system.Equip();
+        _system.Equip(_obj);
     }
 }
