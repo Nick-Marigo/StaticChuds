@@ -38,11 +38,13 @@ public class SpellCaster : iNodeSystem {
     public event Action<int> manaChanged;
     public event Action<int> spellSelected;
     public event Action<bool> spellUpgradeInitiated;
+    public event Action spellUpgraded;
 
     private SpellModifier _selectedModifier;
 
     public void Equip (iNodeObject obj) {
         Debug.Log(obj);
+        _selectedModifier = (SpellModifier)obj;
         spellUpgradeInitiated?.Invoke(true);
     }
 
@@ -113,6 +115,8 @@ public class SpellCaster : iNodeSystem {
     public void ModSpellAt(int index) {
         var spell = spells[index];
         spell = _selectedModifier.WrapOver(spell);
+        spells[index] = spell;
+        spellUpgraded?.Invoke();
     }
 
     public void RemoveSpellAt(int index) {

@@ -9,6 +9,7 @@ public class SpellUIContainer : MonoBehaviour
             _spellCaster = value;
             _spellCaster.spellSelected += UpdateSelectedHighlight;
             _spellCaster.spellUpgradeInitiated += ShowUpgradeOverlays;
+            _spellCaster.spellUpgraded += RefreshSpells;
         }
     }
 
@@ -78,5 +79,6 @@ public class SpellUIContainer : MonoBehaviour
         if (_spellCaster == null) return;
         _spellCaster.spellSelected -= UpdateSelectedHighlight;
         _spellCaster.spellUpgradeInitiated -= ShowUpgradeOverlays;
+        _spellCaster.spellUpgraded -= RefreshSpells;
     }
 }
