@@ -53,7 +53,11 @@ public class SpellCaster : iNodeSystem {
         this.team = team;
         _attributePackage = attributePackage;
         MapKeysToSpells();
-        spells.Add(SpellBuilder.BuildArcaneBolt(this));
+        // Add all base spells
+        foreach (var spellLambda in SpellLoader.BaseSpells) {
+            spells.Add(spellLambda(this));
+        }
+        // spells.Add(SpellBuilder.BuildArcaneBolt(this));
         _potentialSpellModsByType = new(SpellLoader.SpellModsByType);
     }
 
