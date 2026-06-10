@@ -80,7 +80,6 @@ public class SpellCaster : iNodeSystem {
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
             Spell s = ObjectByTypeFetcher.FetchUnusedObject<Func<SpellCaster, Spell, Spell>>(_potentialSpellModsByType, affinity, weakness)(this, null);
             if (s == null) return null;
-            Debug.Log($"{s}: type: {s.type}, name {s.name}");
             _potentialSpellModsByType[s.type].Remove(s.name);
             return s;
     }

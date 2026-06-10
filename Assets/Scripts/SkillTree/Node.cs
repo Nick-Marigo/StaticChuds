@@ -13,14 +13,14 @@ public class Node
 
     public Node(string name, string description, int icon, string branch, iNodeSystem system) {
         _system = system;
-        if (system != null) { 
-            _obj = system.GetNodeObjectByType("mana", "damage");
-            Debug.Log($"got {_obj}");
-        }
         this.name = name;
         this.description = description;
         this.icon = icon;
         this.branch = branch;
+
+        if (system == null) return;
+            _obj = system.GetNodeObjectByType("mana", "damage");
+            this.name = _obj.name;
     }
 
     public void Purchase() {
