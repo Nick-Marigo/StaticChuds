@@ -1,8 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class UIManager : MonoBehaviour
-{
+public class UIManager : MonoBehaviour {
 
     [Header("UI Screens")]
     [SerializeField] GameObject background;
