@@ -30,8 +30,11 @@ namespace UI {
         }
 
         public void SetCameraZoom(float zoom) {
-            Debug.Log($"SetCameraZoom: {zoom}");
             CameraController.Instance.size = zoom;
+        }
+
+        public void SetDisplayDamageNumbers(bool doShow) {
+            DamageNumbers.displayNumbers = doShow;
         }
     }
 }

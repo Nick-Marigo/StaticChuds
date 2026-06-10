@@ -21,16 +21,14 @@ public class RelicInventory : iNodeSystem {
         // Quick equip for testing
         //Relic rel = RelicLoader.Relics["Cursed Scroll"]();
 
-        // Equip all relics
-        /*
-        foreach (var rel in RelicLoader.RelicNames) {
-            //Relic r = FetchUnusedRelicByType("mana", "speed");
-            Relic r = GetRelicByType("health", "damage");
-            Debug.Log($"fetched {r.name} || {r.type}");
-            //var r = rel.Value();
-            EquipRelic(r);
-        }
-        */
+        // Equip all relics FIXME does not update GUI
+        // foreach (var rel in RelicLoader.RelicNames) {
+        //     //Relic r = FetchUnusedRelicByType("mana", "speed");
+        //     Relic r = GetRelicByType("health", "damage");
+        //     Debug.Log($"fetched {r.name} || {r.type}");
+        //     //var r = rel.Value();
+        //     EquipRelic(r);
+        // }
     }
 
     public void Equip(iNodeObject obj) {

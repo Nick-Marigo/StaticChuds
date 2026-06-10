@@ -54,6 +54,7 @@ public class GameManager
     public EnemySpriteManager enemySpriteManager;
     public PlayerSpriteManager playerSpriteManager;
     public RelicIconManager relicIconManager;
+    public StatsIconManager statsIconManager;
     public WaveStats waveStats;
 
     private List<GameObject> enemies;
