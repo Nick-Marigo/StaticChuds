@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum AudioIdentifier {
+	MUSIC_MAIN,
 	SOUND_HURT,
 	SOUND_CAST,
 };
@@ -23,8 +24,15 @@ public class AudioManager : MonoBehaviour {
 
 			EventBus.Instance.OnPlaySound += PlaySound;
 
+			_lookup[ AudioIdentifier.MUSIC_MAIN ] = Resources.Load<AudioClip>("Audio/dungeon");
 			_lookup[ AudioIdentifier.SOUND_HURT ] = Resources.Load<AudioClip>("Audio/hurt");
 			_lookup[ AudioIdentifier.SOUND_CAST ] = Resources.Load<AudioClip>("Audio/cast");
+
+			_sources[0] = Instantiate<AudioSource>(_sourcePrefab, transform);
+			_sources[0].clip = _lookup[AudioIdentifier.MUSIC_MAIN];
+			_sources[0].loop = true;
+
+			_sources[0].Play();
 
 			return;
 		}
