@@ -25,6 +25,11 @@ public class Node
         this.name = obj.name;
         this.description = obj.description;
         this.icon = obj.icon;
+
+        if (obj is SpellModifier modifier)
+        {
+            this.icon = modifier.GetNodeIcon();
+        }
     }
 
     public void Purchase() {
