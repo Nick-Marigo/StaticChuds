@@ -19,8 +19,9 @@ public class Node
         this.branch = branch;
 
         if (system == null) return;
-            _obj = system.GetNodeObjectByType("mana", "damage");
-            this.name = _obj.name;
+        _obj = system.GetNodeObjectByType("mana", "damage");
+        if (_obj == null) return;
+        this.name = _obj.name;
     }
 
     public void Purchase() {
