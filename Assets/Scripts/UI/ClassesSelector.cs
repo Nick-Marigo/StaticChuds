@@ -38,22 +38,6 @@ public class ClassesSelector : MonoBehaviour {
         difficultySelector.SetActive(true);
     }
 
-    /*
-    void GenerateButtons() 
-    {
-        int buttonYOffset = 50;
-        int startY = 50;
-        for (int i = 0; i < classes.Count; i++) 
-        {
-            float xPos = -50;
-            float yPos = startY -buttonYOffset*i;
-            GameObject newButton = Instantiate(button, classSelector.transform);
-            newButton.transform.localPosition = new Vector3(xPos, yPos);
-            newButton.GetComponent<ButtonController>().SetClass(classes.ElementAt(i).Key);
-        }
-    }
-    */
-
     void GenerateButtons() {
         float yScale = 1f / classes.Count;
         for (int i = 0; i < classes.Count; i++) {
