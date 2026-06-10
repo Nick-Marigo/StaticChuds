@@ -9,6 +9,8 @@ public class Relic : iRequestAttributePackage {
     public string name { get; protected set; }
     [JsonProperty]
     public int sprite { get; protected set; }
+    [JsonProperty]
+    public string type { get; protected set; }
     [JsonProperty("trigger")]
     TriggerGenerator triggerGen;
     [JsonProperty("effect")]
@@ -30,7 +32,7 @@ public class Relic : iRequestAttributePackage {
     }
 
     public void Activate() {
-        Debug.Log("activating " + name);
+        //Debug.Log("activating " + name);
         trigger.Activate();
         effect.Activate();
     }
@@ -44,7 +46,7 @@ public class Relic : iRequestAttributePackage {
      * using the generator classes */
     [OnDeserialized]
     void OnDeserialization(StreamingContext context) {
-        Debug.Log($"creating relic: {name}");
+        //Debug.Log($"creating relic: {name}");
 
         trigger = triggerGen.GenerateTrigger();
         if (trigger == null) {
