@@ -17,12 +17,6 @@ public class GameManager
         SKILLTREE
     }
 
-    public enum NodeType {
-        RELIC,
-        SPELLMOD,
-        STAT
-    }
-
     public string[] types { get; private set; } 
 
     public event Action<GameState> OnChangedState;

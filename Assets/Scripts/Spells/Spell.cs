@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 public abstract class Spell : iNodeObject
 {
     [JsonProperty]
-    public string name { get; private set; }
+    public string name;
     [JsonProperty]
     protected string description;
     [JsonProperty]
-    public string type { get; private set; }
+    public string type; 
 
     public float last_cast;
     public SpellCaster owner;

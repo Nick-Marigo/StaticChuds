@@ -68,6 +68,7 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
     }
 
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
+        _LoadAttributes();
         var attribute = ObjectByTypeFetcher.FetchUnusedObject<AttributeGate>(_attributesByType, affinity, weakness);
         if (attribute == null) return null;
         _attributesByType[attribute.type].Remove(attribute.name);

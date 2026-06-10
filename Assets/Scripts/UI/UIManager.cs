@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
@@ -30,6 +31,12 @@ public class UIManager : MonoBehaviour {
         UpdateUIState(GameManager.Instance.state);
     }
 
+    // TO REMOVE
+    private void Update() {
+        if (Keyboard.current.lKey.wasPressedThisFrame) {
+            UpdateUIState(GameManager.GameState.WAVEEND);
+        }
+    }
     void OnDestroy()
     {
         if (GameManager.Instance != null)
