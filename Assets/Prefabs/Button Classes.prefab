@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 1355771761905592642}
   - component: {fileID: 1949700200616903927}
   - component: {fileID: 5628950486595927222}
+  - component: {fileID: -6752337254764899786}
   m_Layer: 5
   m_Name: Button Classes
   m_TagString: Untagged
@@ -284,3 +285,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 3711922461900209974}
+--- !u!114 &-6752337254764899786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6791571272867747119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b98556a192b54d60b691d1186f868ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonScaler
+  canvas: {fileID: 0}
+  xOffset: 0.1
+  yOffset: 0.1
+  xScale: 0.5
+  yScale: 0.5
