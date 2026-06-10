@@ -3,6 +3,7 @@ using UnityEngine;
 public class SpellUIContainer : MonoBehaviour
 {
     [SerializeField] private GameObject spellContainer; 
+    [SerializeField] private GameObject skillTreeOverlay; // activate to stop selection in skilltree while upgading
 
     private readonly int upgradeTranslateMag = 462; 
     private bool _spellContaineroffset = false;
@@ -34,6 +35,7 @@ public class SpellUIContainer : MonoBehaviour
             }
             if (_spellContaineroffset) {
                 spellContainer.transform.Translate(new Vector3 (0, -upgradeTranslateMag, 0));
+                skillTreeOverlay.SetActive(false);
                 _spellContaineroffset = false;
             }
         }
@@ -62,6 +64,7 @@ public class SpellUIContainer : MonoBehaviour
         }
 
         spellContainer.transform.Translate(new Vector3 (0, upgradeTranslateMag, 0));
+        skillTreeOverlay.SetActive(true);
         _spellContaineroffset = true;
     }
 
