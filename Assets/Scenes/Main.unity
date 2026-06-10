@@ -5166,6 +5166,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkillTreePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2512163281928954884, guid: f6f3e87121f954871960bf7fe7119fea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2936069844613173413, guid: f6f3e87121f954871960bf7fe7119fea, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7838,6 +7842,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610884460}
   m_CullTransparentMesh: 1
+--- !u!1 &1650609661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2512163281928954884, guid: f6f3e87121f954871960bf7fe7119fea, type: 3}
+  m_PrefabInstance: {fileID: 1052065211}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1650609662 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2936069844613173413, guid: f6f3e87121f954871960bf7fe7119fea, type: 3}
@@ -60069,6 +60078,7 @@ MonoBehaviour:
   relicRewardScreen: {fileID: 1214303592}
   gameOverScreen: {fileID: 1862859393}
   waveStatsDisplay: {fileID: 338341326}
+  skillTree: {fileID: 1650609661}
   universalButton: {fileID: 522728411}
   buttonText: {fileID: 454447945}
   waveSpawner: {fileID: 302007991}
