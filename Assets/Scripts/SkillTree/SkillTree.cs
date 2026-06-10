@@ -19,7 +19,7 @@ public class SkillTree
 
     public Node CreateRoot()
     {
-        Node newNode = new Node("Root", "Root", 0, "Root", null);
+        Node newNode = new Node("Root", null);
         return newNode;
     }
 
@@ -27,7 +27,7 @@ public class SkillTree
     public Node CreateNodeSpell()
     {
         spellbranchCount++;
-        Node newNode = new Node("Spell " + spellbranchCount, "Spell " + spellbranchCount, 0, "Spells", _owner.spellCaster);
+        Node newNode = new Node("Spells", _owner.spellCaster);
         return newNode;
     }
 
@@ -35,7 +35,7 @@ public class SkillTree
     public Node CreateNodeRelic()
     {
         relicbranchCount++;
-        Node newNode = new Node("Relic " + relicbranchCount, "Relic " + relicbranchCount, 0, "Relics", _owner.relicInventory);
+        Node newNode = new Node("Relics", _owner.relicInventory);
         return newNode;
     }
 
@@ -43,7 +43,7 @@ public class SkillTree
     public Node CreateNodeStat()
     {
         statsbranchCount++;
-        Node newNode = new Node("Stats " + statsbranchCount, "Stats " + statsbranchCount, 0, "Stats", _owner.AttributePackage);
+        Node newNode = new Node("Stats", _owner.AttributePackage);
         return newNode;
     }
     

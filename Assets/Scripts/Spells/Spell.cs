@@ -8,8 +8,8 @@ public abstract class Spell : iNodeObject
 {
     [JsonProperty("name")]
     protected string _name;
-    [JsonProperty]
-    protected string description;
+    [JsonProperty("description")]
+    protected string _description;
     [JsonProperty("type")]
     protected string _type; 
 
@@ -17,6 +17,12 @@ public abstract class Spell : iNodeObject
     public string name { 
         get => _name; 
         protected set => _name = value; 
+    }
+
+    [JsonIgnore]
+    public string description { 
+        get => _description; 
+        protected set => _description = value; 
     }
 
     [JsonIgnore]

@@ -6,7 +6,7 @@ public abstract class SpellModifier : Spell {
     override public DamageInfo damage { get { return innerSpell.damage; } }
     override public Hittable.Team team { get { return innerSpell.team; } }
     override public Projectile projectile { get { return innerSpell.projectile; } }
-    override public int icon { get { return innerSpell.icon; }}
+    override public int icon { get { return 1; }} // TODO add icons to spell mods
 
     public override string GetDisplayName()
     {

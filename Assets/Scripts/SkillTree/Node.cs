@@ -11,17 +11,19 @@ public class Node
     private iNodeSystem _system;
     private iNodeObject _obj;
 
-    public Node(string name, string description, int icon, string branch, iNodeSystem system) {
-        _system = system;
-        this.name = name;
-        this.description = description;
-        this.icon = icon;
+    public Node(string branch, iNodeSystem system) {
         this.branch = branch;
+        if (system == null) {
+            this.icon = 0; // Set root icon
+            return;
+        }
 
-        if (system == null) return;
+        _system = system;
         _obj = system.GetNodeObjectByType("mana", "damage");
         if (_obj == null) return;
         this.name = _obj.name;
+        this.description = _obj.description;
+        this.icon = _obj.icon;
     }
 
     public void Purchase() {
