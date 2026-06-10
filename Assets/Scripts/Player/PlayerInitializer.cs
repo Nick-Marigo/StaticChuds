@@ -17,6 +17,7 @@ public class PlayerInitializer {
     public PlayerInitializer SetSpellCaster() {
         _player.spellCaster = new SpellCaster(_player.AttributePackage, Hittable.Team.PLAYER);
         _player.relicInventory = new RelicInventory(_player.AttributePackage);
+        _player.relicInventory.relicEquipped += _player.relicUIManager.RefreshRelicUI;
         _player.StartCoroutine(_player.spellCaster.ManaRegeneration());
         return this;
     }

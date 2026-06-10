@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpellCaster : iNodeSystem {
-    private Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> _potentialSpellModsByType;
+    private Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, SpellModifier>>> _potentialSpellModsByType;
     public Hittable.Team team;
 
     private int _mana = -1;
@@ -35,11 +35,19 @@ public class SpellCaster : iNodeSystem {
     public EntityAttributePackage _attributePackage;
     private PlayerEventWrapper _eventWrapper;
 
+	private AudioEmitter _audioEmitter = new();
+
     public event Action<int> manaChanged;
     public event Action<int> spellSelected;
+    public event Action<bool> spellUpgradeInitiated;
+    public event Action spellUpgraded;
+
+    private SpellModifier _selectedModifier;
 
     public void Equip (iNodeObject obj) {
         Debug.Log(obj);
+        _selectedModifier = (SpellModifier)obj;
+        spellUpgradeInitiated?.Invoke(true);
     }
 
     public IEnumerator ManaRegeneration() {
@@ -53,7 +61,11 @@ public class SpellCaster : iNodeSystem {
         this.team = team;
         _attributePackage = attributePackage;
         MapKeysToSpells();
-        spells.Add(SpellBuilder.BuildArcaneBolt(this));
+        // Add all base spells
+        foreach (var spellLambda in SpellLoader.BaseSpells) {
+            spells.Add(spellLambda(this));
+        }
+        // spells.Add(SpellBuilder.BuildArcaneBolt(this));
         _potentialSpellModsByType = new(SpellLoader.SpellModsByType);
     }
 
@@ -73,13 +85,17 @@ public class SpellCaster : iNodeSystem {
             selectedSpell.last_cast = Time.time;
             yield return selectedSpell.Cast(where, target, team);
             _eventWrapper.InvokeSpellCast();
+
+			_audioEmitter.EmitSound(AudioIdentifier.SOUND_CAST);
+
         }
         yield break;
     }
 
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
-            Spell s = ObjectByTypeFetcher.FetchUnusedObject<Func<SpellCaster, Spell, Spell>>(_potentialSpellModsByType, affinity, weakness)(this, null);
-            if (s == null) return null;
+            var spellLambda = ObjectByTypeFetcher.FetchUnusedObject<Func<SpellCaster, Spell, SpellModifier>>(_potentialSpellModsByType, affinity, weakness);
+            if (spellLambda == null) return null;
+            var s = spellLambda(this, null);
             _potentialSpellModsByType[s.type].Remove(s.name);
             return s;
     }
@@ -99,6 +115,13 @@ public class SpellCaster : iNodeSystem {
         if (spells.Count >= MAXSPELLS) return false;
         spells.Add(newSpell);
         return true;
+    }
+
+    public void ModSpellAt(int index) {
+        var spell = spells[index];
+        spell = _selectedModifier.WrapOver(spell);
+        spells[index] = spell;
+        spellUpgraded?.Invoke();
     }
 
     public void RemoveSpellAt(int index) {

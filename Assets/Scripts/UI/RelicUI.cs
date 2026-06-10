@@ -22,7 +22,7 @@ public class RelicUI : MonoBehaviour
     public void SetRelicDisplay(Relic relic)
     {
         this.relic = relic;
-        GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
+        GameManager.Instance.relicIconManager.PlaceSprite(relic.icon, icon);
         // Subscribe to highlight highlight events
         _highlightOnAdapter = (float delay) => StartCoroutine(EnableHighlight(delay));
         _highlightOffAdapter = () => DisableHighlight();
@@ -66,7 +66,7 @@ public class RelicUI : MonoBehaviour
 
         description.text = relic.trigger.description;
         description.text = description.text + " " + relic.effect.description;
-        GameManager.Instance.relicIconManager.PlaceSprite(relic.sprite, icon);
+        GameManager.Instance.relicIconManager.PlaceSprite(relic.icon, icon);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

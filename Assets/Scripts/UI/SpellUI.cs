@@ -13,12 +13,21 @@ public class SpellUI : MonoBehaviour
     float last_text_update;
     const float UPDATE_DELAY = 1;
     public GameObject dropbutton;
+    public GameObject upgradeOverlay;
 
     public void ShowDropButton(bool show)
     {
         if(dropbutton != null)
         {
             dropbutton.SetActive(show);
+        }
+    }
+
+    public void ShowUpgradeOverlay(bool show)
+    {
+        if(upgradeOverlay != null)
+        {
+            upgradeOverlay.SetActive(show);
         }
     }
 

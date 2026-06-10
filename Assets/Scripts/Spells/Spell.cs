@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
-public abstract class Spell : iNodeObject
+public abstract class Spell 
 {
     [JsonProperty("name")]
     protected string _name;
-    [JsonProperty]
-    protected string description;
+    [JsonProperty("description")]
+    protected string _description;
     [JsonProperty("type")]
     protected string _type; 
 
@@ -17,6 +17,12 @@ public abstract class Spell : iNodeObject
     public string name { 
         get => _name; 
         protected set => _name = value; 
+    }
+
+    [JsonIgnore]
+    public string description { 
+        get => _description; 
+        protected set => _description = value; 
     }
 
     [JsonIgnore]
