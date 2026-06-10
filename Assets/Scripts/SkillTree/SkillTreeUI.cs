@@ -18,6 +18,7 @@ public class SkillTreeUI : MonoBehaviour
         Node root = skillTree.CreateRoot();
         root.isPurchased = true;
         NodeUI rootUI = SpawnNode(root, new Vector2(0, 0));
+        rootUI.SetRootNull();
         rootUI.SetPurchasedColor();
 
         // Create first branch nodes
