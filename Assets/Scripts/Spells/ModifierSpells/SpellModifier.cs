@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Newtonsoft.Json;
 
 public abstract class SpellModifier : Spell {
     protected Spell innerSpell;
@@ -7,6 +8,14 @@ public abstract class SpellModifier : Spell {
     override public Hittable.Team team { get { return innerSpell.team; } }
     override public Projectile projectile { get { return innerSpell.projectile; } }
     override public int icon { get { return innerSpell.icon; }}
+
+    [JsonProperty("icon")]
+    protected int nodeIcon;
+
+    public int GetNodeIcon()
+    {
+        return nodeIcon;
+    }
 
     public override string GetDisplayName()
     {
