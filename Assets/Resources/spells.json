@@ -43,6 +43,7 @@
    "damage_amp": {
        "name": "damage-amplified",
        "type": "damage",
+       "icon": 5,
        "description": "Increased damage and increased mana cost.",
        "damage_multiplier": "2",
        "mana_multiplier": "1.5"
@@ -50,12 +51,14 @@
    "speed_amp": {
        "name": "speed-amplified",
        "type": "speed",
+       "icon": 6,
        "description": "Faster projectile speed",
        "speed_multiplier": "1.75"
    },
    "doubler": {
        "name": "doubled",
        "type": "mana",
+       "icon": 7,
        "description": "Spell is cast a second time after a small delay; increased mana cost and cooldown.",
        "delay": "0.5",
        "mana_multiplier": "1.5",
@@ -64,6 +67,7 @@
    "splitter": {
        "name": "split",
        "type": "mana",
+       "icon": 8,
        "description": "Spell is cast twice in slightly different directions; increased mana cost.",
        "angle": "10",
        "mana_multiplier": "1.5"
@@ -71,6 +75,7 @@
    "chaos": {
        "name": "chaotic",
        "type": "damage",
+       "icon": 9,
        "description": "Significantly increased damage, but projectile is spiraling.",
        "damage_multiplier": "1.5 wave 5 / +",
        "projectile_trajectory": "spiraling"
@@ -78,6 +83,7 @@
    "homing": {
        "name": "homing",
        "type": "mana",
+       "icon": 10,
        "description": "Homing projectile, with decreased damage and increased mana cost.",
        "damage_multiplier": "0.75",
        "mana_adder": "10",
@@ -86,12 +92,14 @@
    "gotYourBack": {
         "name": "Got Your Back",
         "type": "mana",
+        "icon": 11,
         "description": "Shoot another projectile in the opposite direction; increase mana cost",
         "mana_multiplier": "1.5"
    },
    "riskyDamage": {
         "name": "Risky Damage",
         "type": "damage",
+        "icon": 12,
         "description": "Damage varies each time a spell is casted",
         "damageMin_multiplier": "0.1",
         "damageMax_multiplier": "2.0"
@@ -99,6 +107,7 @@
    "rapidfire": {
         "name": "Rapid Fire",
         "type": "mana",
+        "icon": 13,
         "description": "Spells have low cooldown with increse mana cost",
         "cooldown_multiplier": "0.1",
         "mana_multiplier": "1.2"
@@ -107,6 +116,7 @@
 		"name": "Recoil",
 		"description": "Spells deal more damage but have knockback and a longer cooldown",
         "type": "speed",
+        "icon": 14,
 		"cooldown_multiplier": "2.0",
 		"knockback_timer": "0.1",
 		"knockback_force": "400",
@@ -115,12 +125,14 @@
    "cursed": {
 		"name": "Cursed",
         "type": "damage",
+        "icon": 15,
 		"description": "Spells have a longer cooldown",
 		"cooldown_multiplier": "wave 1.05 *"
    },
    "blessed": {
 		"name": "Blessed",
         "type": "damage",
+        "icon": 16,
 		"description": "Spells have a shorter cooldown and deal much more damage",
 		"cooldown_multiplier": "0.25",
 		"damage_multiplier": "5.0 wave *"

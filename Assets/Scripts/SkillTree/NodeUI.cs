@@ -39,10 +39,9 @@ public class NodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
             case "Relics":
                 GameManager.Instance.relicIconManager.PlaceSprite(node.icon, nodeImage);
                 break;
-            // TOADD
-            /*case "Stats":
+            case "Stats":
                 GameManager.Instance.statsIconManager.PlaceSprite(node.icon, nodeImage);
-                break;*/ 
+                break;
             default:
                 Debug.Log("Branch not found for image");
                 break;
