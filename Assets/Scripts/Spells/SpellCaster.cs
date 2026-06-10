@@ -37,9 +37,13 @@ public class SpellCaster : iNodeSystem {
 
     public event Action<int> manaChanged;
     public event Action<int> spellSelected;
+    public event Action<bool> spellUpgradeInitiated;
+
+    private SpellModifier _selectedModifier;
 
     public void Equip (iNodeObject obj) {
         Debug.Log(obj);
+        spellUpgradeInitiated?.Invoke(true);
     }
 
     public IEnumerator ManaRegeneration() {
@@ -104,6 +108,11 @@ public class SpellCaster : iNodeSystem {
         if (spells.Count >= MAXSPELLS) return false;
         spells.Add(newSpell);
         return true;
+    }
+
+    public void ModSpellAt(int index) {
+        var spell = spells[index];
+        spell = _selectedModifier.WrapOver(spell);
     }
 
     public void RemoveSpellAt(int index) {

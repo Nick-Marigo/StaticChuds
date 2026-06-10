@@ -56,9 +56,10 @@ public abstract class SpellModifier : Spell, iNodeObject {
         innerSpell.SetStatsSource(source);
     }
 
-    public void SetOwner(Spell innerSpell) {
+    public Spell WrapOver(Spell innerSpell) {
         this.innerSpell = innerSpell;
         SetStatsSource(this);
+        return this;
     }
 
     public SpellModifier(SpellCaster owner, Spell innerSpell) : base(owner) {

@@ -8,6 +8,7 @@ public class SpellUIContainer : MonoBehaviour
         set { 
             _spellCaster = value;
             _spellCaster.spellSelected += UpdateSelectedHighlight;
+            _spellCaster.spellUpgradeInitiated += ShowUpgradeOverlays;
         }
     }
 
@@ -24,6 +25,7 @@ public class SpellUIContainer : MonoBehaviour
                 SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
                 spellUI.SetSpell(spells[i]);
                 spellUI.ShowDropButton(false);
+                spellUI.ShowUpgradeOverlay(false);
             }
         }
 
@@ -35,6 +37,19 @@ public class SpellUIContainer : MonoBehaviour
         _spellCaster.RemoveSpellAt(index);
         RefreshSpells();
         ShowDropButtons(false);
+    }
+
+    public void ModSpell(int index) {
+        _spellCaster.ModSpellAt(index);
+    }
+
+    public void ShowUpgradeOverlays(bool show) {
+        for (int i = 0; i < spellUIs.Length; i++) {
+            if (!spellUIs[i].activeSelf) continue;
+
+            SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
+            spellUI.ShowUpgradeOverlay(show);
+        }
     }
 
     public void ShowDropButtons(bool show)
@@ -57,5 +72,11 @@ public class SpellUIContainer : MonoBehaviour
             SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
             spellUI.ShowHighlight(i == selectedIndex);
         }
+    }
+
+    void OnDestroy() {
+        if (_spellCaster == null) return;
+        _spellCaster.spellSelected -= UpdateSelectedHighlight;
+        _spellCaster.spellUpgradeInitiated -= ShowUpgradeOverlays;
     }
 }
