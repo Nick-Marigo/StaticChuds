@@ -1,5 +1,5 @@
 {
-    "health": {
+    "max_health": {
         "sprite": 0,
         "type": "health",
         "display_name": "Health",

@@ -1,21 +1,28 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
 
     private Dictionary <string, Dictionary<string, AttributeGate>> _attributesByType;
-    public class AttributeGate : iNodeObject {
 
+    [JsonObject(MemberSerialization.OptIn)]
+    public class AttributeGate : iNodeObject {
+        [JsonProperty]
         public string type { get; private set; }
-        public string name { get; private set; }
+        [JsonProperty]
         public string description { get; private set; }
+        [JsonProperty("sprite")]
         public int icon { get; private set; }
+
+        public string name { get; private set; }
         public Func<object> Get;
         public Action<object> Set;
 
         public AttributeGate(string name, string type) { 
-            this.type = type; 
+            //this.type = type; 
             this.name = name;
         }
     }
@@ -67,6 +74,8 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         AddAttribute("max_health", "health",
                 () => _playerInstance.hp.max_hp,
                 (value) => _playerInstance.hp.max_hp = (int)value);   
+
+        PopulateAttributeGates();
     }
 
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
@@ -75,6 +84,28 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         if (attribute == null) return null;
         _attributesByType[attribute.type].Remove(attribute.name);
         return attribute;
+    }
+
+    /* Loads all the attributes of each existing Gate from JSON */
+    private void PopulateAttributeGates() {
+        TextAsset statsJson = Resources.Load<TextAsset>("stats");
+        if (statsJson == null) {
+            Debug.Log("Failed to get stats json from Resources");
+            return;
+        }
+
+        JObject stats = JObject.Parse(statsJson.text);
+        foreach (var entry in stats) {
+            string key = entry.Key;
+            if (_attributeDict.TryGetValue(key, out AttributeGate existing)) {
+                JsonConvert.PopulateObject(entry.Value.ToString(), existing);
+            }
+        }
+
+        foreach (var entry in _attributeDict) {
+            Debug.Log($"name: {entry.Value.name} || type: {entry.Value.type} || description: {entry.Value.description}");
+        }
+        
     }
 
     private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter) {
