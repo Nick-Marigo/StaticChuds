@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class SpellUIContainer : MonoBehaviour
 {
+    [SerializeField] private GameObject spellContainer; 
+
+    private readonly int upgradeTranslateMag = 462; 
+    private bool _spellContaineroffset = false;
+
     public GameObject[] spellUIs;
     private SpellCaster _spellCaster;
     public SpellCaster SpellCaster {
@@ -21,12 +26,15 @@ public class SpellUIContainer : MonoBehaviour
 
             spellUIs[i].SetActive(hasSpell);
 
-            if (hasSpell)
-            {
+            if (hasSpell) {
                 SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
                 spellUI.SetSpell(spells[i]);
                 spellUI.ShowDropButton(false);
                 spellUI.ShowUpgradeOverlay(false);
+            }
+            if (_spellContaineroffset) {
+                spellContainer.transform.Translate(new Vector3 (0, -upgradeTranslateMag, 0));
+                _spellContaineroffset = false;
             }
         }
 
@@ -45,12 +53,16 @@ public class SpellUIContainer : MonoBehaviour
     }
 
     public void ShowUpgradeOverlays(bool show) {
+        //spellContainer.GetComponent<RectTransform>();
         for (int i = 0; i < spellUIs.Length; i++) {
             if (!spellUIs[i].activeSelf) continue;
 
             SpellUI spellUI = spellUIs[i].GetComponent<SpellUI>();
             spellUI.ShowUpgradeOverlay(show);
         }
+
+        spellContainer.transform.Translate(new Vector3 (0, upgradeTranslateMag, 0));
+        _spellContaineroffset = true;
     }
 
     public void ShowDropButtons(bool show)

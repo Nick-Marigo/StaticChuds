@@ -6478,7 +6478,7 @@ GameObject:
   - component: {fileID: 1206147113}
   - component: {fileID: 1206147112}
   m_Layer: 0
-  m_Name: Spell Upgrade Select
+  m_Name: Spell Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6501,7 +6501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -699, y: -462}
+  m_AnchoredPosition: {x: 0, y: -462}
   m_SizeDelta: {x: 512, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1206147112
@@ -60158,6 +60158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65137bb55ab2f454e9ae3dcb7ee7f513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spellContainer: {fileID: 1206147110}
   spellUIs:
   - {fileID: 2085212183}
   - {fileID: 96316927}
@@ -60682,10 +60683,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1792405383}
   - {fileID: 1202924359}
   - {fileID: 1206147111}
   - {fileID: 2007398912}
-  - {fileID: 1792405383}
   - {fileID: 1709288114}
   - {fileID: 1214303593}
   - {fileID: 1862859396}
