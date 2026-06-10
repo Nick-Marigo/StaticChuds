@@ -2,13 +2,23 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class EntityAttributePackage : MonoBehaviour {
-    public class AttributeGate {
+public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
+
+    private Dictionary <string, Dictionary<string, AttributeGate>> _attributesByType;
+    public class AttributeGate : iNodeObject {
+
+        public string type { get; private set; }
+        public string name { get; set; }
         public Func<object> Get;
         public Action<object> Set;
+
+        public AttributeGate(string name, string type) { 
+            this.type = type; 
+            this.name = name;
+        }
     }
 
-    Dictionary<string, AttributeGate> _attributeDict;
+    private Dictionary<string, AttributeGate> _attributeDict;
     public Dictionary<string, AttributeGate> AttributeDict {
         get {
             _LoadAttributes();
@@ -21,35 +31,60 @@ public class EntityAttributePackage : MonoBehaviour {
     SpellCaster _spellCaster;
     PlayerEventWrapper _eventWrapper;
 
+    public void Equip(iNodeObject obj) {
+        Debug.Log(obj);
+    }
+
     void _LoadAttributes() {
         if (_attributeDict != null) return;
 
         _SetPlayerSystems();
 
+        _attributesByType = new();
+        foreach (string type in GameManager.Instance.types) {
+            _attributesByType.Add(type, new());
+        }
+
         _attributeDict = new();
-        _attributeDict.Add("mana", new AttributeGate {
-                Get = () => _spellCaster.Mana,
-                Set = (value) => _spellCaster.Mana = (int)value
-                });
-        _attributeDict.Add("spellpower", new AttributeGate {
-                Get = () => _spellCaster.spellPower,
-                Set = (value) => _spellCaster.spellPower = (int)value
-                });
-        _attributeDict.Add("event_wrapper", new AttributeGate {
-                Get = () => _eventWrapper
-                });
-        _attributeDict.Add("speed", new AttributeGate {
-                Get = () => _playerController.speed,
-                Set = (value) => _playerController.speed = (int)value
-                });
-        _attributeDict.Add("health", new AttributeGate {
-                Get = () => _playerInstance.hp.hp,
-                Set = (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp)
-                });
-        _attributeDict.Add("max_health", new AttributeGate {
-                Get = () => _playerInstance.hp.max_hp,
-                Set = (value) => _playerInstance.hp.max_hp = (int)value
-                });
+
+        AddAttribute("mana", "mana",
+                () => _spellCaster.Mana,
+                (value) => _spellCaster.Mana = (int)value);
+        AddAttribute("spellpower", "damage",
+                () => _spellCaster.spellPower,
+                (value) => _spellCaster.spellPower = (int)value);
+        AddAttribute("event_wrapper", "none",
+                () => _eventWrapper,
+                null);
+        AddAttribute("speed", "speed",
+                () => _playerController.speed,
+                (value) => _playerController.speed = (int)value);
+        AddAttribute("health", "health",
+                () => _playerInstance.hp.hp,
+                (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp));
+        AddAttribute("max_health", "health",
+                () => _playerInstance.hp.max_hp,
+                (value) => _playerInstance.hp.max_hp = (int)value);   
+    }
+
+    public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
+        _LoadAttributes();
+        var attribute = ObjectByTypeFetcher.FetchUnusedObject<AttributeGate>(_attributesByType, affinity, weakness);
+        if (attribute == null) return null;
+        _attributesByType[attribute.type].Remove(attribute.name);
+        return attribute;
+    }
+
+    private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter) {
+        var attributeGate = new AttributeGate(name, type) {
+            Get = getter,
+            Set = setter 
+        };
+
+        _attributeDict.Add(name, attributeGate);
+        if (type == "none") return;
+
+        _attributesByType[type].Add(name, attributeGate);
     }
 
     void _SetPlayerSystems() {

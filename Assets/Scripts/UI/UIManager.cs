@@ -1,9 +1,8 @@
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using TMPro;
 
-public class UIManager : MonoBehaviour
-{
+public class UIManager : MonoBehaviour {
 
     [Header("UI Screens")]
     [SerializeField] GameObject background;
@@ -13,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject relicRewardScreen;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject waveStatsDisplay;
+    [SerializeField] GameObject skillTree;
 
     [Header("Universal Button")]
     [SerializeField] GameObject universalButton;
@@ -31,6 +31,12 @@ public class UIManager : MonoBehaviour
         UpdateUIState(GameManager.Instance.state);
     }
 
+    // TO REMOVE
+    private void Update() {
+        if (Keyboard.current.lKey.wasPressedThisFrame) {
+            UpdateUIState(GameManager.GameState.WAVEEND);
+        }
+    }
     void OnDestroy()
     {
         if (GameManager.Instance != null)
@@ -67,17 +73,9 @@ public class UIManager : MonoBehaviour
 
             case GameManager.GameState.WAVEEND:
                 background.SetActive(true);
-                rewardScreen.SetActive(true);
+                skillTree.SetActive(true);
                 universalButton.SetActive(true);
                 buttonText.text = "Skip Reward";
-                rewardScreenManager.ShowReward();
-                break;
-            case GameManager.GameState.RELICREWARD:
-                background.SetActive(true);
-                relicRewardScreen.SetActive(true);
-                universalButton.SetActive(true);
-                buttonText.text = "Skip Reward";
-                rewardScreenManager.ShowRelicReward();
                 break;
             case GameManager.GameState.WAVESTATS:
                 background.SetActive(true);
@@ -85,7 +83,6 @@ public class UIManager : MonoBehaviour
                 universalButton.SetActive(true);
                 buttonText.text = "Next Wave";
                 break;
-
             case GameManager.GameState.GAMEOVER:
                 background.SetActive(true);
                 waveStatsDisplay.SetActive(true);
@@ -98,21 +95,14 @@ public class UIManager : MonoBehaviour
 
     public void OnUniversalButtonClick()
     {
-        if (GameManager.GameState.WAVEEND == GameManager.Instance.state)
-        {
-            rewardScreenManager.GoToNextRewardStep();
-        }
-        else if (GameManager.GameState.RELICREWARD == GameManager.Instance.state)
-        {
-            rewardScreenManager.ClearReward();
+        if (GameManager.GameState.WAVEEND == GameManager.Instance.state) {
+            skillTree.SetActive(false);
             GameManager.Instance.state = GameManager.GameState.WAVESTATS;
         }
-        else if (GameManager.GameState.WAVESTATS == GameManager.Instance.state)
-        {
+        else if (GameManager.GameState.WAVESTATS == GameManager.Instance.state) {
             waveSpawner.NextWave();
         }
-        else if (GameManager.GameState.GAMEOVER == GameManager.Instance.state)
-        {
+        else if (GameManager.GameState.GAMEOVER == GameManager.Instance.state) {
             gameOverManager.RestartScene();
         }
     }

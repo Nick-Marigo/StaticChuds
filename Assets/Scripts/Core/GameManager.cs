@@ -13,8 +13,11 @@ public class GameManager
         COUNTDOWN,
         GAMEOVER,
         WAVESTATS,
-        RELICREWARD
+        RELICREWARD,
+        SKILLTREE
     }
+
+    public string[] types { get; private set; } 
 
     public event Action<GameState> OnChangedState;
 
@@ -51,6 +54,7 @@ public class GameManager
     public EnemySpriteManager enemySpriteManager;
     public PlayerSpriteManager playerSpriteManager;
     public RelicIconManager relicIconManager;
+    public StatsIconManager statsIconManager;
     public WaveStats waveStats;
 
     private List<GameObject> enemies;
@@ -75,6 +79,12 @@ public class GameManager
     private GameManager()
     {
         enemies = new List<GameObject>();
+        types = new string[4] { 
+            "damage",
+            "health",
+            "speed",
+            "mana"
+        };
     }
 
     public void ClearEnemies()

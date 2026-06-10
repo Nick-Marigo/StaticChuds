@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 
 [JsonObject(MemberSerialization.OptIn)]
 abstract public class Effect : iRequestAttributePackage {

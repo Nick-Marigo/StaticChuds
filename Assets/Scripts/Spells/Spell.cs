@@ -4,12 +4,26 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
-public abstract class Spell 
+public abstract class Spell : iNodeObject
 {
-    [JsonProperty]
-    protected string name;
+    [JsonProperty("name")]
+    protected string _name;
     [JsonProperty]
     protected string description;
+    [JsonProperty("type")]
+    protected string _type; 
+
+    [JsonIgnore]
+    public string name { 
+        get => _name; 
+        protected set => _name = value; 
+    }
+
+    [JsonIgnore]
+    public string type { 
+        get => _type; 
+        protected set => _type = value; 
+    }
 
     public float last_cast;
     public SpellCaster owner;
@@ -34,7 +48,6 @@ public abstract class Spell
     // Dictionaries for RPNE calculations
     protected Dictionary<string, int> intRpnVals;
     protected Dictionary<string, float> floatRpnVals;
-
 
     // On waveStart, all the dictionary values are updated to
     // reflect the current game state
@@ -90,7 +103,6 @@ public abstract class Spell
     {
         return (last_cast + GetCooldown() < Time.time);
     }
-
 
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;
