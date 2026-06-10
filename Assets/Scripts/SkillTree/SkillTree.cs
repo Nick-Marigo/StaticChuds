@@ -28,7 +28,7 @@ public class SkillTree
     {
         spellbranchCount++;
         Node newNode = new Node("Spells", _owner.spellCaster);
-        return newNode;
+        return newNode.obj == null ? null : newNode;
     }
 
     //TODO: determine what relic should spawn based on player class
@@ -36,7 +36,7 @@ public class SkillTree
     {
         relicbranchCount++;
         Node newNode = new Node("Relics", _owner.relicInventory);
-        return newNode;
+        return newNode.obj == null ? null : newNode;
     }
 
     //TODO: determine what Stat should spawn based on player class
@@ -44,7 +44,7 @@ public class SkillTree
     {
         statsbranchCount++;
         Node newNode = new Node("Stats", _owner.AttributePackage);
-        return newNode;
+        return newNode.obj == null ? null : newNode;
     }
     
     public bool canPurchased()

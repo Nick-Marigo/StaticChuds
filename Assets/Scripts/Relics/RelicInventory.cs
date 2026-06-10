@@ -36,8 +36,9 @@ public class RelicInventory : iNodeSystem {
     }
 
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
-            Relic r = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, affinity, weakness)();
-            if (r == null) return null;
+            var rLambda = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, affinity, weakness);
+            if (rLambda == null) return null;
+            var r = rLambda();
             _potentialRelicsByType[r.type].Remove(r.name);
             return r;
     }

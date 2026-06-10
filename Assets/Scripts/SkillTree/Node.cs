@@ -9,25 +9,26 @@ public class Node
     public int icon;
 
     private iNodeSystem _system;
-    private iNodeObject _obj;
+    public iNodeObject obj { get; private set; }
 
     public Node(string branch, iNodeSystem system) {
         this.branch = branch;
-        if (system == null) {
+        if (branch == "Root") {
             this.icon = 0; // Set root icon
+            this.name = "Root";
             return;
         }
 
         _system = system;
-        _obj = system.GetNodeObjectByType("mana", "damage");
-        if (_obj == null) return;
-        this.name = _obj.name;
-        this.description = _obj.description;
-        this.icon = _obj.icon;
+        obj = system.GetNodeObjectByType("mana", "damage");
+        if (obj == null) return;
+        this.name = obj.name;
+        this.description = obj.description;
+        this.icon = obj.icon;
     }
 
     public void Purchase() {
         isPurchased = true;
-        _system.Equip(_obj);
+        _system.Equip(obj);
     }
 }
