@@ -9,11 +9,11 @@ public enum AudioIdentifier {
 
 public class AudioManager : MonoBehaviour {
     
-	private Dictionary<AudioIdentifier, AudioClip> _lookup;
+	private Dictionary<AudioIdentifier, AudioClip> _lookup = new();
 
 	[SerializeField]
 	private AudioSource _sourcePrefab;
-	private Dictionary<int, AudioSource> _sources;
+	private Dictionary<int, AudioSource> _sources = new();
 	
 	public static AudioManager Instance;
 
@@ -22,6 +22,9 @@ public class AudioManager : MonoBehaviour {
 			Instance = this;
 
 			EventBus.Instance.OnPlaySound += PlaySound;
+
+			_lookup[ AudioIdentifier.SOUND_HURT ] = Resources.Load<AudioClip>("Audio/hurt");
+			_lookup[ AudioIdentifier.SOUND_CAST ] = Resources.Load<AudioClip>("Audio/cast");
 
 			return;
 		}
@@ -45,6 +48,8 @@ public class AudioManager : MonoBehaviour {
 		}
 
 		_sources[sourceHandle] = newSource;
+
+		newSource.Play();
 
 		StartCoroutine(RemoveSource(newSource.clip.length, sourceHandle));
 	}

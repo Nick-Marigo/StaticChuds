@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
     public Unit unit { get; private set; }
     private PlayerInstance _player;
 
+	private AudioEmitter _audioEmitter = new();
+
     private Vector2 movement;
     public Vector3 position{ get { return transform.position; } }
     public int speed;

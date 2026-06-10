@@ -34,6 +34,8 @@ public class SpellCaster {
     public EntityAttributePackage _attributePackage;
     private PlayerEventWrapper _eventWrapper;
 
+	private AudioEmitter _audioEmitter = new();
+
     public event Action<int> manaChanged;
     public event Action<int> spellSelected;
 
@@ -67,6 +69,9 @@ public class SpellCaster {
             selectedSpell.last_cast = Time.time;
             yield return selectedSpell.Cast(where, target, team);
             _eventWrapper.InvokeSpellCast();
+
+			_audioEmitter.EmitSound(AudioIdentifier.SOUND_CAST);
+
         }
         yield break;
     }
