@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class SpellModifier : Spell {
+public abstract class SpellModifier : Spell, iNodeObject {
     protected Spell innerSpell;
     override public DamageInfo damage { get { return innerSpell.damage; } }
     override public Hittable.Team team { get { return innerSpell.team; } }

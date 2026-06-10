@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
-public abstract class Spell : iNodeObject
+public abstract class Spell 
 {
     [JsonProperty("name")]
     protected string _name;

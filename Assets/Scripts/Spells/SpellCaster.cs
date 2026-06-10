@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpellCaster : iNodeSystem {
-    private Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> _potentialSpellModsByType;
+    private Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, SpellModifier>>> _potentialSpellModsByType;
     public Hittable.Team team;
 
     private int _mana = -1;
@@ -82,7 +82,7 @@ public class SpellCaster : iNodeSystem {
     }
 
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
-            var spellLambda = ObjectByTypeFetcher.FetchUnusedObject<Func<SpellCaster, Spell, Spell>>(_potentialSpellModsByType, affinity, weakness);
+            var spellLambda = ObjectByTypeFetcher.FetchUnusedObject<Func<SpellCaster, Spell, SpellModifier>>(_potentialSpellModsByType, affinity, weakness);
             if (spellLambda == null) return null;
             var s = spellLambda(this, null);
             _potentialSpellModsByType[s.type].Remove(s.name);

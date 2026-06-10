@@ -12,11 +12,11 @@ public class SpellLoader
     private static List<JProperty> spells;
     private static List<Func<SpellCaster, BaseSpell>> baseSpells;
     private static List<Func<SpellCaster, Spell, SpellModifier>> spellModifiers;
-    private static Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> _spellModsByType;
+    private static Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, SpellModifier>>> _spellModsByType;
 
     /* These lists of lambdas are used to randomly
      * instantiate new spells and decorators from */
-    public static Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> SpellModsByType {
+    public static Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, SpellModifier>>> SpellModsByType {
         get {
             if (spells == null) LoadSpells();
             return _spellModsByType;
