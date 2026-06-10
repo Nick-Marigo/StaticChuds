@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class EntityAttributePackage : MonoBehaviour {
+public class EntityAttributePackage : MonoBehaviour, iNodeObject {
 
     private Dictionary <string, Dictionary<string, AttributeGate>> _attributesByType;
     public class AttributeGate {
@@ -90,6 +90,9 @@ public class EntityAttributePackage : MonoBehaviour {
             Debug.Log($"ERROR-EntityAttributePackage: entity has no SpellCaster");
         }
         _eventWrapper = _playerInstance.eventWrapper;
+    }
+
+    public void Equip<PlayerInstance> (PlayerInstance player) {
     }
 }
 

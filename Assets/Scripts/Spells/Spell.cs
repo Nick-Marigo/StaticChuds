@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
-public abstract class Spell 
+public abstract class Spell : iNodeObject
 {
     [JsonProperty]
     public string name { get; private set; }
@@ -51,6 +51,9 @@ public abstract class Spell
         };
     }
 
+    public void Equip<SpellCaster> (SpellCaster caster) {
+    }
+
     public string GetName()
     {
         return name;
@@ -92,7 +95,6 @@ public abstract class Spell
     {
         return (last_cast + GetCooldown() < Time.time);
     }
-
 
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
         this.team = team;

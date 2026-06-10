@@ -8,12 +8,17 @@ public class Node
     public bool isPurchased = false;
     public int icon;
 
-    public Node(string name, string description, int icon, string branch)
-    {
+    private iNodeObject _obj;
+
+    public Node(string name, string description, int icon, string branch ) {
         this.name = name;
         this.description = description;
         this.icon = icon;
         this.branch = branch;
+    }
+
+    public void Purchase() {
+        isPurchased = true;
     }
 
 
