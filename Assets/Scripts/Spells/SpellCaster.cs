@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpellCaster {
+public class SpellCaster : iNodeSystem {
     private Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> _potentialSpellModsByType;
     public Hittable.Team team;
 
@@ -37,6 +37,10 @@ public class SpellCaster {
 
     public event Action<int> manaChanged;
     public event Action<int> spellSelected;
+
+    public void Equip (iNodeObject obj) {
+        Debug.Log(obj);
+    }
 
     public IEnumerator ManaRegeneration() {
         while (true) {
@@ -73,10 +77,10 @@ public class SpellCaster {
         yield break;
     }
 
-    public Spell GetSpellModByType(string affinity, string weakness) {
+    public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
             Spell s = ObjectByTypeFetcher.FetchUnusedObject<Func<SpellCaster, Spell, Spell>>(_potentialSpellModsByType, affinity, weakness)(this, null);
             if (s == null) return null;
-            _potentialSpellModsByType [s.type].Remove(s.name);
+            _potentialSpellModsByType[s.type].Remove(s.name);
             return s;
     }
 

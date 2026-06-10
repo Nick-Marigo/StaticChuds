@@ -37,14 +37,17 @@ public class LevelSelector : MonoBehaviour {
     }
 
     void GenerateButtons() {
-        int buttonXOffset = 90;
-        int buttonYOffset = 50;
+        float yScale = 1f / levels.Count;
         for (int i = 0; i < levels.Count; i++) {
-            float xPos = (i%2) == 0 ?
-                -buttonXOffset : buttonXOffset;
-            float yPos = 90-buttonYOffset*(i/2);
+            float xOffset = (i%2) == 0 ?
+                0.1f : 0.55f;
             button = Instantiate(button, levelSelector.transform);
-            button.transform.localPosition = new Vector3(xPos, yPos);
+            ButtonScaler scaler = button.GetComponent<ButtonScaler>();
+            scaler.yScale = yScale;
+            scaler.xScale = 0.35f;
+            scaler.yOffset = 0.1f + (yScale + 0.05f) * (i / 2);
+            scaler.xOffset = xOffset;
+            //button.transform.localPosition = new Vector3(xPos, yPos);
             // TODO button.GetComponent<MenuSelectorController>().spawner = this;
             button.GetComponent<ButtonController>().SetLevel(levels[i].name);
         }

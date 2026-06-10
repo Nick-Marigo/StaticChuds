@@ -13,7 +13,8 @@ public class GameManager
         COUNTDOWN,
         GAMEOVER,
         WAVESTATS,
-        RELICREWARD
+        RELICREWARD,
+        SKILLTREE
     }
 
     public string[] types { get; private set; } 

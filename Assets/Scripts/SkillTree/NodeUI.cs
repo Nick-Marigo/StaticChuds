@@ -94,7 +94,7 @@ public class NodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
         incomingLine.StartFill(() =>
         {
-            node.isPurchased = true;
+            node.Purchase();
             SetPurchasedColor();
 
             RectTransform rect = GetComponent<RectTransform>();

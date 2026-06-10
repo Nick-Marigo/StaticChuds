@@ -9,10 +9,11 @@ public class SkillTreeUI : MonoBehaviour
     [SerializeField] RectTransform nodesContainer;
     [SerializeField] GameObject nodePrefab;
     [SerializeField] GameObject linePrefab;
+    [SerializeField] GameObject owner;
 
     void Start()
     {
-        skillTree = new SkillTree();
+        skillTree = new SkillTree(owner.GetComponent<PlayerInstance>());
 
         // Create root node
         Node root = skillTree.CreateRoot();

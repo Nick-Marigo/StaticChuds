@@ -51,8 +51,14 @@ public abstract class SpellModifier : Spell {
 
     public override void SetStatsSource(Spell source)
     {
+        if (source == null || innerSpell == null) return;
         statSource = source;
         innerSpell.SetStatsSource(source);
+    }
+
+    public void SetOwner(Spell innerSpell) {
+        this.innerSpell = innerSpell;
+        SetStatsSource(this);
     }
 
     public SpellModifier(SpellCaster owner, Spell innerSpell) : base(owner) {

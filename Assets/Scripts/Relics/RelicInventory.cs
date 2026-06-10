@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class RelicInventory {
+public class RelicInventory : iNodeSystem {
 
     private EntityAttributePackage _attributePackage;
 
@@ -31,7 +31,11 @@ public class RelicInventory {
         // }
     }
 
-    public Relic GetRelicByType(string affinity, string weakness) {
+    public void Equip(iNodeObject obj) {
+        Debug.Log(obj);
+    }
+
+    public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
             Relic r = ObjectByTypeFetcher.FetchUnusedObject<Func<Relic>>(_potentialRelicsByType, affinity, weakness)();
             if (r == null) return null;
             _potentialRelicsByType[r.type].Remove(r.name);

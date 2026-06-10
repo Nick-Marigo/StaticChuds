@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System;
 
 [JsonObject(MemberSerialization.OptIn)]
-public class Relic : iRequestAttributePackage {
+public class Relic : iRequestAttributePackage, iNodeObject {
     [JsonProperty]
     public string name { get; protected set; }
     [JsonProperty]
