@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class RelicInventory {
+public class RelicInventory : iNodeObject {
 
     private EntityAttributePackage _attributePackage;
 
@@ -29,6 +29,10 @@ public class RelicInventory {
             //var r = rel.Value();
             EquipRelic(r);
         }
+    }
+
+    public void Equip() {
+        Debug.Log("equipped new relic");
     }
 
     public Relic GetRelicByType(string affinity, string weakness) {

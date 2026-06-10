@@ -31,6 +31,10 @@ public class EntityAttributePackage : MonoBehaviour, iNodeObject {
     SpellCaster _spellCaster;
     PlayerEventWrapper _eventWrapper;
 
+    public void Equip() {
+        Debug.Log("equipped new stat buff");
+    }
+
     void _LoadAttributes() {
         if (_attributeDict != null) return;
 
@@ -90,9 +94,6 @@ public class EntityAttributePackage : MonoBehaviour, iNodeObject {
             Debug.Log($"ERROR-EntityAttributePackage: entity has no SpellCaster");
         }
         _eventWrapper = _playerInstance.eventWrapper;
-    }
-
-    public void Equip<PlayerInstance> (PlayerInstance player) {
     }
 }
 

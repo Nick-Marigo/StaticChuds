@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
-public abstract class Spell : iNodeObject
+public abstract class Spell 
 {
     [JsonProperty]
     public string name { get; private set; }
@@ -49,9 +49,6 @@ public abstract class Spell : iNodeObject
             {"power", owner.spellPower},
             {"wave", waveNum} 
         };
-    }
-
-    public void Equip<SpellCaster> (SpellCaster caster) {
     }
 
     public string GetName()

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System;
 
 [JsonObject(MemberSerialization.OptIn)]
-public class Relic : iNodeObject, iRequestAttributePackage {
+public class Relic : iRequestAttributePackage {
     [JsonProperty]
     public string name { get; protected set; }
     [JsonProperty]
@@ -35,9 +35,6 @@ public class Relic : iNodeObject, iRequestAttributePackage {
         //Debug.Log("activating " + name);
         trigger.Activate();
         effect.Activate();
-    }
-
-    public void Equip<RelicInventory> (RelicInventory inventory) {
     }
 
     void _SetAttributePackages (EntityAttributePackage package) {

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpellCaster {
+public class SpellCaster : iNodeObject {
     private Dictionary<string, Dictionary<string, Func<SpellCaster, Spell, Spell>>> _potentialSpellModsByType;
     public Hittable.Team team;
 
@@ -37,6 +37,10 @@ public class SpellCaster {
 
     public event Action<int> manaChanged;
     public event Action<int> spellSelected;
+
+    public void Equip () {
+        Debug.Log("equipped new spell mod");
+    }
 
     public IEnumerator ManaRegeneration() {
         while (true) {
