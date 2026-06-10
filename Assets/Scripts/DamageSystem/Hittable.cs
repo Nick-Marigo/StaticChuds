@@ -12,8 +12,12 @@ public class Hittable
 
     public GameObject owner;
 
+	private AudioEmitter _audioEmitter = new();
+
     public void Damage(Damage damage)
     {
+		_audioEmitter.EmitSound(AudioIdentifier.SOUND_HURT);
+
         if (team == Team.MONSTERS && GameManager.Instance.waveStats != null)
         {
             GameManager.Instance.waveStats.UpdateTotalDamageDealt(Math.Min(damage.amount, hp));
