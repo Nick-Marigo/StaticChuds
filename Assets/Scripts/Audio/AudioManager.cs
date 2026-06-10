@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour {
 	private void Awake() {
 		if(Instance == null) {
 			Instance = this;
+
+			EventBus.Instance.OnPlaySound += PlaySound;
+
 			return;
 		}
 
@@ -50,6 +53,10 @@ public class AudioManager : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 
 		_sources.Remove(sourceHandle);
+	}
+
+	private void OnDestroy() {
+		EventBus.Instance.OnPlaySound -= PlaySound;
 	}
 
 }

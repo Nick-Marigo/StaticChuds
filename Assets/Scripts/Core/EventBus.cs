@@ -32,6 +32,11 @@ public class EventBus
         OnWaveStart?.Invoke(waveNum);
     }
 
+	public event Action<AudioIdentifier> OnPlaySound;
+	public void InvokePlaySound(AudioIdentifier soundIdentifier) {
+		OnPlaySound?.Invoke(soundIdentifier);
+	}
+
     public event Action<string> enemyKilled;
     public void InvokeEnemyKilled(string enemyName) {
         enemyKilled?.Invoke(enemyName);
