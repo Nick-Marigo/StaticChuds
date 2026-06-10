@@ -8,6 +8,10 @@ public class RelicUIManager : MonoBehaviour
 
     List<GameObject> relicUIObjects = new List<GameObject>();
 
+    private void OnDestroy() {
+        player.relicInventory.relicEquipped -= RefreshRelicUI;
+    }
+
     public void RefreshRelicUI()
     {
         foreach (GameObject obj in relicUIObjects)
