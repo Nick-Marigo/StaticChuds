@@ -62,7 +62,7 @@
        "cooldown_multiplier": "1.5"
    },
    "splitter": {
-       "name": "mana",
+       "name": "split",
        "type": "mana",
        "description": "Spell is cast twice in slightly different directions; increased mana cost.",
        "angle": "10",
