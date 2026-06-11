@@ -40,7 +40,7 @@ public class WaveSpawner : MonoBehaviour
         EventBus.Instance.StartWave(currentWave);
         waveStats.StartWave(currentWave);
 
-        if (currentWave <= selectedLevel.waves)
+        if (selectedLevel.waves == 0 || currentWave <= selectedLevel.waves)
         {
             StartCoroutine(SpawnWave());
             return;
