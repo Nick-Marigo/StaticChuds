@@ -18,15 +18,16 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         public int icon { get; private set; }
         [JsonProperty]
         public string amount { get; private set; }
-
+        [JsonProperty("display_name")]
         public string name { get; private set; }
+
+        public string _name { get; private set; }
         public Func<object> Get;
         public Action<object> Set;
         public Action<string> upgradeClass;
 
         public AttributeGate(string name, string type) { 
-            //this.type = type; 
-            this.name = name;
+            this._name = name;
         }
 
         public void Upgrade() {
@@ -102,7 +103,7 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         var attribute = ObjectByTypeFetcher.FetchUnusedObject<AttributeGate>(_attributesByType, affinity, weakness);
         if (attribute == null) return null;
         Debug.Log($"before removal: {attribute.name} + {attribute.type}");
-        _attributesByType[attribute.type].Remove(attribute.name);
+        _attributesByType[attribute.type].Remove(attribute._name);
         return attribute;
     }
 
@@ -121,11 +122,6 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
                 JsonConvert.PopulateObject(entry.Value.ToString(), existing);
             }
         }
-
-        foreach (var entry in _attributeDict) {
-            Debug.Log($"name: {entry.Value.name} || type: {entry.Value.type} || description: {entry.Value.description}");
-        }
-        
     }
 
     private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter, Action<string> upgrade) {
