@@ -22,11 +22,15 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         public string name { get; private set; }
         public Func<object> Get;
         public Action<object> Set;
-        public Action Upgrade;
+        public Action<string> upgradeClass;
 
         public AttributeGate(string name, string type) { 
             //this.type = type; 
             this.name = name;
+        }
+
+        public void Upgrade() {
+            upgradeClass(amount);
         }
     }
 
@@ -59,31 +63,36 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         }
 
         _attributeDict = new();
+        var playerClass = _playerInstance.PlayerClass;
 
         AddAttribute("mana", "mana",
                 () => _spellCaster.Mana,
                 (value) => _spellCaster.Mana = (int)value,
-                () => Debug.Log("helloooo"));
+                (value) => playerClass.mana = value + " " + playerClass.mana + " +");
+        AddAttribute("mana_regeneration", "mana",
+                () => _spellCaster.mana_reg,
+                (value) => _spellCaster.mana_reg = (int)value,
+                (value) => playerClass.mana_regeneration = value + " " + playerClass.mana_regeneration + " +");
         AddAttribute("spellpower", "damage",
                 () => _spellCaster.spellPower,
                 (value) => _spellCaster.spellPower = (int)value,
-                () => Debug.Log("helloooo"));
+                (value) => playerClass.spellpower = value + " " + playerClass.spellpower + " +");
         AddAttribute("event_wrapper", "none",
                 () => _eventWrapper,
                 null,
-                () => Debug.Log("helloooo"));
+                null);
         AddAttribute("speed", "speed",
                 () => _playerController.speed,
                 (value) => _playerController.speed = (int)value,
-                () => Debug.Log("helloooo"));
+                (value) => playerClass.speed = value + " " + playerClass.speed + " +");
         AddAttribute("health", "none",
                 () => _playerInstance.hp.hp,
                 (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp),
-                () => Debug.Log("helloooo"));
+                null);
         AddAttribute("max_health", "health",
                 () => _playerInstance.hp.max_hp,
                 (value) => _playerInstance.hp.max_hp = (int)value,
-                () => Debug.Log("helloooo"));
+                (value) => playerClass.health = value + " " + playerClass.health + " +");
 
         PopulateAttributeGates();
     }
@@ -119,11 +128,11 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         
     }
 
-    private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter, Action upgrade) {
+    private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter, Action<string> upgrade) {
         var attributeGate = new AttributeGate(name, type) {
             Get = getter,
             Set = setter,
-            Upgrade = upgrade
+            upgradeClass = upgrade
         };
 
         _attributeDict.Add(name, attributeGate);

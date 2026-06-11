@@ -13,7 +13,7 @@ public class Node
 
     public Node(string branch, iNodeSystem system) {
         this.branch = branch;
-        if (branch == "Root") {
+        if (branch == "Root" || system == null) {
             this.icon = 0; // Set root icon
             this.name = "Root";
             return;

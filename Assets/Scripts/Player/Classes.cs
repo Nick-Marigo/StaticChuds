@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class Classes {
@@ -16,6 +17,7 @@ public class Classes {
 
     public int CalculateMana(int wave)
     {
+        Debug.Log(mana);
         return RPNEvaluator.RPNEvaluator.Evaluate(mana, new Dictionary<string, int> { {"wave", wave} });
     }
 
