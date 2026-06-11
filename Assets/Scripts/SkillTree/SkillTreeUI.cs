@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class SkillTreeUI : MonoBehaviour
 {
@@ -56,16 +58,19 @@ public class SkillTreeUI : MonoBehaviour
         Vector2 spellPosition = new Vector2(0, -150);
         Node spell1 = skillTree.CreateNodeSpell();
         SpawnConntectNode(spell1, rootPosition, spellPosition);
+        spell1.depth = 1;
 
         // relic branch
         Vector2 relicPosition = new Vector2(-150, 100);
         Node relic1 = skillTree.CreateNodeRelic();
         SpawnConntectNode(relic1, rootPosition, relicPosition);
+        relic1.depth = 1;
 
         // Stats branch
         Vector2 statsPosition = new Vector2(150, 100);
         Node stats1 = skillTree.CreateNodeStat();
         SpawnConntectNode(stats1, rootPosition, statsPosition);
+        stats1.depth = 1;
     }
 
     public void NodeClicked(Node node, Vector2 position)
@@ -79,19 +84,40 @@ public class SkillTreeUI : MonoBehaviour
 
         Vector2 sideways = new Vector2(-direction.y, direction.x);
 
-        float forwardDistance = 200f;
-        float sideDistance = 120f;
+        float spread = 1 - ((node.depth - 1) / 6f);
+        float angle = (float)(Math.PI * 0.25) * spread * spread;
+
+        float forwardDistance = 250f * Mathf.Cos(angle);
+        float sideDistance = 250f * Mathf.Sin(angle);
+        // Debug.Log($"spread: {spread}, angle: {angle}, sideDistance: {sideDistance}");
 
         Vector2 leftChildPosition = position + direction * forwardDistance - sideways * sideDistance;
         Vector2 rightChildPosition = position + direction * forwardDistance + sideways * sideDistance;
 
+        if (ShouldCutBranchDepth(node.branch, node.depth)) return;
+
         Node child1 = CreateNodeFromBranch(node.branch);
         if (child1 == null) return;
         SpawnConntectNode(child1, position, leftChildPosition);
+        child1.depth = node.depth + 1;
 
         Node child2 = CreateNodeFromBranch(node.branch);
         if (child2 == null) return;
         SpawnConntectNode(child2, position, rightChildPosition);
+        child2.depth = node.depth + 1;
+    }
+
+    private bool ShouldCutBranchDepth(string branch, int depth) {
+        switch (branch) {
+            case "Spells":
+                return depth > 3;
+            case "Stats":
+                return depth > 2;
+            case "Relics":
+                return depth > 3;
+            default:
+                return true;
+        };
     }
 
     Node CreateNodeFromBranch(string branch)
