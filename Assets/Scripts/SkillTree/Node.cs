@@ -7,6 +7,7 @@ public class Node
     public string branch;
     public bool isPurchased = false;
     public int icon;
+    public int depth;
 
     private iNodeSystem _system;
     public iNodeObject obj { get; private set; }
