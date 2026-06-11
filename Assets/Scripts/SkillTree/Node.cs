@@ -12,7 +12,7 @@ public class Node
     private iNodeSystem _system;
     public iNodeObject obj { get; private set; }
 
-    public Node(string branch, iNodeSystem system) {
+    public Node(string branch, iNodeSystem system, (string affinity, string weakness) types) {
         this.branch = branch;
         if (branch == "Root" || system == null) {
             this.icon = 0; // Set root icon
@@ -21,7 +21,7 @@ public class Node
         }
 
         _system = system;
-        obj = system.GetNodeObjectByType("mana", "damage");
+        obj = system.GetNodeObjectByType(types.affinity, types.weakness);
         if (obj == null) return;
         this.name = obj.name;
         this.description = obj.description;

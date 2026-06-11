@@ -9,6 +9,8 @@ public class Classes {
     public string mana_regeneration;
     public string spellpower;
     public string speed;
+    public string affinity;
+    public string weakness;
 
     public int CalculateHP(int wave)
     {
