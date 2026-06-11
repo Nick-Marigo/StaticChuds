@@ -84,7 +84,7 @@ public class SkillTreeUI : MonoBehaviour
 
     public void NodeClicked(Node node, Vector2 position)
     {
-        if (!skillTree.CanPurchase()) return;
+        //if (!skillTree.CanPurchase()) return;
         SpawnTwoChildren(node, position);
     }
 
