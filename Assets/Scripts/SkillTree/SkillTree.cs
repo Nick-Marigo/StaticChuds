@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class SkillTree
 {
-    public int skillPoints = 100;
+    public int skillPoints = 0;
 
     private PlayerInstance _owner;
 
@@ -11,7 +11,6 @@ public class SkillTree
     int spellbranchCount = 0;
     int relicbranchCount = 0;
     int statsbranchCount = 0;
-
 
     public SkillTree(PlayerInstance owner) {
         this._owner = owner;
@@ -23,7 +22,6 @@ public class SkillTree
         return newNode;
     }
 
-    //TODO: determine what spell or mod should spawn based on player class
     public Node CreateNodeSpell()
     {
         spellbranchCount++;
@@ -31,7 +29,6 @@ public class SkillTree
         return newNode.obj == null ? null : newNode;
     }
 
-    //TODO: determine what relic should spawn based on player class
     public Node CreateNodeRelic()
     {
         relicbranchCount++;
@@ -39,7 +36,6 @@ public class SkillTree
         return newNode.obj == null ? null : newNode;
     }
 
-    //TODO: determine what Stat should spawn based on player class
     public Node CreateNodeStat()
     {
         statsbranchCount++;
@@ -47,15 +43,7 @@ public class SkillTree
         return newNode.obj == null ? null : newNode;
     }
     
-    public bool canPurchased()
-    {
-        if (skillPoints > 0)
-        {
-            skillPoints--;
-            return true;
-        }
-
-        return false;
-
+    public bool CanPurchase() {
+        return skillPoints > 0;
     }
 }
