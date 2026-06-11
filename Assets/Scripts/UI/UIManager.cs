@@ -31,7 +31,6 @@ public class UIManager : MonoBehaviour {
         UpdateUIState(GameManager.Instance.state);
     }
 
-    // TO REMOVE
     private void Update() {
         if (Keyboard.current.lKey.wasPressedThisFrame) {
             UpdateUIState(GameManager.GameState.WAVEEND);
