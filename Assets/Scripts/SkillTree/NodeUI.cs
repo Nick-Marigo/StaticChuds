@@ -81,7 +81,7 @@ public class NodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (node.isPurchased || node.name == "Root")
+        if (node.isPurchased || node.name == "Root" || !skillTreeUI.skillTree.CanPurchase())
         {
             return;
         }
@@ -95,6 +95,7 @@ public class NodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         {
             node.Purchase();
             SetPurchasedColor();
+            skillTreeUI.UpdateSkillPoints(-1);
 
             RectTransform rect = GetComponent<RectTransform>();
             skillTreeUI.NodeClicked(node, rect.anchoredPosition);

@@ -7,7 +7,7 @@ public abstract class SpellModifier : Spell, iNodeObject {
     override public DamageInfo damage { get { return innerSpell.damage; } }
     override public Hittable.Team team { get { return innerSpell.team; } }
     override public Projectile projectile { get { return innerSpell.projectile; } }
-    override public int icon { get { return 1; }} // TODO add icons to spell mods
+    override public int icon { get { return innerSpell == null? -1 : innerSpell.icon; }} 
 
     [JsonProperty("icon")]
     protected int nodeIcon;

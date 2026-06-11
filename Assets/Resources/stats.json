@@ -1,32 +1,37 @@
 {
-    "health": {
+    "max_health": {
         "sprite": 0,
         "type": "health",
         "display_name": "Health",
-        "description": "Increase max health by {amount} per wave."
+        "description": "Increases health stat scaling",
+        "amount": "40"
     },
     "mana": {
         "sprite": 1,
         "type": "mana",
         "display_name": "Mana",
-        "description": "Increase max mana by {amount} per wave."
+        "description": "Increases mana stat scaling",
+        "amount": "20"
     },
     "mana_regeneration": {
         "sprite": 2,
         "type": "mana",
         "display_name": "Mana Regeneration",
-        "description": "Increase mana regeneration by {amount} per wave."
+        "description": "Increases mana regen stat scaling",
+        "amount": "5"
     },
     "spellpower": {
         "sprite": 3,
         "type": "damage",
         "display_name": "Spell Power",
-        "description": "Increase spell power by {amount} per wave."
+        "description": "Increases damage stat scaling",
+        "amount": "20"
     },
     "speed": {
         "sprite": 4,
         "type": "speed",
         "display_name": "Speed",
-        "description": "Increase movement speed by {amount} per wave."
+        "description": "Increases speed stat scaling",
+        "amount": "3"
     }
 }

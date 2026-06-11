@@ -1,19 +1,21 @@
 using System;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using TMPro;
 
 public class SkillTreeUI : MonoBehaviour
 {
-    private SkillTree skillTree;
+    public SkillTree skillTree { get; private set; }
 
     [SerializeField] RectTransform skillTreeContent;
     [SerializeField] RectTransform linesContainer;
     [SerializeField] RectTransform nodesContainer;
     [SerializeField] GameObject nodePrefab;
     [SerializeField] GameObject linePrefab;
-    [SerializeField] GameObject owner;
+    [SerializeField] public GameObject owner;
+    [SerializeField] TextMeshProUGUI skillText;
 
-    void Start()
+    void Awake()
     {
         skillTree = new SkillTree(owner.GetComponent<PlayerInstance>());
 
@@ -23,10 +25,12 @@ public class SkillTreeUI : MonoBehaviour
         NodeUI rootUI = SpawnNode(root, new Vector2(0, 0));
         rootUI.SetRootNull();
         rootUI.SetPurchasedColor();
+        UpdateSkillPoints(0);
 
         // Create first branch nodes
         BuildBranches();
     }
+
 
     NodeUI SpawnNode(Node node, Vector2 position)
     {
@@ -73,9 +77,15 @@ public class SkillTreeUI : MonoBehaviour
         stats1.depth = 1;
     }
 
+    public void UpdateSkillPoints(int n) {
+        skillTree.skillPoints += n;
+        skillText.text = $"Skill Points: {skillTree.skillPoints}";
+    }
+
     public void NodeClicked(Node node, Vector2 position)
     {
-        if (skillTree.canPurchased()) SpawnTwoChildren(node, position);
+        //if (!skillTree.CanPurchase()) return;
+        SpawnTwoChildren(node, position);
     }
 
     void SpawnTwoChildren(Node node, Vector2 position)

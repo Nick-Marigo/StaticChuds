@@ -1,22 +1,37 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
 
     private Dictionary <string, Dictionary<string, AttributeGate>> _attributesByType;
-    public class AttributeGate : iNodeObject {
 
+    [JsonObject(MemberSerialization.OptIn)]
+    public class AttributeGate : iNodeObject {
+        [JsonProperty]
         public string type { get; private set; }
-        public string name { get; private set; }
+        [JsonProperty]
         public string description { get; private set; }
+        [JsonProperty("sprite")]
         public int icon { get; private set; }
+        [JsonProperty]
+        public string amount { get; private set; }
+        [JsonProperty("display_name")]
+        public string name { get; private set; }
+
+        public string _name { get; private set; }
         public Func<object> Get;
         public Action<object> Set;
+        public Action<string> upgradeClass;
 
         public AttributeGate(string name, string type) { 
-            this.type = type; 
-            this.name = name;
+            this._name = name;
+        }
+
+        public void Upgrade() {
+            upgradeClass(amount);
         }
     }
 
@@ -35,6 +50,7 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
 
     public void Equip(iNodeObject obj) {
         Debug.Log(obj);
+        ((AttributeGate)obj).Upgrade();
     }
 
     void _LoadAttributes() {
@@ -48,39 +64,71 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         }
 
         _attributeDict = new();
+        var playerClass = _playerInstance.PlayerClass;
 
         AddAttribute("mana", "mana",
                 () => _spellCaster.Mana,
-                (value) => _spellCaster.Mana = (int)value);
+                (value) => _spellCaster.Mana = (int)value,
+                (value) => playerClass.mana = value + " " + playerClass.mana + " +");
+        AddAttribute("mana_regeneration", "mana",
+                () => _spellCaster.mana_reg,
+                (value) => _spellCaster.mana_reg = (int)value,
+                (value) => playerClass.mana_regeneration = value + " " + playerClass.mana_regeneration + " +");
         AddAttribute("spellpower", "damage",
                 () => _spellCaster.spellPower,
-                (value) => _spellCaster.spellPower = (int)value);
+                (value) => _spellCaster.spellPower = (int)value,
+                (value) => playerClass.spellpower = value + " " + playerClass.spellpower + " +");
         AddAttribute("event_wrapper", "none",
                 () => _eventWrapper,
+                null,
                 null);
         AddAttribute("speed", "speed",
                 () => _playerController.speed,
-                (value) => _playerController.speed = (int)value);
-        AddAttribute("health", "health",
+                (value) => _playerController.speed = (int)value,
+                (value) => playerClass.speed = value + " " + playerClass.speed + " +");
+        AddAttribute("health", "none",
                 () => _playerInstance.hp.hp,
-                (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp));
+                (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp),
+                null);
         AddAttribute("max_health", "health",
                 () => _playerInstance.hp.max_hp,
-                (value) => _playerInstance.hp.max_hp = (int)value);   
+                (value) => _playerInstance.hp.max_hp = (int)value,
+                (value) => playerClass.health = value + " " + playerClass.health + " +");
+
+        PopulateAttributeGates();
     }
 
     public iNodeObject GetNodeObjectByType(string affinity, string weakness) {
         _LoadAttributes();
         var attribute = ObjectByTypeFetcher.FetchUnusedObject<AttributeGate>(_attributesByType, affinity, weakness);
         if (attribute == null) return null;
-        _attributesByType[attribute.type].Remove(attribute.name);
+        Debug.Log($"before removal: {attribute.name} + {attribute.type}");
+        _attributesByType[attribute.type].Remove(attribute._name);
         return attribute;
     }
 
-    private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter) {
+    /* Loads all the attributes of each existing Gate from JSON */
+    private void PopulateAttributeGates() {
+        TextAsset statsJson = Resources.Load<TextAsset>("stats");
+        if (statsJson == null) {
+            Debug.Log("Failed to get stats json from Resources");
+            return;
+        }
+
+        JObject stats = JObject.Parse(statsJson.text);
+        foreach (var entry in stats) {
+            string key = entry.Key;
+            if (_attributeDict.TryGetValue(key, out AttributeGate existing)) {
+                JsonConvert.PopulateObject(entry.Value.ToString(), existing);
+            }
+        }
+    }
+
+    private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter, Action<string> upgrade) {
         var attributeGate = new AttributeGate(name, type) {
             Get = getter,
-            Set = setter 
+            Set = setter,
+            upgradeClass = upgrade
         };
 
         _attributeDict.Add(name, attributeGate);

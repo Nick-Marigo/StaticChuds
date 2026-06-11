@@ -31,7 +31,6 @@ public class UIManager : MonoBehaviour {
         UpdateUIState(GameManager.Instance.state);
     }
 
-    // TO REMOVE
     private void Update() {
         if (Keyboard.current.lKey.wasPressedThisFrame) {
             UpdateUIState(GameManager.GameState.WAVEEND);
@@ -74,8 +73,9 @@ public class UIManager : MonoBehaviour {
             case GameManager.GameState.WAVEEND:
                 background.SetActive(true);
                 skillTree.SetActive(true);
+                skillTree.GetComponent<SkillTreeUI>().UpdateSkillPoints(1);
                 universalButton.SetActive(true);
-                buttonText.text = "Skip Reward";
+                buttonText.text = "Next";
                 break;
             case GameManager.GameState.WAVESTATS:
                 background.SetActive(true);
