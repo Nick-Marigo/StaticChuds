@@ -62,25 +62,29 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
 
         AddAttribute("mana", "mana",
                 () => _spellCaster.Mana,
-                (value) => _spellCaster.Mana = (int)value);
+                (value) => _spellCaster.Mana = (int)value,
+                () => Debug.Log("helloooo"));
         AddAttribute("spellpower", "damage",
                 () => _spellCaster.spellPower,
-                (value) => _spellCaster.spellPower = (int)value);
+                (value) => _spellCaster.spellPower = (int)value,
+                () => Debug.Log("helloooo"));
         AddAttribute("event_wrapper", "none",
                 () => _eventWrapper,
-                null);
+                null,
+                () => Debug.Log("helloooo"));
         AddAttribute("speed", "speed",
                 () => _playerController.speed,
-                (value) => _playerController.speed = (int)value);
+                (value) => _playerController.speed = (int)value,
+                () => Debug.Log("helloooo"));
         AddAttribute("health", "none",
                 () => _playerInstance.hp.hp,
-                (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp));
+                (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp),
+                () => Debug.Log("helloooo"));
         AddAttribute("max_health", "health",
                 () => _playerInstance.hp.max_hp,
-                (value) => _playerInstance.hp.max_hp = (int)value);   
+                (value) => _playerInstance.hp.max_hp = (int)value,
+                () => Debug.Log("helloooo"));
 
-
-        _attributeDict["mana"].Upgrade = () => {Debug.Log("hello");};
         PopulateAttributeGates();
     }
 
@@ -115,10 +119,11 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         
     }
 
-    private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter) {
+    private void AddAttribute(string name, string type, Func<object> getter, Action<object> setter, Action upgrade) {
         var attributeGate = new AttributeGate(name, type) {
             Get = getter,
-            Set = setter 
+            Set = setter,
+            Upgrade = upgrade
         };
 
         _attributeDict.Add(name, attributeGate);
