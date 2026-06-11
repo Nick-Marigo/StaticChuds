@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] GameObject rewardScreen;
     [SerializeField] GameObject relicRewardScreen;
     [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject gameOverButton;
+    [SerializeField] TextMeshProUGUI gameOverbuttonText;
     [SerializeField] GameObject waveStatsDisplay;
     [SerializeField] GameObject skillTree;
 
@@ -87,8 +89,8 @@ public class UIManager : MonoBehaviour {
                 background.SetActive(true);
                 waveStatsDisplay.SetActive(true);
                 gameOverScreen.SetActive(true);
-                universalButton.SetActive(true);
-                buttonText.text = "Restart Game";
+                gameOverButton.SetActive(true);
+                gameOverbuttonText.text = "Restart Game";
                 break;
         }
     }
