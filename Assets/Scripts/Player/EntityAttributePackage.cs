@@ -16,10 +16,13 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         public string description { get; private set; }
         [JsonProperty("sprite")]
         public int icon { get; private set; }
+        [JsonProperty]
+        public string amount { get; private set; }
 
         public string name { get; private set; }
         public Func<object> Get;
         public Action<object> Set;
+        public Action Upgrade;
 
         public AttributeGate(string name, string type) { 
             //this.type = type; 
@@ -42,6 +45,7 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
 
     public void Equip(iNodeObject obj) {
         Debug.Log(obj);
+        ((AttributeGate)obj).Upgrade();
     }
 
     void _LoadAttributes() {
@@ -68,13 +72,15 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         AddAttribute("speed", "speed",
                 () => _playerController.speed,
                 (value) => _playerController.speed = (int)value);
-        AddAttribute("health", "health",
+        AddAttribute("health", "none",
                 () => _playerInstance.hp.hp,
                 (value) => _playerInstance.hp.hp = Mathf.Min((int)value, _playerInstance.hp.max_hp));
         AddAttribute("max_health", "health",
                 () => _playerInstance.hp.max_hp,
                 (value) => _playerInstance.hp.max_hp = (int)value);   
 
+
+        _attributeDict["mana"].Upgrade = () => {Debug.Log("hello");};
         PopulateAttributeGates();
     }
 
@@ -82,6 +88,7 @@ public class EntityAttributePackage : MonoBehaviour, iNodeSystem {
         _LoadAttributes();
         var attribute = ObjectByTypeFetcher.FetchUnusedObject<AttributeGate>(_attributesByType, affinity, weakness);
         if (attribute == null) return null;
+        Debug.Log($"before removal: {attribute.name} + {attribute.type}");
         _attributesByType[attribute.type].Remove(attribute.name);
         return attribute;
     }
