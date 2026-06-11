@@ -2590,7 +2590,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1133016775}
-  m_Father: {fileID: 787206665}
+  m_Father: {fileID: 1650609662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2610,10 +2610,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonScaler
   canvas: {fileID: 2021125304}
-  xOffset: -6.4
-  yOffset: 3.46
-  xScale: 2.2
-  yScale: 0.7
+  xOffset: 0.01
+  yOffset: 0.89
+  xScale: 0.2
+  yScale: 0.1
 --- !u!114 &495094340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4205,11 +4205,6 @@ Transform:
   - {fileID: 1884016145}
   m_Father: {fileID: 1718273953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &787206665 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2387338684750365524, guid: f6f3e87121f954871960bf7fe7119fea, type: 3}
-  m_PrefabInstance: {fileID: 1052065211}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &797691353
 GameObject:
   m_ObjectHideFlags: 0
@@ -5794,7 +5789,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2387338684750365524, guid: f6f3e87121f954871960bf7fe7119fea, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2936069844613173413, guid: f6f3e87121f954871960bf7fe7119fea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 495094338}
     m_AddedComponents: []
