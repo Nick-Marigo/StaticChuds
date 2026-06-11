@@ -10,6 +10,9 @@ public class GotYourBack : SpellModifier {
     public static JObject config;
     protected string mana_multiplier;
 
+    [JsonIgnore]
+    private PlayerController _playerController;
+
     void SetAttributes()
     {
         if (config == null) {
@@ -28,14 +31,19 @@ public class GotYourBack : SpellModifier {
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
+        Vector3 direction = target - where;
+
         // Let the inner spell handle its own casting behavior
         yield return innerSpell.Cast(where, target, team);
 
         // Let the inner spell handle its own casting behavior
-        yield return innerSpell.Cast(where, where - (target - where), team);
+        Vector3 newWhere = _playerController.position;
+        Vector3 backwardTarget = newWhere - direction;
+        yield return innerSpell.Cast(newWhere, backwardTarget, team);
     }
 
     public GotYourBack(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
         SetAttributes();
+        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 }

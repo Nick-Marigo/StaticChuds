@@ -39,6 +39,7 @@ public class Doubler : SpellModifier {
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
+        Vector3 direction = target - where;
         // Let the inner spell handle its own casting behavior
         yield return innerSpell.Cast(where, target, team);
 
@@ -48,7 +49,9 @@ public class Doubler : SpellModifier {
 
         // Let the inner spell handle its own casting behavior and
         // get current pos from playerController
-        yield return innerSpell.Cast(_playerController.position, target, team);
+        Vector3 newWhere = _playerController.position;
+        Vector3 newTarget = newWhere + direction;
+        yield return innerSpell.Cast(newWhere, newTarget, team);
     }
 
     public Doubler(SpellCaster owner, Spell innerSpell) : base(owner, innerSpell) {
